@@ -29,5 +29,5 @@ with open(F / "concat.txt", "w") as f:
     for n, d in concat: f.write(f"file 'frames/{n}.png'\nduration {d:.3f}\n")
     f.write(f"file 'frames/{concat[-1][0]}.png'\n")
 out = F / ("film.mp4" if len(sys.argv) == 1 else "film_partial.mp4")
-subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-f", "concat", "-safe", "0", "-i", str(F / "concat.txt"), "-vf", f"fps={fps},scale={W}:{H},format=yuv420p", "-c:v", "libx264", "-crf", "20", str(out)], check=True)
+subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-f", "concat", "-safe", "0", "-i", str(F / "concat.txt"), "-vf", f"fps={fps},scale={W}:{H},format=yuv420p", "-t", f"{sum(d for _, d in concat):.2f}", "-c:v", "libx264", "-crf", "20", str(out)], check=True)
 print("wrote", out, sum(d for _, d in concat), "s"); (F / "DONE").write_text("done")
