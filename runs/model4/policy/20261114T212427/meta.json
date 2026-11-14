@@ -1,0 +1,14 @@
+{
+ "model": "model4",
+ "produced_by": "scripts/run_policy.py",
+ "timestamp": "20261114T212427",
+ "git": "9f12b6a",
+ "inputs": "runs/model1/replay/20261114T212304",
+ "K": 3,
+ "min_run": 6,
+ "effects": {
+  "zero (E05)": 0.0,
+  "conservative (half of E04)": 0.1625,
+  "high (E04: 53.2 -> 35.9 days)": 0.325
+ }
+}
