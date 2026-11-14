@@ -1,0 +1,92 @@
+{
+ "fps": 10,
+ "size": [
+  1920,
+  1080
+ ],
+ "scenes": [
+  {
+   "id": "gap",
+   "seconds": 9,
+   "params": {
+    "film": "p-map,p-card",
+    "cols": "0.62fr 1.6fr",
+    "step": "all",
+    "county": "09",
+    "zoom": "0.86",
+    "head": "Equal Care Across Finland: where is the gap?"
+   },
+   "cap": "The gap, in one picture. Each county is an aggregate twin of the cancer pathway, built from public THL and Cancer Registry data. Red: a gap we can identify. Hatched: too few patients to judge."
+  },
+  {
+   "id": "replay_referral",
+   "replay": true,
+   "seconds": 26,
+   "params": {
+    "film": "p-pol",
+    "sig": "ref_assess_over90",
+    "county": "09",
+    "zoom": "1.0",
+    "head": "Replay 2021–2026 · referral handover"
+   },
+   "caps": [
+    "We replay history. Each month both models see only what had been published by then.",
+    "Model 3 is the strategy's own monitoring: an annual review of figures two years old. Model 4 re-targets the same three pilot slots every month.",
+    "Referral gaps move between counties. Model 4 reaches 51% of gap-months; Model 3 reaches 20%. Same lever, same budget."
+   ]
+  },
+  {
+   "id": "replay_treatment",
+   "replay": true,
+   "seconds": 20,
+   "params": {
+    "film": "p-pol",
+    "sig": "treat_onc_wait",
+    "county": "HUS",
+    "zoom": "1.0",
+    "head": "Replay 2021–2026 · treatment start (Goal 3 proxy)"
+   },
+   "caps": [
+    "Goal 3, treatment start. The public proxy is the oncology queue, in days of referral inflow.",
+    "Here the gaps are chronic. Model 4 reaches 60%, Model 3 56%: a tie. Faster monitoring does not help where the gap never moves."
+   ]
+  },
+  {
+   "id": "replay_dx",
+   "replay": true,
+   "seconds": 12,
+   "params": {
+    "film": "p-pol",
+    "sig": "dx_endo_over90",
+    "county": "15",
+    "zoom": "1.0",
+    "head": "Replay 2021–2026 · diagnosis (endoscopy queue)"
+   },
+   "caps": [
+    "Diagnosis: the endoscopy queue. 38% against 34%, also a tie."
+   ]
+  },
+  {
+   "id": "score",
+   "seconds": 22,
+   "params": {
+    "film": "p-score",
+    "zoom": "1.22",
+    "head": "Scoreboard: every success factor of the strategy"
+   },
+   "cap": "The scoreboard lists every success factor. Model 4 wins one, ties two. Survival, mortality and stage are not estimated: no public county data. The twin missed the 2020 pandemic dip and only ties the last-value baseline on half the signals. We show that."
+  },
+  {
+   "id": "action",
+   "seconds": 26,
+   "params": {
+    "film": "p-card",
+    "county": "09",
+    "step": "referral",
+    "zoom": "1.02",
+    "head": "Monday morning: Päijät-Häme"
+   },
+   "cap": "The action for one county. Päijät-Häme: 61% of patients waiting for a first specialist assessment have waited over 90 days; nationally 17%. Standardised referral criteria and a fast track, roadmap measure 2.5.2, owner named, evidence cited, effect not yet estimated, checked monthly."
+  }
+ ]
+}

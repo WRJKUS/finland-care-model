@@ -1,0 +1,1236 @@
+{
+ "2026-10-31": {
+  "01": {
+   "en": [
+    {
+     "text": "No identifiable gap is seen in East Uusimaa; the only published signals are screening participation, at 80% for breast, 76% for cervical and 73% for colorectal cancer.",
+     "cites": [
+      "det_screen_breast",
+      "det_screen_cervix",
+      "det_screen_colorectal"
+     ]
+    },
+    {
+     "text": "We are fairly sure of this for detection: the intervals are narrow (for example 79% to 81% for breast) and close to the national levels of 82%, 73% and 74%.",
+     "cites": [
+      "det_screen_breast",
+      "det_screen_cervix",
+      "det_screen_colorectal"
+     ]
+    },
+    {
+     "text": "The limitation is that the data run only to the end of 2024 and cover only the detection step, so referral, diagnosis and treatment cannot be judged from public data.",
+     "cites": [
+      "det_screen_breast",
+      "det_screen_colorectal"
+     ]
+    }
+   ],
+   "fi": [
+    {
+     "text": "Itä-Uudellamaalla ei näy tunnistettavaa aukkoa; julkaistut signaalit ovat vain seulontaan osallistuminen: rintasyöpä 80 %, kohdunkaulasyöpä 76 % ja suolistosyöpä 73 %.",
+     "cites": [
+      "det_screen_breast",
+      "det_screen_cervix",
+      "det_screen_colorectal"
+     ]
+    },
+    {
+     "text": "Tästä voi olla melko varma havaitsemisen osalta: vaihteluvälit ovat kapeita (esimerkiksi rintasyövässä 79–81 %) ja lähellä valtakunnallisia tasoja 82 %, 73 % ja 74 %.",
+     "cites": [
+      "det_screen_breast",
+      "det_screen_cervix",
+      "det_screen_colorectal"
+     ]
+    },
+    {
+     "text": "Rajoituksena tiedot ulottuvat vain vuoden 2024 loppuun ja koskevat vain havaitsemisvaihetta, joten lähetettä, diagnoosia ja hoitoa ei voi arvioida julkisista tiedoista.",
+     "cites": [
+      "det_screen_breast",
+      "det_screen_colorectal"
+     ]
+    }
+   ]
+  },
+  "02": {
+   "en": [
+    {
+     "text": "No identifiable gap is seen in Central Uusimaa; screening participation is 80% for breast, 75% for cervical and 74% for colorectal cancer.",
+     "cites": [
+      "det_screen_breast",
+      "det_screen_cervix",
+      "det_screen_colorectal"
+     ]
+    },
+    {
+     "text": "We are fairly sure of this for detection: the intervals are narrow and the figures are at or near the national levels of 82%, 73% and 74%.",
+     "cites": [
+      "det_screen_breast",
+      "det_screen_cervix",
+      "det_screen_colorectal"
+     ]
+    },
+    {
+     "text": "The limitation is that only the detection step is published, with data to the end of 2024, so later steps of the pathway cannot be judged.",
+     "cites": [
+      "det_screen_breast",
+      "det_screen_cervix"
+     ]
+    }
+   ],
+   "fi": [
+    {
+     "text": "Keski-Uudellamaalla ei näy tunnistettavaa aukkoa; seulontaan osallistuminen on rintasyövässä 80 %, kohdunkaulasyövässä 75 % ja suolistosyövässä 74 %.",
+     "cites": [
+      "det_screen_breast",
+      "det_screen_cervix",
+      "det_screen_colorectal"
+     ]
+    },
+    {
+     "text": "Tästä voi olla melko varma havaitsemisen osalta: vaihteluvälit ovat kapeita ja luvut ovat valtakunnallisten tasojen 82 %, 73 % ja 74 % tasolla tai lähellä niitä.",
+     "cites": [
+      "det_screen_breast",
+      "det_screen_cervix",
+      "det_screen_colorectal"
+     ]
+    },
+    {
+     "text": "Rajoituksena julkaistu on vain havaitsemisvaihe vuoden 2024 loppuun asti, joten hoitopolun myöhempiä vaiheita ei voi arvioida.",
+     "cites": [
+      "det_screen_breast",
+      "det_screen_cervix"
+     ]
+    }
+   ]
+  },
+  "03": {
+   "en": [
+    {
+     "text": "No identifiable gap is seen in West Uusimaa; screening participation is 76% for breast, 73% for cervical and 72% for colorectal cancer.",
+     "cites": [
+      "det_screen_breast",
+      "det_screen_cervix",
+      "det_screen_colorectal"
+     ]
+    },
+    {
+     "text": "The model does not flag a gap, although breast screening (76%, interval 75% to 77%) is below the national 82% and colorectal (72%) is slightly below 74%, so these are worth following.",
+     "cites": [
+      "det_screen_breast",
+      "det_screen_colorectal"
+     ]
+    },
+    {
+     "text": "The limitation is that only the detection step is published, with data to the end of 2024, so later steps cannot be judged from public data.",
+     "cites": [
+      "det_screen_cervix"
+     ]
+    }
+   ],
+   "fi": [
+    {
+     "text": "Länsi-Uudellamaalla ei näy tunnistettavaa aukkoa; seulontaan osallistuminen on rintasyövässä 76 %, kohdunkaulasyövässä 73 % ja suolistosyövässä 72 %.",
+     "cites": [
+      "det_screen_breast",
+      "det_screen_cervix",
+      "det_screen_colorectal"
+     ]
+    },
+    {
+     "text": "Malli ei merkitse aukkoa, vaikka rintaseulonta (76 %, vaihteluväli 75–77 %) on alle valtakunnallisen 82 % ja suolistoseulonta (72 %) hieman alle 74 %, joten niitä kannattaa seurata.",
+     "cites": [
+      "det_screen_breast",
+      "det_screen_colorectal"
+     ]
+    },
+    {
+     "text": "Rajoituksena julkaistu on vain havaitsemisvaihe vuoden 2024 loppuun asti, joten myöhempiä vaiheita ei voi arvioida julkisista tiedoista.",
+     "cites": [
+      "det_screen_cervix"
+     ]
+    }
+   ]
+  },
+  "04": {
+   "en": [
+    {
+     "text": "No identifiable gap is seen in Vantaa and Kerava; screening participation is 77% for breast, 71% for cervical and 72% for colorectal cancer.",
+     "cites": [
+      "det_screen_breast",
+      "det_screen_cervix",
+      "det_screen_colorectal"
+     ]
+    },
+    {
+     "text": "The model does not flag a gap, but all three figures are somewhat below the national levels of 82%, 73% and 74%, so they are worth following.",
+     "cites": [
+      "det_screen_breast",
+      "det_screen_cervix",
+      "det_screen_colorectal"
+     ]
+    },
+    {
+     "text": "The limitation is that only the detection step is published, with data to the end of 2024, so referral, diagnosis and treatment cannot be judged.",
+     "cites": [
+      "det_screen_breast"
+     ]
+    }
+   ],
+   "fi": [
+    {
+     "text": "Vantaalla ja Keravalla ei näy tunnistettavaa aukkoa; seulontaan osallistuminen on rintasyövässä 77 %, kohdunkaulasyövässä 71 % ja suolistosyövässä 72 %.",
+     "cites": [
+      "det_screen_breast",
+      "det_screen_cervix",
+      "det_screen_colorectal"
+     ]
+    },
+    {
+     "text": "Malli ei merkitse aukkoa, mutta kaikki kolme lukua ovat hieman alle valtakunnallisten tasojen 82 %, 73 % ja 74 %, joten niitä kannattaa seurata.",
+     "cites": [
+      "det_screen_breast",
+      "det_screen_cervix",
+      "det_screen_colorectal"
+     ]
+    },
+    {
+     "text": "Rajoituksena julkaistu on vain havaitsemisvaihe vuoden 2024 loppuun asti, joten lähetettä, diagnoosia ja hoitoa ei voi arvioida.",
+     "cites": [
+      "det_screen_breast"
+     ]
+    }
+   ]
+  },
+  "05": {
+   "en": [
+    {
+     "text": "No identifiable gap is seen in Southwest Finland; the oncology treatment queue is 11 days of referral inflow (interval 8 to 14 days) against 19 days nationally.",
+     "cites": [
+      "treat_onc_wait"
+     ]
+    },
+    {
+     "text": "The share of oncology patients waiting over 90 days is 4% (interval 2% to 8%) against 3% nationally, and screening participation is at or above national levels.",
+     "cites": [
+      "treat_onc_over90",
+      "det_screen_breast",
+      "det_screen_cervix"
+     ]
+    },
+    {
+     "text": "The endoscopy queue (13% over 90 days, interval 8% to 21%) is unidentifiable: the interval is too wide to judge, which is not the same as good.",
+     "cites": [
+      "dx_endo_over90"
+     ]
+    },
+    {
+     "text": "The limitation is that the endoscopy, surgery and specialist-assessment signals are not cancer-specific.",
+     "cites": [
+      "dx_endo_over90",
+      "treat_surg_over90",
+      "ref_assess_over90"
+     ]
+    }
+   ],
+   "fi": [
+    {
+     "text": "Varsinais-Suomessa ei näy tunnistettavaa aukkoa; syöpätautien hoitojono on 11 lähetevirran päivää (vaihteluväli 8–14 päivää), kun valtakunnallinen taso on 19 päivää.",
+     "cites": [
+      "treat_onc_wait"
+     ]
+    },
+    {
+     "text": "Yli 90 vrk odottaneiden syöpäpotilaiden osuus on 4 % (vaihteluväli 2–8 %) ja valtakunnallisesti 3 %, ja seulontaosallistuminen on valtakunnallisella tasolla tai sen yläpuolella.",
+     "cites": [
+      "treat_onc_over90",
+      "det_screen_breast",
+      "det_screen_cervix"
+     ]
+    },
+    {
+     "text": "Tähystysjono (13 % yli 90 vrk, vaihteluväli 8–21 %) on tunnistamaton: vaihteluväli on liian leveä arvioon, mikä ei tarkoita hyvää tilannetta.",
+     "cites": [
+      "dx_endo_over90"
+     ]
+    },
+    {
+     "text": "Rajoituksena tähystys-, kirurgia- ja erikoislääkärin arviointisignaalit eivät ole syöpäkohtaisia.",
+     "cites": [
+      "dx_endo_over90",
+      "treat_surg_over90",
+      "ref_assess_over90"
+     ]
+    }
+   ]
+  },
+  "06": {
+   "en": [
+    {
+     "text": "No identifiable gap is seen in Satakunta, but one signal cannot be judged: the share of oncology patients waiting over 90 days is 31% (interval 21% to 42%) against 3% nationally and is marked unidentifiable.",
+     "cites": [
+      "treat_onc_over90"
+     ]
+    },
+    {
+     "text": "The oncology queue itself is 3 days of referral inflow against 19 nationally and is not flagged, so the two signals point in different directions.",
+     "cites": [
+      "treat_onc_wait"
+     ]
+    },
+    {
+     "text": "We recommend reporting cancer-specific waiting times to the national cancer quality register so that the county can be seen at all.",
+     "cites": [
+      "A-Q1",
+      "E06"
+     ]
+    },
+    {
+     "text": "Screening participation is at or near national levels, and the endoscopy and referral signals are not cancer-specific.",
+     "cites": [
+      "det_screen_breast",
+      "dx_endo_over90"
+     ]
+    }
+   ],
+   "fi": [
+    {
+     "text": "Satakunnassa ei näy tunnistettavaa aukkoa, mutta yhtä signaalia ei voi arvioida: yli 90 vrk odottaneiden syöpäpotilaiden osuus on 31 % (vaihteluväli 21–42 %) ja valtakunnallisesti 3 %, ja se on merkitty tunnistamattomaksi.",
+     "cites": [
+      "treat_onc_over90"
+     ]
+    },
+    {
+     "text": "Syöpätautien hoitojono on 3 lähetevirran päivää, kun valtakunnallinen taso on 19, eikä sitä ole merkitty poikkeavaksi, joten signaalit osoittavat eri suuntiin.",
+     "cites": [
+      "treat_onc_wait"
+     ]
+    },
+    {
+     "text": "Suosittelemme raportoimaan syöpäkohtaiset odotusajat kansalliseen syövän laaturekisteriin, jotta alueen tilanne ylipäätään näkyy.",
+     "cites": [
+      "A-Q1",
+      "E06"
+     ]
+    },
+    {
+     "text": "Seulontaosallistuminen on valtakunnallisella tasolla tai lähellä sitä, ja tähystys- ja lähetesignaalit eivät ole syöpäkohtaisia.",
+     "cites": [
+      "det_screen_breast",
+      "dx_endo_over90"
+     ]
+    }
+   ]
+  },
+  "07": {
+   "en": [
+    {
+     "text": "No identifiable gap is seen in Kanta-Häme, but two signals cannot be judged: oncology patients waiting over 90 days (7%, interval 3% to 13%) and first specialist assessment over 90 days (46%, interval 26% to 66%).",
+     "cites": [
+      "treat_onc_over90",
+      "ref_assess_over90"
+     ]
+    },
+    {
+     "text": "Both are marked unidentifiable because the intervals are too wide, which does not mean the situation is good, and the assessment signal is not cancer-specific.",
+     "cites": [
+      "treat_onc_over90",
+      "ref_assess_over90"
+     ]
+    },
+    {
+     "text": "The oncology queue is 5 days of referral inflow against 19 nationally and is not flagged.",
+     "cites": [
+      "treat_onc_wait"
+     ]
+    },
+    {
+     "text": "We recommend reporting cancer-specific waiting times to the national cancer quality register so that the county can be seen.",
+     "cites": [
+      "A-Q1",
+      "E06"
+     ]
+    }
+   ],
+   "fi": [
+    {
+     "text": "Kanta-Hämeessä ei näy tunnistettavaa aukkoa, mutta kahta signaalia ei voi arvioida: yli 90 vrk odottaneet syöpäpotilaat (7 %, vaihteluväli 3–13 %) ja yli 90 vrk ensiarviota odottaneet (46 %, vaihteluväli 26–66 %).",
+     "cites": [
+      "treat_onc_over90",
+      "ref_assess_over90"
+     ]
+    },
+    {
+     "text": "Molemmat on merkitty tunnistamattomiksi, koska vaihteluvälit ovat liian leveitä; se ei tarkoita hyvää tilannetta, eikä arviointisignaali ole syöpäkohtainen.",
+     "cites": [
+      "treat_onc_over90",
+      "ref_assess_over90"
+     ]
+    },
+    {
+     "text": "Syöpätautien hoitojono on 5 lähetevirran päivää, kun valtakunnallinen taso on 19, eikä sitä ole merkitty poikkeavaksi.",
+     "cites": [
+      "treat_onc_wait"
+     ]
+    },
+    {
+     "text": "Suosittelemme raportoimaan syöpäkohtaiset odotusajat kansalliseen syövän laaturekisteriin, jotta alueen tilanne näkyy.",
+     "cites": [
+      "A-Q1",
+      "E06"
+     ]
+    }
+   ]
+  },
+  "09": {
+   "en": [
+    {
+     "text": "The most important gap in Päijät-Häme is at the referral step: 61% of those waiting for a first specialist assessment in cancer-diagnosing specialties have waited over 90 days (interval 58% to 64%) against 17% nationally.",
+     "cites": [
+      "ref_assess_over90"
+     ]
+    },
+    {
+     "text": "We are very sure this is above the national level, because the interval is narrow and far from 17%.",
+     "cites": [
+      "ref_assess_over90"
+     ]
+    },
+    {
+     "text": "We recommend adopting standardised referral criteria and a symptom-based fast track from primary care, with a named coordinator in specialist outpatient care.",
+     "cites": [
+      "A-R1"
+     ]
+    },
+    {
+     "text": "Oncology and endoscopy signals are unidentifiable (endoscopy 25%, interval 16% to 38%) and cannot be judged, and the assessment signal is not cancer-specific.",
+     "cites": [
+      "treat_onc_over90",
+      "dx_endo_over90",
+      "ref_assess_over90"
+     ]
+    }
+   ],
+   "fi": [
+    {
+     "text": "Päijät-Hämeen tärkein aukko on lähetevaiheessa: syöpiä diagnosoivilla erikoisaloilla ensiarviota odottaneista 61 % on odottanut yli 90 vrk (vaihteluväli 58–64 %), kun valtakunnallinen taso on 17 %.",
+     "cites": [
+      "ref_assess_over90"
+     ]
+    },
+    {
+     "text": "Olemme hyvin varmoja, että luku on valtakunnallista tasoa korkeampi, koska vaihteluväli on kapea ja kaukana 17 %:sta.",
+     "cites": [
+      "ref_assess_over90"
+     ]
+    },
+    {
+     "text": "Suosittelemme otettavaksi käyttöön yhtenäiset lähetekriteerit ja oireperusteisen nopean väylän perusterveydenhuollosta sekä nimeämään koordinaattorin erikoissairaanhoidon poliklinikalle.",
+     "cites": [
+      "A-R1"
+     ]
+    },
+    {
+     "text": "Syöpähoidon ja tähystyksen signaalit ovat tunnistamattomia (tähystys 25 %, vaihteluväli 16–38 %) eikä niitä voi arvioida, ja arviointisignaali ei ole syöpäkohtainen.",
+     "cites": [
+      "treat_onc_over90",
+      "dx_endo_over90",
+      "ref_assess_over90"
+     ]
+    }
+   ]
+  },
+  "11": {
+   "en": [
+    {
+     "text": "South Karelia has a watch signal at the treatment step: 38% of the GI surgery and urology queue has waited over 90 days (interval 34% to 42%) against 27% nationally.",
+     "cites": [
+      "treat_surg_over90"
+     ]
+    },
+    {
+     "text": "Watch means a 70 to 90% probability of being beyond the threshold, so we are moderately sure, and no action is attached to this signal in the records.",
+     "cites": [
+      "treat_surg_over90"
+     ]
+    },
+    {
+     "text": "The oncology signals (4 days of queue; 4% over 90 days) and the endoscopy signal (17%, interval 7% to 35%) are unidentifiable and cannot be judged.",
+     "cites": [
+      "treat_onc_wait",
+      "treat_onc_over90",
+      "dx_endo_over90"
+     ]
+    },
+    {
+     "text": "The main limitation is that the watch signal is not cancer-specific.",
+     "cites": [
+      "treat_surg_over90"
+     ]
+    }
+   ],
+   "fi": [
+    {
+     "text": "Etelä-Karjalassa on seurantasignaali hoitovaiheessa: gastrokirurgian ja urologian jonosta 38 % on odottanut yli 90 vrk (vaihteluväli 34–42 %), kun valtakunnallinen taso on 27 %.",
+     "cites": [
+      "treat_surg_over90"
+     ]
+    },
+    {
+     "text": "Seuranta tarkoittaa 70–90 %:n todennäköisyyttä rajan ylittymiselle, joten varmuus on kohtalainen, eikä signaaliin ole kirjattu toimenpidettä.",
+     "cites": [
+      "treat_surg_over90"
+     ]
+    },
+    {
+     "text": "Syöpähoidon signaalit (jono 4 päivää; 4 % yli 90 vrk) ja tähystyssignaali (17 %, vaihteluväli 7–35 %) ovat tunnistamattomia eikä niitä voi arvioida.",
+     "cites": [
+      "treat_onc_wait",
+      "treat_onc_over90",
+      "dx_endo_over90"
+     ]
+    },
+    {
+     "text": "Tärkein rajoitus on, ettei seurantasignaali ole syöpäkohtainen.",
+     "cites": [
+      "treat_surg_over90"
+     ]
+    }
+   ]
+  },
+  "12": {
+   "en": [
+    {
+     "text": "The most important gap in South Savo is at the diagnosis step: 41% of the endoscopy queue has waited over 90 days (interval 35% to 48%) against 15% nationally.",
+     "cites": [
+      "dx_endo_over90"
+     ]
+    },
+    {
+     "text": "A second gap is at the referral step: 33% waiting over 90 days for a first specialist assessment (interval 30% to 37%) against 17%; we are very sure both are above the national level.",
+     "cites": [
+      "ref_assess_over90"
+     ]
+    },
+    {
+     "text": "We recommend pre-booking endoscopy slots for suspected-cancer referrals and triaging the queue by symptom criteria and FIT result.",
+     "cites": [
+      "A-D1"
+     ]
+    },
+    {
+     "text": "We also recommend standardised referral criteria and a symptom-based fast track from primary care, with a named coordinator.",
+     "cites": [
+      "A-R1"
+     ]
+    },
+    {
+     "text": "Both signals are not cancer-specific, as they cover all endoscopy indications and all referral reasons in these specialties.",
+     "cites": [
+      "dx_endo_over90",
+      "ref_assess_over90"
+     ]
+    }
+   ],
+   "fi": [
+    {
+     "text": "Etelä-Savon tärkein aukko on diagnoosivaiheessa: tähystysjonosta 41 % on odottanut yli 90 vrk (vaihteluväli 35–48 %), kun valtakunnallinen taso on 15 %.",
+     "cites": [
+      "dx_endo_over90"
+     ]
+    },
+    {
+     "text": "Toinen aukko on lähetevaiheessa: ensiarviota yli 90 vrk odottaneita on 33 % (vaihteluväli 30–37 %), kun valtakunnallinen taso on 17 %; olemme hyvin varmoja, että molemmat ylittävät valtakunnallisen tason.",
+     "cites": [
+      "ref_assess_over90"
+     ]
+    },
+    {
+     "text": "Suosittelemme varaamaan tähystysaikoja etukäteen syöpäepäilylähetteille ja priorisoimaan jonon oirekriteerien ja FIT-tuloksen mukaan.",
+     "cites": [
+      "A-D1"
+     ]
+    },
+    {
+     "text": "Suosittelemme myös yhtenäisiä lähetekriteerejä ja oireperusteista nopeaa väylää perusterveydenhuollosta sekä nimettyä koordinaattoria.",
+     "cites": [
+      "A-R1"
+     ]
+    },
+    {
+     "text": "Kumpikaan signaali ei ole syöpäkohtainen, sillä ne kattavat kaikki tähystyksen syyt ja kaikki lähetesyyt näillä erikoisaloilla.",
+     "cites": [
+      "dx_endo_over90",
+      "ref_assess_over90"
+     ]
+    }
+   ]
+  },
+  "13": {
+   "en": [
+    {
+     "text": "No identifiable gap is seen in North Savo, but two signals cannot be judged: the endoscopy queue (44% over 90 days, interval 30% to 59%) and oncology patients waiting over 90 days (13%, interval 7% to 24%).",
+     "cites": [
+      "dx_endo_over90",
+      "treat_onc_over90"
+     ]
+    },
+    {
+     "text": "Both are marked unidentifiable because the intervals are too wide, which does not mean the situation is good, and the endoscopy signal is not cancer-specific.",
+     "cites": [
+      "dx_endo_over90",
+      "treat_onc_over90"
+     ]
+    },
+    {
+     "text": "The oncology queue is 2 days of referral inflow against 19 nationally and is not flagged.",
+     "cites": [
+      "treat_onc_wait"
+     ]
+    },
+    {
+     "text": "We recommend reporting cancer-specific waiting times to the national cancer quality register so that the county can be seen.",
+     "cites": [
+      "A-Q1",
+      "E06"
+     ]
+    }
+   ],
+   "fi": [
+    {
+     "text": "Pohjois-Savossa ei näy tunnistettavaa aukkoa, mutta kahta signaalia ei voi arvioida: tähystysjono (44 % yli 90 vrk, vaihteluväli 30–59 %) ja yli 90 vrk odottaneet syöpäpotilaat (13 %, vaihteluväli 7–24 %).",
+     "cites": [
+      "dx_endo_over90",
+      "treat_onc_over90"
+     ]
+    },
+    {
+     "text": "Molemmat on merkitty tunnistamattomiksi, koska vaihteluvälit ovat liian leveitä; se ei tarkoita hyvää tilannetta, eikä tähystyssignaali ole syöpäkohtainen.",
+     "cites": [
+      "dx_endo_over90",
+      "treat_onc_over90"
+     ]
+    },
+    {
+     "text": "Syöpätautien hoitojono on 2 lähetevirran päivää, kun valtakunnallinen taso on 19, eikä sitä ole merkitty poikkeavaksi.",
+     "cites": [
+      "treat_onc_wait"
+     ]
+    },
+    {
+     "text": "Suosittelemme raportoimaan syöpäkohtaiset odotusajat kansalliseen syövän laaturekisteriin, jotta alueen tilanne näkyy.",
+     "cites": [
+      "A-Q1",
+      "E06"
+     ]
+    }
+   ]
+  },
+  "14": {
+   "en": [
+    {
+     "text": "The most important gap in North Karelia is at the treatment step: the oncology queue is 65 days of referral inflow (interval 46 to 92 days) against 19 days nationally.",
+     "cites": [
+      "treat_onc_wait"
+     ]
+    },
+    {
+     "text": "We are very sure it is above the national level, though the interval is wide, so the exact size is uncertain.",
+     "cites": [
+      "treat_onc_wait"
+     ]
+    },
+    {
+     "text": "We recommend reserving protected first-treatment slots in oncology, reviewing the cancer treatment queue weekly and naming a pathway coordinator.",
+     "cites": [
+      "A-T1"
+     ]
+    },
+    {
+     "text": "There is also a watch signal for cervical screening participation, 67% (interval 66% to 69%) against 73% nationally, for which we recommend a targeted text or letter reminder to invited people who have not responded.",
+     "cites": [
+      "det_screen_cervix",
+      "A-S1"
+     ]
+    },
+    {
+     "text": "GI surgery and urology also show a gap (68% over 90 days), but that signal is not cancer-specific.",
+     "cites": [
+      "treat_surg_over90"
+     ]
+    }
+   ],
+   "fi": [
+    {
+     "text": "Pohjois-Karjalan tärkein aukko on hoitovaiheessa: syöpätautien hoitojono on 65 lähetevirran päivää (vaihteluväli 46–92 päivää), kun valtakunnallinen taso on 19 päivää.",
+     "cites": [
+      "treat_onc_wait"
+     ]
+    },
+    {
+     "text": "Olemme hyvin varmoja, että luku ylittää valtakunnallisen tason, mutta vaihteluväli on leveä, joten tarkka suuruus on epävarma.",
+     "cites": [
+      "treat_onc_wait"
+     ]
+    },
+    {
+     "text": "Suosittelemme varaamaan syöpätautien yksikköön suojatut ensihoidon aloitusajat, käymään hoitojonon läpi viikoittain ja nimeämään hoitopolun koordinaattorin.",
+     "cites": [
+      "A-T1"
+     ]
+    },
+    {
+     "text": "Lisäksi kohdunkaulasyövän seulontaosallistumisessa on seurantasignaali, 67 % (vaihteluväli 66–69 %), kun valtakunnallinen taso on 73 %; suosittelemme kohdennettua tekstiviesti- tai kirjemuistutusta kutsutuille, jotka eivät ole vastanneet.",
+     "cites": [
+      "det_screen_cervix",
+      "A-S1"
+     ]
+    },
+    {
+     "text": "Myös gastrokirurgiassa ja urologiassa on aukko (68 % yli 90 vrk), mutta se ei ole syöpäkohtainen signaali.",
+     "cites": [
+      "treat_surg_over90"
+     ]
+    }
+   ]
+  },
+  "15": {
+   "en": [
+    {
+     "text": "The most important gap in Central Finland is at the diagnosis step: 36% of the endoscopy queue has waited over 90 days (interval 29% to 43%) against 15% nationally.",
+     "cites": [
+      "dx_endo_over90"
+     ]
+    },
+    {
+     "text": "We are very sure it is above the national level, because the interval is clearly above 15%.",
+     "cites": [
+      "dx_endo_over90"
+     ]
+    },
+    {
+     "text": "We recommend pre-booking endoscopy slots for suspected-cancer referrals and triaging the queue by symptom criteria and FIT result.",
+     "cites": [
+      "A-D1"
+     ]
+    },
+    {
+     "text": "A watch signal also exists for GI surgery and urology (38% over 90 days), and the oncology share over 90 days (22%, interval 13% to 37%) is unidentifiable and cannot be judged.",
+     "cites": [
+      "treat_surg_over90",
+      "treat_onc_over90"
+     ]
+    },
+    {
+     "text": "The endoscopy signal is not cancer-specific, as it covers all endoscopy indications.",
+     "cites": [
+      "dx_endo_over90"
+     ]
+    }
+   ],
+   "fi": [
+    {
+     "text": "Keski-Suomen tärkein aukko on diagnoosivaiheessa: tähystysjonosta 36 % on odottanut yli 90 vrk (vaihteluväli 29–43 %), kun valtakunnallinen taso on 15 %.",
+     "cites": [
+      "dx_endo_over90"
+     ]
+    },
+    {
+     "text": "Olemme hyvin varmoja, että luku ylittää valtakunnallisen tason, koska vaihteluväli on selvästi yli 15 %:n.",
+     "cites": [
+      "dx_endo_over90"
+     ]
+    },
+    {
+     "text": "Suosittelemme varaamaan tähystysaikoja etukäteen syöpäepäilylähetteille ja priorisoimaan jonon oirekriteerien ja FIT-tuloksen mukaan.",
+     "cites": [
+      "A-D1"
+     ]
+    },
+    {
+     "text": "Gastrokirurgiassa ja urologiassa on lisäksi seurantasignaali (38 % yli 90 vrk), ja syöpäpotilaiden yli 90 vrk odottaneiden osuus (22 %, vaihteluväli 13–37 %) on tunnistamaton eikä sitä voi arvioida.",
+     "cites": [
+      "treat_surg_over90",
+      "treat_onc_over90"
+     ]
+    },
+    {
+     "text": "Tähystyssignaali ei ole syöpäkohtainen, sillä se kattaa kaikki tähystyksen syyt.",
+     "cites": [
+      "dx_endo_over90"
+     ]
+    }
+   ]
+  },
+  "16": {
+   "en": [
+    {
+     "text": "The most important gap in South Ostrobothnia is at the referral step: 40% of those waiting for a first specialist assessment in cancer-diagnosing specialties have waited over 90 days (interval 39% to 43%) against 17% nationally.",
+     "cites": [
+      "ref_assess_over90"
+     ]
+    },
+    {
+     "text": "We are very sure this is above the national level, because the interval is narrow and far from 17%.",
+     "cites": [
+      "ref_assess_over90"
+     ]
+    },
+    {
+     "text": "We recommend adopting standardised referral criteria and a symptom-based fast track from primary care, with a named coordinator in specialist outpatient care.",
+     "cites": [
+      "A-R1"
+     ]
+    },
+    {
+     "text": "The oncology share over 90 days (19%, interval 12% to 28%) is unidentifiable and cannot be judged; the assessment signal is not cancer-specific.",
+     "cites": [
+      "treat_onc_over90",
+      "ref_assess_over90"
+     ]
+    }
+   ],
+   "fi": [
+    {
+     "text": "Etelä-Pohjanmaan tärkein aukko on lähetevaiheessa: syöpiä diagnosoivilla erikoisaloilla ensiarviota odottaneista 40 % on odottanut yli 90 vrk (vaihteluväli 39–43 %), kun valtakunnallinen taso on 17 %.",
+     "cites": [
+      "ref_assess_over90"
+     ]
+    },
+    {
+     "text": "Olemme hyvin varmoja, että luku ylittää valtakunnallisen tason, koska vaihteluväli on kapea ja kaukana 17 %:sta.",
+     "cites": [
+      "ref_assess_over90"
+     ]
+    },
+    {
+     "text": "Suosittelemme otettavaksi käyttöön yhtenäiset lähetekriteerit ja oireperusteisen nopean väylän perusterveydenhuollosta sekä nimeämään koordinaattorin erikoissairaanhoidon poliklinikalle.",
+     "cites": [
+      "A-R1"
+     ]
+    },
+    {
+     "text": "Syöpäpotilaiden yli 90 vrk odottaneiden osuus (19 %, vaihteluväli 12–28 %) on tunnistamaton eikä sitä voi arvioida; arviointisignaali ei ole syöpäkohtainen.",
+     "cites": [
+      "treat_onc_over90",
+      "ref_assess_over90"
+     ]
+    }
+   ]
+  },
+  "17": {
+   "en": [
+    {
+     "text": "No identifiable gap is seen in Ostrobothnia, but several signals cannot be judged.",
+     "cites": [
+      "treat_onc_wait",
+      "treat_onc_over90"
+     ]
+    },
+    {
+     "text": "The oncology queue (0 days) and share over 90 days (12%, interval 6% to 25%) are unidentifiable, and the endoscopy signal (19%, interval 13% to 28%) is also unidentifiable, so none of these should be read as good.",
+     "cites": [
+      "treat_onc_wait",
+      "treat_onc_over90",
+      "dx_endo_over90"
+     ]
+    },
+    {
+     "text": "We recommend reporting cancer-specific waiting times to the national cancer quality register so that the county can be seen.",
+     "cites": [
+      "A-Q1",
+      "E06"
+     ]
+    },
+    {
+     "text": "The endoscopy and referral signals are not cancer-specific.",
+     "cites": [
+      "dx_endo_over90",
+      "ref_assess_over90"
+     ]
+    }
+   ],
+   "fi": [
+    {
+     "text": "Pohjanmaalla ei näy tunnistettavaa aukkoa, mutta useita signaaleja ei voi arvioida.",
+     "cites": [
+      "treat_onc_wait",
+      "treat_onc_over90"
+     ]
+    },
+    {
+     "text": "Syöpätautien hoitojono (0 päivää) ja yli 90 vrk odottaneiden osuus (12 %, vaihteluväli 6–25 %) ovat tunnistamattomia, samoin tähystyssignaali (19 %, vaihteluväli 13–28 %), joten mitään niistä ei pidä tulkita hyväksi.",
+     "cites": [
+      "treat_onc_wait",
+      "treat_onc_over90",
+      "dx_endo_over90"
+     ]
+    },
+    {
+     "text": "Suosittelemme raportoimaan syöpäkohtaiset odotusajat kansalliseen syövän laaturekisteriin, jotta alueen tilanne näkyy.",
+     "cites": [
+      "A-Q1",
+      "E06"
+     ]
+    },
+    {
+     "text": "Tähystys- ja lähetesignaalit eivät ole syöpäkohtaisia.",
+     "cites": [
+      "dx_endo_over90",
+      "ref_assess_over90"
+     ]
+    }
+   ]
+  },
+  "19": {
+   "en": [
+    {
+     "text": "The most important gap in North Ostrobothnia is at the referral step: 35% of those waiting for a first specialist assessment in cancer-diagnosing specialties have waited over 90 days (interval 34% to 36%) against 17% nationally.",
+     "cites": [
+      "ref_assess_over90"
+     ]
+    },
+    {
+     "text": "We are very sure this is above the national level, because the interval is narrow and far from 17%.",
+     "cites": [
+      "ref_assess_over90"
+     ]
+    },
+    {
+     "text": "We recommend adopting standardised referral criteria and a symptom-based fast track from primary care, with a named coordinator in specialist outpatient care.",
+     "cites": [
+      "A-R1"
+     ]
+    },
+    {
+     "text": "The oncology signals are not flagged (queue 9 days; 2% over 90 days), but the referral signal is not cancer-specific.",
+     "cites": [
+      "treat_onc_wait",
+      "treat_onc_over90",
+      "ref_assess_over90"
+     ]
+    }
+   ],
+   "fi": [
+    {
+     "text": "Pohjois-Pohjanmaan tärkein aukko on lähetevaiheessa: syöpiä diagnosoivilla erikoisaloilla ensiarviota odottaneista 35 % on odottanut yli 90 vrk (vaihteluväli 34–36 %), kun valtakunnallinen taso on 17 %.",
+     "cites": [
+      "ref_assess_over90"
+     ]
+    },
+    {
+     "text": "Olemme hyvin varmoja, että luku ylittää valtakunnallisen tason, koska vaihteluväli on kapea ja kaukana 17 %:sta.",
+     "cites": [
+      "ref_assess_over90"
+     ]
+    },
+    {
+     "text": "Suosittelemme otettavaksi käyttöön yhtenäiset lähetekriteerit ja oireperusteisen nopean väylän perusterveydenhuollosta sekä nimeämään koordinaattorin erikoissairaanhoidon poliklinikalle.",
+     "cites": [
+      "A-R1"
+     ]
+    },
+    {
+     "text": "Syöpähoidon signaalit eivät ole poikkeavia (jono 9 päivää; 2 % yli 90 vrk), mutta lähetesignaali ei ole syöpäkohtainen.",
+     "cites": [
+      "treat_onc_wait",
+      "treat_onc_over90",
+      "ref_assess_over90"
+     ]
+    }
+   ]
+  },
+  "20": {
+   "en": [
+    {
+     "text": "No identifiable gap is seen in Kainuu, but the picture is incomplete: no oncology queue records are published for the county.",
+     "cites": [
+      "treat_surg_over90",
+      "dx_endo_over90"
+     ]
+    },
+    {
+     "text": "The specialist assessment signal (11% over 90 days, interval 6% to 21%) is unidentifiable and cannot be judged, which is not the same as good.",
+     "cites": [
+      "ref_assess_over90"
+     ]
+    },
+    {
+     "text": "We recommend reporting cancer-specific waiting times to the national cancer quality register so that the county can be seen at all.",
+     "cites": [
+      "A-Q1",
+      "E06"
+     ]
+    },
+    {
+     "text": "The surgery, endoscopy and referral signals are not cancer-specific; screening participation is at or above national levels.",
+     "cites": [
+      "treat_surg_over90",
+      "dx_endo_over90",
+      "det_screen_breast"
+     ]
+    }
+   ],
+   "fi": [
+    {
+     "text": "Kainuussa ei näy tunnistettavaa aukkoa, mutta kuva on puutteellinen: alueelta ei ole julkaistu syöpätautien hoitojonotietoja.",
+     "cites": [
+      "treat_surg_over90",
+      "dx_endo_over90"
+     ]
+    },
+    {
+     "text": "Erikoislääkärin ensiarviosignaali (11 % yli 90 vrk, vaihteluväli 6–21 %) on tunnistamaton eikä sitä voi arvioida, mikä ei tarkoita hyvää tilannetta.",
+     "cites": [
+      "ref_assess_over90"
+     ]
+    },
+    {
+     "text": "Suosittelemme raportoimaan syöpäkohtaiset odotusajat kansalliseen syövän laaturekisteriin, jotta alueen tilanne ylipäätään näkyy.",
+     "cites": [
+      "A-Q1",
+      "E06"
+     ]
+    },
+    {
+     "text": "Kirurgia-, tähystys- ja lähetesignaalit eivät ole syöpäkohtaisia; seulontaosallistuminen on valtakunnallisella tasolla tai sen yläpuolella.",
+     "cites": [
+      "treat_surg_over90",
+      "dx_endo_over90",
+      "det_screen_breast"
+     ]
+    }
+   ]
+  },
+  "21": {
+   "en": [
+    {
+     "text": "No identifiable gap is seen in Lapland, but the oncology signals cannot be judged: the queue (4 days, interval 2 to 5 days) and the share over 90 days (9%, interval 4% to 19%) are unidentifiable.",
+     "cites": [
+      "treat_onc_wait",
+      "treat_onc_over90"
+     ]
+    },
+    {
+     "text": "This is not the same as good; the intervals are too wide to compare with the national 19 days and 3%.",
+     "cites": [
+      "treat_onc_wait",
+      "treat_onc_over90"
+     ]
+    },
+    {
+     "text": "We recommend reporting cancer-specific waiting times to the national cancer quality register so that the county can be seen.",
+     "cites": [
+      "A-Q1",
+      "E06"
+     ]
+    },
+    {
+     "text": "Endoscopy (5%) and specialist assessment (6%) are not flagged, but they are not cancer-specific.",
+     "cites": [
+      "dx_endo_over90",
+      "ref_assess_over90"
+     ]
+    }
+   ],
+   "fi": [
+    {
+     "text": "Lapissa ei näy tunnistettavaa aukkoa, mutta syöpähoidon signaaleja ei voi arvioida: jono (4 päivää, vaihteluväli 2–5 päivää) ja yli 90 vrk odottaneiden osuus (9 %, vaihteluväli 4–19 %) ovat tunnistamattomia.",
+     "cites": [
+      "treat_onc_wait",
+      "treat_onc_over90"
+     ]
+    },
+    {
+     "text": "Tämä ei tarkoita hyvää tilannetta; vaihteluvälit ovat liian leveitä vertailuun valtakunnallisen 19 päivän ja 3 %:n kanssa.",
+     "cites": [
+      "treat_onc_wait",
+      "treat_onc_over90"
+     ]
+    },
+    {
+     "text": "Suosittelemme raportoimaan syöpäkohtaiset odotusajat kansalliseen syövän laaturekisteriin, jotta alueen tilanne näkyy.",
+     "cites": [
+      "A-Q1",
+      "E06"
+     ]
+    },
+    {
+     "text": "Tähystys (5 %) ja erikoislääkärin arvio (6 %) eivät ole poikkeavia, mutta ne eivät ole syöpäkohtaisia.",
+     "cites": [
+      "dx_endo_over90",
+      "ref_assess_over90"
+     ]
+    }
+   ]
+  },
+  "90": {
+   "en": [
+    {
+     "text": "The most important gap in Helsinki is at the detection step: breast screening participation is 74% (interval 73% to 75%) against 82% nationally.",
+     "cites": [
+      "det_screen_breast"
+     ]
+    },
+    {
+     "text": "We are very sure it is below the national level, because the interval is narrow and clearly under 82%.",
+     "cites": [
+      "det_screen_breast"
+     ]
+    },
+    {
+     "text": "We recommend a targeted text or letter reminder to invited people who have not returned a test or booked a visit; this is a recommendation only and has not been simulated.",
+     "cites": [
+      "A-S1"
+     ]
+    },
+    {
+     "text": "Cervical (71%) and colorectal (70%) participation are not flagged; the data run only to the end of 2024 and cover only detection, so later steps cannot be judged.",
+     "cites": [
+      "det_screen_cervix",
+      "det_screen_colorectal"
+     ]
+    }
+   ],
+   "fi": [
+    {
+     "text": "Helsingin tärkein aukko on havaitsemisvaiheessa: rintasyövän seulontaan osallistuminen on 74 % (vaihteluväli 73–75 %), kun valtakunnallinen taso on 82 %.",
+     "cites": [
+      "det_screen_breast"
+     ]
+    },
+    {
+     "text": "Olemme hyvin varmoja, että luku on valtakunnallista tasoa alempi, koska vaihteluväli on kapea ja selvästi alle 82 %:n.",
+     "cites": [
+      "det_screen_breast"
+     ]
+    },
+    {
+     "text": "Suosittelemme kohdennettua tekstiviesti- tai kirjemuistutusta kutsutuille, jotka eivät ole palauttaneet näytettä tai varanneet aikaa; kyse on vain suosituksesta, jota ei ole simuloitu.",
+     "cites": [
+      "A-S1"
+     ]
+    },
+    {
+     "text": "Kohdunkaulan (71 %) ja suolen (70 %) seulontaosallistuminen eivät ole poikkeavia; tiedot ulottuvat vain vuoden 2024 loppuun ja koskevat vain havaitsemista, joten myöhempiä vaiheita ei voi arvioida.",
+     "cites": [
+      "det_screen_cervix",
+      "det_screen_colorectal"
+     ]
+    }
+   ]
+  },
+  "91": {
+   "en": [
+    {
+     "text": "No identifiable gap is seen in Åland; cervical screening participation is 80% (interval 78% to 81%) against 73% nationally.",
+     "cites": [
+      "det_screen_cervix"
+     ]
+    },
+    {
+     "text": "We are fairly sure of this for cervical screening, because the interval is narrow and above the national level.",
+     "cites": [
+      "det_screen_cervix"
+     ]
+    },
+    {
+     "text": "The limitation is that this is the only published record, with data to the end of 2024, so other cancers and the referral, diagnosis and treatment steps cannot be judged from public data.",
+     "cites": [
+      "det_screen_cervix"
+     ]
+    }
+   ],
+   "fi": [
+    {
+     "text": "Ahvenanmaalla ei näy tunnistettavaa aukkoa; kohdunkaulasyövän seulontaan osallistuminen on 80 % (vaihteluväli 78–81 %), kun valtakunnallinen taso on 73 %.",
+     "cites": [
+      "det_screen_cervix"
+     ]
+    },
+    {
+     "text": "Tästä voi olla melko varma kohdunkaulan seulonnan osalta, koska vaihteluväli on kapea ja valtakunnallisen tason yläpuolella.",
+     "cites": [
+      "det_screen_cervix"
+     ]
+    },
+    {
+     "text": "Rajoituksena tämä on ainoa julkaistu tieto vuoden 2024 loppuun asti, joten muita syöpiä sekä lähete-, diagnoosi- ja hoitovaihetta ei voi arvioida julkisista tiedoista.",
+     "cites": [
+      "det_screen_cervix"
+     ]
+    }
+   ]
+  },
+  "HUS": {
+   "en": [
+    {
+     "text": "The most important gap in HUS specialist care is at the treatment step: the oncology queue is 54 days of referral inflow (interval 48 to 62 days) against 19 days nationally.",
+     "cites": [
+      "treat_onc_wait"
+     ]
+    },
+    {
+     "text": "We are very sure it is above the national level, because the whole interval lies well above 19 days.",
+     "cites": [
+      "treat_onc_wait"
+     ]
+    },
+    {
+     "text": "We recommend reserving protected first-treatment slots in oncology, reviewing the cancer treatment queue weekly and naming a pathway coordinator.",
+     "cites": [
+      "A-T1"
+     ]
+    },
+    {
+     "text": "The share of oncology patients waiting over 90 days is low (1%, interval 0% to 1%) and not flagged, so the two measures show different things.",
+     "cites": [
+      "treat_onc_over90"
+     ]
+    },
+    {
+     "text": "Endoscopy, surgery and referral signals are not flagged, and they are not cancer-specific.",
+     "cites": [
+      "dx_endo_over90",
+      "treat_surg_over90",
+      "ref_assess_over90"
+     ]
+    }
+   ],
+   "fi": [
+    {
+     "text": "HUSin erikoissairaanhoidon tärkein aukko on hoitovaiheessa: syöpätautien hoitojono on 54 lähetevirran päivää (vaihteluväli 48–62 päivää), kun valtakunnallinen taso on 19 päivää.",
+     "cites": [
+      "treat_onc_wait"
+     ]
+    },
+    {
+     "text": "Olemme hyvin varmoja, että luku ylittää valtakunnallisen tason, koska koko vaihteluväli on selvästi yli 19 päivän.",
+     "cites": [
+      "treat_onc_wait"
+     ]
+    },
+    {
+     "text": "Suosittelemme varaamaan syöpätautien yksikköön suojatut ensihoidon aloitusajat, käymään hoitojonon läpi viikoittain ja nimeämään hoitopolun koordinaattorin.",
+     "cites": [
+      "A-T1"
+     ]
+    },
+    {
+     "text": "Yli 90 vrk odottaneiden syöpäpotilaiden osuus on pieni (1 %, vaihteluväli 0–1 %) eikä poikkeava, joten nämä kaksi mittaria kuvaavat eri asioita.",
+     "cites": [
+      "treat_onc_over90"
+     ]
+    },
+    {
+     "text": "Tähystys-, kirurgia- ja lähetesignaalit eivät ole poikkeavia, eivätkä ne ole syöpäkohtaisia.",
+     "cites": [
+      "dx_endo_over90",
+      "treat_surg_over90",
+      "ref_assess_over90"
+     ]
+    }
+   ]
+  }
+ }
+}

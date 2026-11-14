@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Equal Care Across Finland – county pathway twin</title>
+<style>
+:root{--ink:#1c2430;--mut:#5d6878;--line:#dfe3e8;--bg:#f4f5f7;--pan:#fff;--gap:#c8372d;--watch:#e0a030;--ok:#4f9d7c;--unid:#aab1bb;--none:#e9ecef;--m3:#6b5fb5;--m4:#0e7c86;--nat:#7a8594}
+*{box-sizing:border-box}body{margin:0;font:14px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--ink);background:var(--bg)}
+header{background:var(--ink);color:#fff;padding:12px 20px;display:flex;gap:18px;align-items:center;flex-wrap:wrap;position:sticky;top:0;z-index:5}
+header h1{font-size:18px;margin:0;font-weight:650}header .sub{font-size:12px;opacity:.8}
+.ctl{display:flex;gap:10px;align-items:center;margin-left:auto;flex-wrap:wrap}
+button{font:inherit;border:1px solid var(--line);background:#fff;border-radius:6px;padding:5px 11px;cursor:pointer;color:var(--ink)}
+button.on{background:var(--ink);color:#fff;border-color:var(--ink)}header button{border-color:#fff3}
+#play{background:#fff;font-weight:650;min-width:84px}#slider{width:340px}#date{font-variant-numeric:tabular-nums;font-weight:650;font-size:16px;min-width:92px}
+main{padding:14px 20px 40px;max-width:1900px;margin:auto;display:grid;gap:14px}
+.row{display:grid;gap:14px}.r1{grid-template-columns:minmax(380px,460px) 1fr}.r2{grid-template-columns:1fr 1fr}.r3{grid-template-columns:1.25fr 1fr}
+@media(max-width:1100px){.r1,.r2,.r3{grid-template-columns:1fr}}
+.pan{background:var(--pan);border:1px solid var(--line);border-radius:10px;padding:14px 16px;min-width:0}
+h2{font-size:15px;margin:0 0 2px}h3{font-size:13px;margin:12px 0 4px}.cap{color:var(--mut);font-size:12.5px;margin:2px 0 8px}
+.chip{display:inline-block;border-radius:10px;padding:0 7px;font-size:11.5px;border:1px solid var(--line);background:#f3f5f7;color:var(--mut);margin:0 2px 2px 0;cursor:pointer;white-space:nowrap}
+.st{display:inline-block;border-radius:4px;padding:0 7px;font-size:12px;font-weight:650;color:#fff;white-space:nowrap}
+.st.g{background:var(--gap)}.st.w{background:var(--watch);color:#3a2800}.st.o{background:var(--ok)}.st.u{background:repeating-linear-gradient(45deg,#aab1bb 0 4px,#c9ced5 4px 8px);color:#222}.st.s,.st.n,.st.x{background:var(--none);color:var(--mut);border:1px dashed #b5bcc6}
+.path{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin:8px 0 4px}
+.stepb{position:relative;border-radius:8px;padding:8px 10px;color:#fff;cursor:pointer;min-height:58px;border:2px solid transparent}
+.stepb.sel{border-color:var(--ink)}.stepb b{display:block;font-size:13px}.stepb span{font-size:12px}
+.stepb:not(:last-child)::after{content:"→";position:absolute;right:-16px;top:16px;color:var(--mut);font-size:16px}
+.stepb.g{background:var(--gap)}.stepb.w{background:var(--watch);color:#3a2800}.stepb.o{background:var(--ok)}.stepb.u{background:repeating-linear-gradient(45deg,#aab1bb 0 5px,#c3c8cf 5px 10px);color:#1c2430}.stepb.x,.stepb.s,.stepb.n{background:var(--none);color:var(--mut);border:2px dashed #b5bcc6}
+table{border-collapse:collapse;width:100%;font-size:12.5px}th,td{text-align:left;padding:4px 6px;border-bottom:1px solid var(--line);vertical-align:top}th{color:var(--mut);font-weight:600;font-size:11.5px}
+td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+.rec{border:1px solid var(--line);border-left:5px solid var(--gap);border-radius:8px;padding:9px 12px;margin:8px 0;background:#fffdfc}
+.rec.w{border-left-color:var(--watch)}.rec.q{border-left-color:var(--unid)}
+.rec .flow{font-size:12px;color:var(--mut);margin-bottom:3px}.rec .act{font-weight:650;font-size:14.5px;margin:2px 0 6px}
+.rec dl{display:grid;grid-template-columns:118px 1fr;gap:2px 10px;margin:0;font-size:12.5px}.rec dt{color:var(--mut)}.rec dd{margin:0}
+.brief{background:#f3f6fa;border:1px solid #d9e1ea;border-radius:8px;padding:9px 12px;margin:8px 0;font-size:13.5px}
+.brief p{margin:0 0 5px}.brief .tag{font-size:11.5px;color:var(--mut)}
+svg text{font-family:inherit}.legend{display:flex;gap:10px;flex-wrap:wrap;font-size:12px;color:var(--mut);margin-top:4px;align-items:center}
+.sw{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-2px;margin-right:4px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0}
+.big{font-size:26px;font-weight:700;font-variant-numeric:tabular-nums}.kpis{display:flex;gap:22px;margin:4px 0 6px}.kpis div span{display:block;font-size:11.5px;color:var(--mut)}
+.ne{color:var(--mut);font-style:italic}.win{font-weight:700}.note{font-size:12px;color:var(--mut)}
+#srcpop{position:fixed;right:18px;bottom:18px;max-width:520px;background:#fff;border:1px solid var(--ink);border-radius:8px;padding:10px 14px;box-shadow:0 6px 24px #0003;display:none;z-index:9;font-size:13px}
+#capbar{display:none}
+body.film header,body.film .pan,body.film #foot{display:none}
+body.film{background:#fff;overflow:hidden}body.film main{padding:18px 40px;max-width:none;display:block}
+body.film .pan.show{display:block;border:none;padding:0}
+body.film .row{display:block}body.film #lanes{display:grid;grid-template-columns:1fr 1fr;gap:30px}
+body.film #capbar{display:block;position:fixed;left:0;right:0;bottom:0;background:var(--ink);color:#fff;font-size:34px;line-height:1.25;padding:20px 48px;min-height:128px;font-weight:550}
+body.film #filmhead{display:flex}#filmhead{display:none;justify-content:space-between;align-items:baseline;font-size:26px;font-weight:700;margin-bottom:6px}
+#filmhead small{font-size:20px;color:var(--mut);font-weight:500}
+body.view header .ctl{display:none}
+</style></head><body>
+<header><div><h1 id="title">Equal Care Across Finland — county pathway twin</h1>
+<div class="sub" id="subt">A twin is one wellbeing services county, never a patient. Public aggregate data only. Replay shows only what had been published by each date.</div></div>
+<div class="ctl"><button id="play">▶ Play</button><input type="range" id="slider" min="0" value="0"><span id="date"></span>
+<button id="lang">FI</button></div></header>
+<main>
+<div id="filmhead"><span id="fh1"></span><small id="fh2"></small></div>
+<div class="row r1">
+ <section class="pan" id="p-map"><h2 id="mapT"></h2><div class="cap" id="mapC"></div>
+  <div class="tabs" id="stepTabs"></div><svg id="map" viewBox="0 -8 360 620" style="width:100%;max-height:640px"></svg>
+  <div class="legend" id="legend"></div></section>
+ <section class="pan" id="p-card"><div id="card"></div></section>
+</div>
+<div class="row"><section class="pan" id="p-pol"><h2 id="polT"></h2><div class="cap" id="polC"></div><div class="tabs" id="polTabs"></div>
+ <div class="row r2" id="lanes"></div><div id="series"></div></section></div>
+<div class="row r3">
+ <section class="pan" id="p-score"><h2 id="scT"></h2><div class="cap" id="scC"></div><div id="score"></div></section>
+ <section class="pan" id="p-m2"><h2 id="m2T"></h2><div class="cap" id="m2C"></div><div id="m2"></div></section>
+</div>
+<div class="row r3">
+ <section class="pan" id="p-ctrl"><h2>Controls, baselines and limits</h2><div id="ctrl"></div></section>
+ <section class="pan" id="p-lens"><h2>Model 1: the six equality lenses</h2><div id="lens"></div></section>
+</div>
+<section class="pan" id="p-src"><h2>Sources</h2><div class="cap">Every claim on this page points to one of these. Papers are published results, not Finnish county observations.</div><div id="src"></div></section>
+<div id="foot" class="note">Counterfactuals (Models 3 and 4) read "had this been in place over these years"; they are not forecasts of 2028 or 2035. Runs: <span id="runs"></span></div>
+</main><div id="srcpop"></div><div id="capbar"></div>
+<script>
+const D=/*__DATA__*/null;
+const Q=new URLSearchParams(location.search);
+const S={t:D.months.length-1,county:Q.get('county')||'14',step:Q.get('step')||'all',sig:Q.get('sig')||'ref_assess_over90',lang:Q.get('lang')||'en',play:false};
+if(Q.get('t'))S.t=+Q.get('t');
+const STEPS=['detection','referral','diagnosis','treatment'];
+const STEPSIG={detection:['det_screen_breast','det_screen_cervix','det_screen_colorectal'],referral:['ref_assess_over90','ref_over21'],diagnosis:['dx_endo_over90'],treatment:['treat_onc_wait','treat_onc_over90','treat_surg_over90']};
+const JUDGED=[].concat(...STEPS.map(s=>STEPSIG[s]));
+const HUSM=D.counties.HUS.members;
+const TX={en:{detection:'Detection',referral:'Referral',diagnosis:'Diagnosis',treatment:'Treatment start',all:'Any step',g:'gap',w:'watch',o:'no gap seen',u:'cannot be judged',s:'no recent data',n:'not judged',x:'no data','-':'no data',
+ play:'▶ Play',pause:'❚❚ Pause',mapT:'Where is the gap?',mapC:'Each county coloured by its worst signal at the selected pathway step, as known on the replay date. Hatched = too few patients to judge; never read as "fine".',
+ national:'national',level:'Level',interval:'80% interval',status:'Status',through:'Data through',source:'Source',signal:'Signal',step:'Step',
+ brief:'AI briefing',rec:'Recommended action',noGap:'No identifiable gap on this date.',ne:'not estimated',
+ owner:'Who',roadmap:'Roadmap',budget:'Cost',evidence:'Evidence',expected:'Expected change',monitor:'Check',failure:'Could fail if',sure:'How sure',
+ polT:'Model 3 (strategy monitoring) against Model 4 (twin-targeted): same lever, same budget',scT:'Scoreboard: every success factor',m2T:'Model 2: the pathway for the whole country'},
+ fi:{detection:'Havaitseminen',referral:'Lähete',diagnosis:'Diagnoosi',treatment:'Hoidon aloitus',all:'Mikä tahansa vaihe',g:'ero',w:'seurattava',o:'eroa ei havaita',u:'ei voida arvioida',s:'ei tuoretta tietoa',n:'ei arvioida',x:'ei tietoa','-':'ei tietoa',
+ play:'▶ Toista',pause:'❚❚ Tauko',mapT:'Missä ero on?',mapC:'Alueen väri kertoo heikoimman signaalin valitussa hoitopolun vaiheessa toistopäivän tiedoilla. Viivoitettu = liian vähän potilaita arvioitavaksi; ei tarkoita "kunnossa".',
+ national:'koko maa',level:'Taso',interval:'80 %:n väli',status:'Tila',through:'Tiedot asti',source:'Lähde',signal:'Signaali',step:'Vaihe',
+ brief:'Tekoälyn tilannekatsaus',rec:'Suositeltu toimenpide',noGap:'Ei tunnistettavaa eroa tänä päivänä.',ne:'ei arvioitu',
+ owner:'Vastuutaho',roadmap:'Tiekartta',budget:'Kustannus',evidence:'Näyttö',expected:'Odotettu muutos',monitor:'Seuranta',failure:'Voi epäonnistua, jos',sure:'Varmuus',
+ polT:'Malli 3 (strategian seuranta) vastaan malli 4 (kaksosen kohdentama): sama keino, sama budjetti',scT:'Tulostaulu: kaikki menestystekijät',m2T:'Malli 2: koko maan hoitopolku'}};
+const T=k=>(TX[S.lang][k]??TX.en[k]??k);
+const $=id=>document.getElementById(id);
+const el=(h)=>{const d=document.createElement('div');d.innerHTML=h;return d.firstElementChild};
+const cname=c=>D.counties[c]?D.counties[c][S.lang]:c;
+const slabel=s=>D.signals[s]['label_'+S.lang];
+function fmt(sig,v){if(v==null)return '–';const u=D.signals[sig].unit;return u==='days'?Math.round(v)+' d':u==='ratio'?v.toFixed(2):(100*v).toFixed(v<0.1?1:0)+'%'}
+function recOf(sig,c){const r=D.R[sig]||{};if(r[c])return {r:r[c],via:null};if(HUSM.includes(c)&&r.HUS)return {r:r.HUS,via:'HUS'};return null}
+function stAt(sig,c,t){const x=recOf(sig,c);if(!x)return 'x';const s=x.r.st[t];return s==='-'?'x':s}
+const RANK={g:5,w:4,o:3,u:2,s:1,n:0,x:0};
+function stepStatus(step,c,t){let best='x',cs=false,csok=false;for(const s of STEPSIG[step]){const st=stAt(s,c,t);if(RANK[st]>RANK[best])best=st;if(D.signals[s].cancer_specific){cs=true;if(st==='o')csok=true}}
+ if(best==='o'&&cs&&!csok)best='u'; /* a step is never green on non-cancer-specific signals alone */
+ return best}
+function anyStatus(c,t){let best='x';for(const s of STEPS){const st=stepStatus(s,c,t);if(RANK[st]>RANK[best])best=st}return best}
+const COL={g:'var(--gap)',w:'var(--watch)',o:'var(--ok)',u:'url(#hatch)',s:'var(--none)',n:'var(--none)',x:'var(--none)'};
+function cite(ids){return (ids||[]).map(i=>`<span class="chip" data-src="${i}">${i}</span>`).join('')}
+function srcOfSignal(sig){const s=D.signals[sig].source;if(s.includes('jonoryhma'))return 'S02';if(s.includes('eshjono'))return 'S01';if(s.includes('3621'))return 'S03';if(s.includes('3620'))return 'S04';if(s.includes('6103'))return 'S05';return 'S01'}
+
+function drawMap(){
+ $('mapT').textContent=T('mapT');$('mapC').textContent=T('mapC');
+ const tabs=$('stepTabs');tabs.innerHTML='';
+ for(const s of ['all',...STEPS]){const b=el(`<button class="${S.step===s?'on':''}">${T(s)}</button>`);b.onclick=()=>{S.step=s;render()};tabs.appendChild(b)}
+ let h='<defs><pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#c9ced5"/><rect width="3" height="6" fill="#aab1bb"/></pattern></defs>';
+ const lab=[];
+ for(const c in D.paths){const p=D.paths[c];const st=c==='91'?'x':(S.step==='all'?anyStatus(c,S.t):stepStatus(S.step,c,S.t));
+  const sel=c===S.county||(S.county==='HUS'&&HUSM.includes(c));
+  h+=`<path d="${p.d}" fill="${COL[st]}" stroke="${sel?'#1c2430':'#fff'}" stroke-width="${sel?2.2:0.8}" data-c="${c}" style="cursor:pointer"><title>${cname(c)}: ${T(st)}</title></path>`;
+  if(c===S.county)lab.push(`<text x="${p.cx}" y="${p.cy+3}" font-size="9.5" text-anchor="middle" fill="#1c2430" stroke="#fff" stroke-width="2.5" paint-order="stroke" font-weight="700" pointer-events="none">${cname(c)}</text>`)}
+ const selp=D.paths[S.county];if(selp)h+=`<path d="${selp.d}" fill="none" stroke="#1c2430" stroke-width="2.2" pointer-events="none"/>`;
+ $('map').innerHTML=h+lab.join('');
+ $('map').querySelectorAll('path[data-c]').forEach(p=>p.onclick=()=>{S.county=p.dataset.c;render()});
+ $('legend').innerHTML=['g','w','o','u','x'].map(k=>`<span><span class="sw" style="background:${k==='u'?'repeating-linear-gradient(45deg,#aab1bb 0 3px,#c9ced5 3px 6px)':COL[k]}"></span>${T(k)}</span>`).join('')+`<span class="note">threshold origin: model (not an official target), except screening 80% (strategy)</span>`;
+}
+function briefingAt(c,t){const keys=Object.keys(D.briefings).sort();let k=null;for(const x of keys)if(x<=D.months[t])k=x;if(!k)return null;const b=D.briefings[k][c];return b?{k,b}:null}
+function drawCard(){
+ const c=S.county,t=S.t;let h=`<h2>${cname(c)} <span class="note">· ${D.months[t]}</span></h2><div class="cap">${S.lang==='en'?'What the county twin knew on this date: where the gap is, how sure we are, and what to do.':'Mitä aluekaksonen tiesi tänä päivänä: missä ero on, kuinka varmaa se on ja mitä tehdä.'}</div>`;
+ h+='<div class="path">'+STEPS.map(s=>{const st=stepStatus(s,c,t);return `<div class="stepb ${st} ${S.step===s?'sel':''}" data-step="${s}"><b>${T(s)}</b><span>${T(st)}</span></div>`}).join('')+'</div>';
+ const br=briefingAt(c,t);
+ if(br){h+=`<div class="brief"><div class="tag">${T('brief')} · ${S.lang==='en'?'written from the records published by':'kirjoitettu tiedoista, jotka oli julkaistu'} ${br.k} · ${D.briefing_meta.llm||''}</div>`+br.b[S.lang].map(s=>`<p>${s.text} ${cite(s.cites.map(x=>D.signals[x]?srcOfSignal(x):x))}</p>`).join('')+'</div>'}
+ else h+=`<div class="brief"><div class="tag">${T('brief')}</div><p class="ne">${S.lang==='en'?'No stored briefing for this county on or before this date (briefings start 2021-03).':'Tälle alueelle ei ole tallennettua katsausta tältä päivältä (katsaukset alkavat 2021-03).'}</p></div>`;
+ let recs='',rows='',unid=[];
+ for(const step of STEPS)for(const sig of STEPSIG[step]){const x=recOf(sig,c);const cfg=D.signals[sig];const st=stAt(sig,c,t);
+  if(!x||x.r.lv[t]==null){rows+=`<tr><td>${T(step)}</td><td>${slabel(sig)}</td><td colspan="3" class="ne">${T('ne')}: ${S.lang==='en'?'no public data for this county':'ei julkista tietoa tältä alueelta'}</td><td><span class="st x">${T('x')}</span></td><td></td><td>${cite([srcOfSignal(sig)])}</td></tr>`;if(cfg.cancer_specific&&step==='treatment')unid.push(sig);continue}
+  const r=x.r;const via=x.via?` <span class="note">(${S.lang==='en'?'reported for HUS as a whole':'raportoitu koko HUSista'})</span>`:'';
+  rows+=`<tr><td>${T(step)}</td><td>${slabel(sig)}${via}</td><td class="num"><b>${fmt(sig,r.lv[t])}</b></td><td class="num">${fmt(sig,r.lo[t])} – ${fmt(sig,r.hi[t])}</td><td class="num">${fmt(sig,r.rf[t])}</td><td><span class="st ${st}">${T(st)}</span></td><td class="num">${r.dt[t]||''}</td><td>${cite([srcOfSignal(sig)])}</td></tr>`;
+  if(st==='u'&&cfg.cancer_specific&&step==='treatment')unid.push(sig);
+  if(st==='g'||st==='w'){const a=D.actions[sig.startsWith('det_screen')?'det_screen':sig];if(!a)continue;const L=S.lang;
+   const tgt=cfg.target?` · ${S.lang==='en'?'strategy target':'strategian tavoite'} ${fmt(sig,cfg.target)}`:'';
+   recs+=`<div class="rec ${st}"><div class="flow"><span class="st ${st}">${T(st)}</span> → <b>${T(step)}</b> → ${slabel(sig)}</div>
+   <div class="act">${a['action_'+L]}</div><dl>
+   <dt>${T('sure')}</dt><dd><b>${fmt(sig,r.lv[t])}</b> (${fmt(sig,r.lo[t])} – ${fmt(sig,r.hi[t])}) vs ${T('national')} ${fmt(sig,r.rf[t])}; P(gap) ${r.p[t]}${tgt}; ${S.lang==='en'?'threshold origin':'kynnyksen alkuperä'}: ${cfg.delta_origin}; ${cfg.cancer_specific?'':'<b>'+(S.lang==='en'?'not cancer-specific':'ei syöpäkohtainen')+'</b>; '}${S.lang==='en'?'data through':'tiedot asti'} ${r.dt[t]} ${cite([srcOfSignal(sig)])}</dd>
+   <dt>${T('owner')}</dt><dd>${a['owner_'+L]}</dd>
+   <dt>${T('roadmap')}</dt><dd>${a.roadmap_en} ${cite(a.sources)}</dd>
+   <dt>${T('budget')}</dt><dd>${a['budget_'+L]}</dd>
+   <dt>${T('evidence')}</dt><dd>${cite(a.evidence)}</dd>
+   <dt>${T('expected')}</dt><dd>${a['expected_'+L]}</dd>
+   <dt>${T('monitor')}</dt><dd>${a['monitor_'+L]}</dd>
+   <dt>${T('failure')}</dt><dd>${a['failure_'+L]}</dd></dl></div>`}}
+ if(!recs)recs=`<p><span class="st o">${T('noGap')}</span></p>`;
+ if(unid.length){const a=D.actions.data_gap,L=S.lang;recs+=`<div class="rec q"><div class="flow"><span class="st u">${T('u')}</span> → <b>${T('treatment')}</b> → ${unid.map(slabel).join('; ')}</div><div class="act">${a['action_'+L]}</div><dl><dt>${T('owner')}</dt><dd>${a['owner_'+L]}</dd><dt>${T('roadmap')}</dt><dd>${a.roadmap_en} ${cite(a.sources)}</dd><dt>${T('budget')}</dt><dd>${a['budget_'+L]}</dd><dt>${T('evidence')}</dt><dd>${cite(a.evidence)}</dd></dl></div>`}
+ h+=`<h3>${T('rec')}</h3>`+recs;
+ h+=`<h3>${S.lang==='en'?'All signals for this county':'Alueen kaikki signaalit'}</h3><table><tr><th>${T('step')}</th><th>${T('signal')}</th><th>${T('level')}</th><th>${T('interval')}</th><th>${T('national')}</th><th>${T('status')}</th><th>${T('through')}</th><th>${T('source')}</th></tr>${rows}</table>`;
+ const cx=D.ctx,cc=HUSM.includes(c)||c==='HUS'?null:c;
+ h+=`<p class="note"><b>${S.lang==='en'?'Not estimated for any county (no public aggregate data)':'Ei arvioitu millekään alueelle (ei julkista aggregaattitietoa)'}:</b> ${S.lang==='en'?'measured days from referral to diagnosis and from diagnosis to first treatment by cancer; stage at diagnosis (clinical notifications cover about 40% of cases':'mitatut päivät lähetteestä diagnoosiin ja diagnoosista ensihoitoon syövittäin; levinneisyys diagnoosihetkellä (kliiniset ilmoitukset kattavat noin 40 % tapauksista'} ${cite(['S10'])}); ${S.lang==='en'?'survival for lung, pancreas and liver cancer; cancer mortality; care experience (NPS, PROM); trial participation.':'keuhko-, haima- ja maksasyövän elossaolo; syöpäkuolleisuus; hoitokokemus (NPS, PROM); tutkimuksiin osallistuminen.'}`;
+ if(cc&&cx.pc_continuity_coci.v[cc]!=null)h+=` ${S.lang==='en'?'Context':'Tausta'}: ${S.lang==='en'?'continuity of care with a GP (COCI)':'hoidon jatkuvuus (COCI)'} ${cx.pc_continuity_coci.v[cc]} (${cx.pc_continuity_coci.period.slice(0,4)}) ${cite(['S08'])} — ${S.lang==='en'?'roadmap 2.5.1 named-GP: effect on cancer delay not estimated':'tiekartan 2.5.1 omalääkäri: vaikutusta syöpäviiveeseen ei arvioitu'} ${cite(['E09'])}.`;
+ h+='</p>';$('card').innerHTML=h;
+ $('card').querySelectorAll('.stepb').forEach(b=>b.onclick=()=>{S.step=b.dataset.step;render()});
+}
+const PM0=D.months.indexOf(D.card.months[0]);
+function drawPolicy(){
+ $('polT').textContent=T('polT');
+ const sig=S.sig,cs=D.card.signals[sig],n=D.card.months.length,pt=Math.max(-1,Math.min(n-1,S.t-PM0));
+ $('polC').innerHTML=`Counterfactual on history: had ${D.card.budget.K} county pilot slots of the roadmap's pathway lever (2.5.2 / 3.1.2) been available from 2021. Model 3 re-decides once a year from annual figures two years old; Model 4 re-decides monthly from the twin's records. Pink cells = months the county truly had a gap (judged in hindsight, shown only up to the playhead). Bars = months with an active pilot slot.`;
+ const tabs=$('polTabs');tabs.innerHTML='';for(const s of Object.keys(D.card.signals)){const b=el(`<button class="${s===sig?'on':''}">${T(D.signals[s].step)}: ${slabel(s)}</button>`);b.onclick=()=>{S.sig=s;render()};tabs.appendChild(b)}
+ const cnt=Object.keys(cs.truth).map(c=>[c,cs.truth[c].gap.reduce((a,b)=>a+b,0)+(cs.active.model3[c]?1:0)+(cs.active.model4[c]?1:0)]).filter(x=>x[1]>0).sort((a,b)=>b[1]-a[1]).map(x=>x[0]);
+ const W=860,LH=17,L0=148,H=cnt.length*LH+44,cw=(W-L0-8)/n;const lanes=$('lanes');lanes.innerHTML='';if(Q.get('lane'))lanes.style.cssText='display:grid;grid-template-columns:1fr';
+ for(const [m,name,col] of [['model3','Model 3 · strategy monitoring (annual, data two years old)','var(--m3)'],['model4','Model 4 · twin-targeted (monthly, 6-week lag)','var(--m4)']].filter(x=>!Q.get('lane')||x[0]===Q.get('lane'))){
+  let g=0,cv=0,used=0,svg='';
+  cnt.forEach((c,i)=>{const y=22+i*LH;const tr=cs.truth[c].gap,ac=cs.active[m][c]||[];
+   svg+=`<text x="${L0-6}" y="${y+12}" font-size="11.5" text-anchor="end" fill="${c===S.county?'#1c2430':'#5d6878'}" font-weight="${c===S.county?700:400}" data-c="${c}" style="cursor:pointer">${D.counties[c][S.lang].split(' (')[0]}</text>`;
+   for(let k=0;k<n;k++){const x=L0+k*cw;if(k<=pt&&tr[k]){svg+=`<rect x="${x}" y="${y}" width="${cw+.3}" height="${LH-3}" fill="#f3c1bb"/>`;g++}
+    if(k<=pt&&ac[k]){svg+=`<rect x="${x}" y="${y+4}" width="${cw+.3}" height="${LH-11}" fill="${col}"/>`;used++;if(tr[k])cv++}}});
+  for(let y=2021;y<=2026;y++){const x=L0+(y-2021)*12*cw;svg+=`<line x1="${x}" x2="${x}" y1="14" y2="${H-18}" stroke="#dfe3e8"/><text x="${x+3}" y="${H-5}" font-size="11" fill="#5d6878">${y}</text>`}
+  if(pt>=0)svg+=`<line x1="${L0+(pt+1)*cw}" x2="${L0+(pt+1)*cw}" y1="8" y2="${H-18}" stroke="#1c2430" stroke-width="1.5"/>`;
+  const fin=cs[m];
+  lanes.appendChild(el(`<div><h3 style="color:${col};margin-top:4px">${name}</h3><div class="kpis"><div><span>gap-months reached so far</span><b class="big" style="color:${col}">${g?Math.round(100*cv/g):0}%</b> <span style="display:inline">${cv} of ${g}</span></div><div><span>slot-months used so far</span><b class="big">${used}</b></div><div><span>full period: coverage · precision</span><b class="big">${Math.round(100*fin.coverage)}% · ${Math.round(100*fin.precision)}%</b></div></div><svg viewBox="0 0 ${W} ${H}" style="width:100%">${svg}</svg></div>`))}
+ lanes.querySelectorAll('text[data-c]').forEach(p=>p.onclick=()=>{S.county=p.dataset.c;render()});
+ const d3=cs.model4_minus_model3_coverage,df=cs.model4_minus_model3fast_coverage;
+ lanes.appendChild(el(`<div style="grid-column:1/-1" class="note"><span class="sw" style="background:#f3c1bb"></span>true gap-month (hindsight) <span class="sw" style="background:var(--m3);margin-left:10px"></span>Model 3 slot <span class="sw" style="background:var(--m4);margin-left:10px"></span>Model 4 slot · Coverage difference Model 4 − Model 3: <b>${(100*d3.point).toFixed(0)} points</b> (80% bootstrap interval ${(100*d3.lo80).toFixed(0)} to ${(100*d3.hi80).toFixed(0)}); against a Model 3 with data only one year old: ${(100*df.point).toFixed(0)} (${(100*df.lo80).toFixed(0)} to ${(100*df.hi80).toFixed(0)}). ${d3.lo80>0?'':'<b>Not distinguishable from a tie on this signal.</b>'}</div>`));
+ drawSeries();
+}
+function drawSeries(){
+ const sig=S.sig,c=S.county,x=recOf(sig,c),W=1760,H=250,L=58,R=20,Tp=16,B=26;
+ if(!x){$('series').innerHTML=`<p class="ne">${cname(c)}: ${slabel(sig)} — ${T('ne')}</p>`;return}
+ const key=x.via||c,r=x.r,ser=(D.S[sig]||{})[key],fc=(D.F[sig]||{})[key]||{period:[],pred:[],hit:[]},t=S.t;
+ const t0=new Date(D.months[0]).getTime(),t1=new Date(D.months[D.months.length-1]).getTime()+60*864e5;
+ const X=d=>L+(new Date(d).getTime()-t0)/(t1-t0)*(W-L-R);
+ let mx=0;for(let i=0;i<D.months.length;i++){for(const k of ['hi','th'])if(r[k][i]!=null)mx=Math.max(mx,r[k][i])}
+ if(ser)ser.obs.forEach((v,i)=>{if(ser.period[i]>=D.months[0])mx=Math.max(mx,v)});
+ const unit=D.signals[sig].unit;mx=unit==='days'?Math.min(mx*1.08,400):Math.min(1,mx*1.08);const Y=v=>Tp+(1-Math.min(v,mx)/mx)*(H-Tp-B);
+ let s='';for(let k=0;k<=4;k++){const v=mx*k/4;s+=`<line x1="${L}" x2="${W-R}" y1="${Y(v)}" y2="${Y(v)}" stroke="#eef0f3"/><text x="${L-6}" y="${Y(v)+4}" font-size="11" text-anchor="end" fill="#5d6878">${fmt(sig,v)}</text>`}
+ for(let y=2016;y<=2026;y++)s+=`<text x="${X(y+'-01-01')}" y="${H-6}" font-size="11" fill="#5d6878">${y}</text>`;
+ let band='',band2='',line='',ref='',thr='';
+ for(let i=0;i<=t;i++){if(r.lv[i]==null)continue;const xx=X(D.months[i]);band+=`${band?'L':'M'}${xx},${Y(r.hi[i])}`;band2=`L${xx},${Y(r.lo[i])}`+band2;line+=`${line?'L':'M'}${xx},${Y(r.lv[i])}`;if(r.rf[i]!=null){ref+=`${ref?'L':'M'}${xx},${Y(r.rf[i])}`;thr+=`${thr?'L':'M'}${xx},${Y(r.th[i])}`}}
+ if(band)s+=`<path d="${band}${band2}Z" fill="#0e7c8622"/>`;
+ if(ref)s+=`<path d="${ref}" fill="none" stroke="var(--nat)" stroke-width="1.3"/><path d="${thr}" fill="none" stroke="var(--gap)" stroke-width="1" stroke-dasharray="2 4"/>`;
+ const dtNow=r.dt[t];
+ if(ser)ser.period.forEach((p,i)=>{if(p>=D.months[0]&&dtNow&&p<=dtNow)s+=`<circle cx="${X(p)}" cy="${Y(ser.obs[i])}" r="2.4" fill="#1c2430" opacity=".45"/>`});
+ if(line)s+=`<path d="${line}" fill="none" stroke="var(--m4)" stroke-width="2.4"/>`;
+ let nf=-1;fc.period.forEach((p,i)=>{if(dtNow&&p<=dtNow&&p>=D.months[0]){if(new Date(dtNow)-new Date(p)<760*864e5)s+=`<text x="${X(p)}" y="${Tp+8}" font-size="10" text-anchor="middle" fill="${fc.hit[i]?'#4f9d7c':'#c8372d'}">${fc.hit[i]?'✓':'✗'}</text>`}else if(nf<0&&dtNow&&p>dtNow)nf=i});
+ if(nf>=0&&r.lv[t]!=null){const xa=X(dtNow),xb=X(fc.period[nf]);s+=`<path d="M${xa},${Y(r.hi[t])}L${xb},${Y(Math.min(mx,r.hi[t]*1.0))}L${xb},${Y(r.lo[t])}L${xa},${Y(r.lo[t])}Z" fill="#0e7c8614"/><line x1="${xa}" x2="${xb}" y1="${Y(r.lv[t])}" y2="${Y(fc.pred[nf])}" stroke="var(--m4)" stroke-width="2.4" stroke-dasharray="6 5"/><circle cx="${xb}" cy="${Y(fc.pred[nf])}" r="4" fill="#fff" stroke="var(--m4)" stroke-width="2"/><text x="${xb+8}" y="${Y(fc.pred[nf])+4}" font-size="11.5" fill="var(--m4)">predicted next: ${fmt(sig,fc.pred[nf])}</text>`}
+ const li=(()=>{for(let i=t;i>=0;i--)if(r.lv[i]!=null)return i;return -1})();
+ if(li>=0){s+=`<text x="${X(D.months[li])-6}" y="${Y(r.lv[li])-8}" font-size="12" text-anchor="end" font-weight="700" fill="var(--m4)">${cname(key).split(' (')[0]} ${fmt(sig,r.lv[li])}</text>`;if(r.rf[li]!=null)s+=`<text x="${X(D.months[li])-6}" y="${Y(r.rf[li])+14}" font-size="11.5" text-anchor="end" fill="var(--nat)">${T('national')} ${fmt(sig,r.rf[li])}</text>`}
+ s+=`<line x1="${X(D.months[t])}" x2="${X(D.months[t])}" y1="${Tp}" y2="${H-B}" stroke="#1c2430" stroke-width="1.2"/>`;
+ $('series').innerHTML=`<h3>${cname(key)} · ${slabel(sig)}</h3><svg viewBox="0 0 ${W} ${H}" style="width:100%">${s}</svg><div class="cap">Solid line and band: the twin's level and 80% interval, as it stood on each replay date (fitted). Dashed with open circle: its prediction for the next period it had not seen. ✓ / ✗ along the top: whether each past prediction's 80% interval held the value later published (last two years). Dots: published values. Grey line: national level; red dotted: gap threshold (origin: model). ${D.signals[sig].definition} ${cite([srcOfSignal(sig)])}</div>`;
+}
+function drawScore(){
+ $('scT').textContent=T('scT');
+ $('scC').textContent='Models 3 and 4 compared on what public data can score. An empty cell is never "on target": where nothing can be estimated, the cell says so. Losses and ties are listed beside the wins.';
+ const c=D.card.signals,pc=(v)=>Math.round(100*v)+'%',sc=D.screening;
+ const row=(sig)=>{const s=c[sig],d=s.model4_minus_model3_coverage;const verdict=d.lo80>0?'Model 4 ahead':d.hi80<0?'Model 3 ahead':'tie (interval includes 0)';
+  return [`${pc(s.model3.coverage)} of ${s.model3.true_gap_months} gap-months reached; precision ${pc(s.model3.precision)}`,`${pc(s.model4.coverage)} reached; precision ${pc(s.model4.precision)}`,verdict]};
+ const ne=`<span class="ne">not estimated</span>`;const a=row('treat_onc_wait'),b=row('ref_assess_over90'),e=row('dx_endo_over90');
+ const sce=c.treat_onc_wait;const hi=Object.keys(sce.model3.scenario_excess_queue_days_removed)[2];
+ const R=[
+ ['3','Patients start treatment within target times','Cancer-specific target times are to be defined by 2028 (roadmap 3.1.2) '+cite(['S11','S10']),ne+' as measured days. Proxy, oncology queue: '+a[0],'Proxy: '+a[1],a[2]+'. Chronic gaps: an annual review finds them too.'],
+ ['3','…scenario only: excess queue-days removed','E04 relative effect (liver cancer, before/after); zero under E05 '+cite(['E04','E05']),`0 to ${Math.round(sce.model3.scenario_excess_queue_days_removed[hi])} of ${Math.round(sce.model3.scenario_total_excess)}`,`0 to ${Math.round(sce.model4.scenario_excess_queue_days_removed[hi])}`,'Finnish effect not estimated. With zero effect both models achieve nothing.'],
+ ['3','Regional differences known and used (referral handover)','Roadmap 3.2.2, 3.2.3 '+cite(['S11']),b[0],b[1],b[2]+'. Gaps move between counties: monthly re-targeting pays.'],
+ ['3','Regional differences known and used (endoscopy)','Roadmap 3.2.2, 3.2.3',e[0],e[1],e[2]],
+ ['3','Five-year survival, lung / pancreas / liver','+14 / +6 / +14 points to the Sweden–Norway average '+cite(['S10']),ne,ne,'No county-level public data; no stage-valid effect evidence '+cite(['E14','E15'])],
+ ['3','Cancer mortality −10%','From about 13 300 deaths a year '+cite(['S10']),ne,ne,'Not simulated: no lever with a matched endpoint'],
+ ['2','At least 70% diagnosed at stage I–II','Strategy '+cite(['S10']),ne,ne,'Stage notifications cover about 40% of cases; no public county series'],
+ ['2','80% screening participation in every county','Strategy; roadmap 2.4.1 '+cite(['S10','S11']),'not simulated','not simulated',`Observed (${sc.det_screen_breast.data_through.slice(0,4)}): breast ${sc.det_screen_breast.at_target}/${sc.det_screen_breast.n} counties at 80%, cervix ${sc.det_screen_cervix.at_target}/${sc.det_screen_cervix.n}, colorectal ${sc.det_screen_colorectal.at_target}/${sc.det_screen_colorectal.n}. Reminder outreach has no roadmap budget line: recommendation only `+cite(['S03','S04','S05','E12'])],
+ ['2','Preventable cancers −1 000 a year','Strategy',ne,ne,'Context only: daily smoking by education '+cite(['S07'])],
+ ['1','Care experience (NPS > 80), PROM','Strategy',ne,ne,'No public data'],
+ ['4','Clinical trials +10% a year; >10% of patients in trials','Strategy',ne,ne,'No public county data'],
+ ['=','Regional and socioeconomic differences available to services','Strategy, cross-cutting','annual, two years late','monthly, 6-week lag, with intervals','Regional lens estimated; socioeconomic lens only partly (see lenses)']];
+ $('score').innerHTML='<table><tr><th>Goal</th><th>Success factor</th><th>Target and origin</th><th style="color:var(--m3)">Model 3</th><th style="color:var(--m4)">Model 4</th><th>Verdict / note</th></tr>'+R.map(r=>'<tr>'+r.map(x=>`<td>${x}</td>`).join('')+'</tr>').join('')+'</table>';
+}
+function drawM2(){
+ $('m2T').textContent=T('m2T');$('m2C').textContent='National level of one signal per pathway step as the replay knew it, plus referral volume against a year earlier (flow). Solid up to the replay date.';
+ const sigs=['det_screen_breast','ref_assess_over90','dx_endo_over90','treat_onc_wait','ref_volume_yoy'];let h='';const t=S.t;
+ for(const sig of sigs){const r=D.R[sig].FI;const W=560,H=74,L=6,Rm=120;let mx=0,mn=1e9;for(let i=0;i<D.months.length;i++)if(r.lv[i]!=null){mx=Math.max(mx,r.hi[i]);mn=Math.min(mn,r.lo[i])}
+  const pad=(mx-mn)*.1;mx+=pad;mn-=pad;const X=i=>L+i/(D.months.length-1)*(W-L-Rm),Y=v=>6+(1-(v-mn)/(mx-mn))*(H-22);let p='',bd='',bd2='',last=-1;
+  for(let i=0;i<=t;i++)if(r.lv[i]!=null){p+=`${p?'L':'M'}${X(i)},${Y(r.lv[i])}`;bd+=`${bd?'L':'M'}${X(i)},${Y(r.hi[i])}`;bd2=`L${X(i)},${Y(r.lo[i])}`+bd2;last=i}
+  let al='';for(const a of D.alarms)if(a.signal===sig&&a.period>=D.months[0]){const i=D.months.findIndex(m=>m>=a.period);if(i>=0&&i<=t)al+=`<line x1="${X(i)}" x2="${X(i)}" y1="4" y2="${H-16}" stroke="var(--gap)" stroke-dasharray="2 2"/>`}
+  let yrs='';for(let y=2016;y<=2026;y+=2){const i=D.months.indexOf(y+'-01-31');yrs+=`<text x="${X(i)}" y="${H-3}" font-size="9.5" fill="#5d6878">${y}</text>`}
+  h+=`<div style="display:grid;grid-template-columns:150px 1fr;gap:8px;align-items:center;border-bottom:1px solid var(--line)"><div style="font-size:12px"><b>${T(D.signals[sig].step)==D.signals[sig].step?'Flow':T(D.signals[sig].step)}</b><br><span class="note">${slabel(sig)}</span></div><svg viewBox="0 0 ${W} ${H}" style="width:100%">${bd?`<path d="${bd}${bd2}Z" fill="#1c243014"/>`:''}<path d="${p}" fill="none" stroke="#1c2430" stroke-width="1.8"/>${al}${yrs}${last>=0?`<text x="${X(last)+6}" y="${Y(r.lv[last])+4}" font-size="12" font-weight="700">${fmt(sig,r.lv[last])}</text>`:''}</svg></div>`}
+ h+=`<p class="note">Red dashed lines: national surprise alarms (|z| ≥ 3, threshold origin: model). ${cite(['S01','S02','S03'])}</p>`;$('m2').innerHTML=h;
+}
+function drawStatic(){
+ const b=D.baselines.filter(x=>!x.signal.startsWith('ctrl'));const wp=b.filter(x=>x.beats_persistence).length,wt=b.filter(x=>x.beats_trend).length;
+ let h=`<h3>Baselines (one-step-ahead, periods the twin had not seen)</h3><p>The twin beats a straight trend on <b>${wt} of ${b.length}</b> signals and beats persistence (last value) on <b>${wp} of ${b.length}</b>. Where it does not beat persistence, its level is no better than the last published number; its added value there is the interval and the identifiability flag, not the forecast.</p><table><tr><th>Signal</th><th>n</th><th>Twin MAE</th><th>Persistence</th><th>Trend</th><th>80% interval held</th><th>Beats both</th></tr>`+
+ b.map(x=>`<tr><td>${slabel(x.signal)}</td><td class="num">${x.n}</td><td class="num">${fmt(x.signal,x.twin)}</td><td class="num">${fmt(x.signal,x.persistence)}</td><td class="num">${fmt(x.signal,x.trend)}</td><td class="num">${Math.round(100*x.coverage80)}%</td><td>${x.beats_persistence&&x.beats_trend?'✓':'✗ '+(x.beats_persistence?'':'persistence ')+(x.beats_trend?'':'trend')}</td></tr>`).join('')+'</table>';
+ const a20=D.alarms.filter(a=>a.period.startsWith('2020'));
+ h+=`<h3>Controls</h3><p><b>Positive control: failed.</b> The 2020 pandemic dip was ${a20.length?'flagged':'<b>not flagged</b>'} by the national alarm. Referrals in January–April 2020 were 11% below 2019, but THL published only three snapshots a year until 2021 and the year-on-year series is noisy (z = −0.76 against a threshold of 3). Breast screening participation 2020 fell from 81.6% to 80.5% (z = −0.64). With monthly data from 2021 the same test would be sharper; we cannot show that on a known disruption.</p><p><b>Negative control: passed, but weak.</b> Resident population from the same THL cube raised no alarm. It is a pipeline check; we found no strong a-priori series that should stay flat.</p>
+ <h3>Artefact rulebook (signal patterns that indict the data, not the population)</h3><ul style="margin:4px 0;padding-left:18px"><li>Before 2023 the THL figures are hospital-district data mapped onto counties: a break at 2023 is the reform until shown otherwise.</li><li>A stage share that moves together with the stage-unknown share (not used: no public stage series).</li><li>A drop in the newest registry year is registration lag.</li><li>Screening: age-range changes and the colorectal roll-out from 2022 shift participation mechanically.</li><li>Year-to-date referral counts that fall within a year, or numerators above denominators, are dropped (1 row).</li><li>Small counties: fewer than 20 in a queue (or 10 in the oncology queue) is "cannot be judged", never a gap.</li></ul>
+ <h3>Fitted parameters</h3><p class="note">Process variance q and overdispersion φ are re-chosen on every replay date from published data only. Final values: ${Object.entries(D.q_selected).map(([k,v])=>{const f=Object.values(v).pop();return k+' q='+f[0]+' φ='+f[1]+((f[0]===0.3||f[0]===0.0005||f[1]===30)?' <b>(at bound: treat as unestimated)</b>':'')}).join('; ')}.</p>`;
+ $('ctrl').innerHTML=h;
+ const cx=D.ctx,lo=cx.risk_smoking_lowedu.v,hi=cx.risk_smoking_highedu.v;const gaps=Object.keys(lo).filter(c=>c!=='FI'&&lo[c]!=null&&hi[c]!=null).map(c=>[c,lo[c]-hi[c]]).sort((a,b)=>b[1]-a[1]);
+ $('lens').innerHTML=`<table><tr><th>Lens (roadmap pp. 9–25)</th><th>Status</th><th>What public aggregate data shows</th></tr>
+ <tr><td>Regional differences</td><td><span class="st o">estimated</span></td><td>All signals on this page, county against national, with intervals. The roadmap itself reports large regional variation from first symptom to diagnosis and treatment, and distances over 400 km to a central hospital ${cite(['S11','S01','S02'])}</td></tr>
+ <tr><td>Socioeconomic position</td><td><span class="st w">partial</span></td><td>Risk behaviour only: daily smoking, low minus high education, ${cx.risk_smoking_lowedu.period.slice(0,4)}: national ${lo.FI!=null?(lo.FI-hi.FI).toFixed(1):'–'} points; widest in ${gaps.slice(0,3).map(g=>cname(g[0])+' '+g[1].toFixed(1)).join(', ')} ${cite(['S07'])}. Screening by education exists only in a paper using linked data (50.9% vs 77.6%) ${cite(['E11'])}; by county: <span class="ne">not estimated</span>.</td></tr>
+ <tr><td>Older patients</td><td><span class="st x">not estimated</span></td><td>Queue data has no age split.</td></tr>
+ <tr><td>Children and adolescents</td><td><span class="st x">not estimated</span></td><td>Numbers too small for county signals; no public series.</td></tr>
+ <tr><td>Rare cancers and hereditary syndromes</td><td><span class="st x">not estimated</span></td><td>No public aggregate by county.</td></tr>
+ <tr><td>Poor-prognosis cancers</td><td><span class="st x">not estimated</span></td><td>County survival is public only for breast, colon and cervix ${cite(['S06'])}; lung, pancreas, liver: national only.</td></tr></table>
+ <p class="note">Formal equality is everyone getting the same service; de facto equality is the same chance of outcome given need. The gap signals compare each county with the national level; they are not age- or case-mix-adjusted (the public queue data has no such split), which is a stated limit.</p>`;
+ $('src').innerHTML='<table>'+Object.entries(D.sources).map(([k,v])=>`<tr id="src-${k}"><td><b>${k}</b></td><td>${v.kind}</td><td>${v.title}${v.note?' <span class="note">'+v.note+'</span>':''}</td><td><a href="${v.url}" target="_blank" rel="noopener">link</a></td><td class="num">${v.accessed||''}</td></tr>`).join('')+'</table>';
+ $('runs').textContent=Object.values(D.runs).join(' · ');
+}
+function render(){
+ $('slider').max=D.months.length-1;$('slider').value=S.t;$('date').textContent=D.months[S.t];$('play').textContent=S.play?T('pause'):T('play');$('lang').textContent=S.lang==='en'?'FI':'EN';
+ drawMap();drawCard();drawPolicy();drawScore();drawM2();
+ document.querySelectorAll('[data-src]').forEach(c=>c.onclick=e=>{e.stopPropagation();const v=D.sources[c.dataset.src]||Object.values(D.actions).find(a=>a.id===c.dataset.src);const p=$('srcpop');p.style.display='block';p.innerHTML=v?(v.title?`<b>${c.dataset.src}</b> · ${v.title}<br><span class="note">${v.note||''} ${v.accessed?'Accessed '+v.accessed:''}</span><br><a href="${v.url}" target="_blank" rel="noopener">${v.url.slice(0,70)}…</a>`:`<b>${v.id}</b> · ${v.action_en}`):c.dataset.src});
+}
+document.body.onclick=()=>{$('srcpop').style.display='none'};
+$('slider').oninput=e=>{S.t=+e.target.value;render()};
+$('lang').onclick=()=>{S.lang=S.lang==='en'?'fi':'en';render()};
+let timer=null;$('play').onclick=()=>{S.play=!S.play;if(S.play){if(S.t>=D.months.length-1)S.t=PM0-1;timer=setInterval(()=>{if(S.t>=D.months.length-1){S.play=false;clearInterval(timer)}else S.t++;render()},260)}else clearInterval(timer);render()};
+drawStatic();render();
+// film / export modes: ?film=p-map,p-card&zoom=1.2&cap=...&head=...   ?view=model1..4
+const film=Q.get('film');
+if(film){document.body.classList.add('film');film.split(',').forEach(id=>$(id).classList.add('show'));$('capbar').textContent=Q.get('cap')||'';if(!Q.get('cap'))$('capbar').style.display='none';$('fh1').textContent=Q.get('head')||'';$('fh2').textContent=D.months[S.t];
+ const z=+(Q.get('zoom')||1);document.querySelector('main').style.zoom=z;
+ if(film.split(',').length===2){const m=document.querySelector('main');const a=$(film.split(',')[0]),b=$(film.split(',')[1]);const w=el('<div style="display:grid;grid-template-columns:'+(Q.get('cols')||'1fr 1.6fr')+';gap:30px"></div>');m.appendChild(w);w.appendChild(a);w.appendChild(b)}
+ (Q.get('hide')||'').split(',').filter(Boolean).forEach(id=>{const e=$(id);if(e)e.style.display='none'})}
+</script></body></html>

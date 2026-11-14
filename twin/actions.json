@@ -1,0 +1,134 @@
+{
+ "treat_onc_wait": {
+  "id": "A-T1",
+  "step": "treatment",
+  "action_en": "Reserve protected first-treatment slots in oncology and review the cancer treatment queue weekly, with a named pathway coordinator.",
+  "action_fi": "Varataan syöpätautien yksikköön suojatut ensihoidon aloitusajat ja käydään syöpäpotilaiden hoitojono läpi viikoittain; nimetään hoitopolun koordinaattori.",
+  "owner_en": "Head of oncology and the director of hospital services of the county, with the regional cancer centre (FICAN)",
+  "owner_fi": "Hyvinvointialueen syöpätautien ylilääkäri ja sairaalapalvelujen johtaja, alueellisen syöpäkeskuksen (FICAN) kanssa",
+  "roadmap": "3.1.2",
+  "roadmap_en": "Roadmap 3.1.2: care-chain descriptions with cancer-specific access times by 2028; with 3.2.3 procedures for reacting to deviations.",
+  "budget_en": "Funded inside measure 3.1.1: EUR 5 M per year, EUR 25 M over 5 years, shared by 2.5.2, 3.1.2, 3.1.3, 3.1.4 and 4.3.2 (roadmap p. 55). No county share is stated. 3.2.3: EUR 3 M start-up (pp. 61–62).",
+  "budget_fi": "Sisältyy toimenpiteen 3.1.1 rahoitukseen: 5 M€/v, 25 M€/5 v, kattaa myös 2.5.2, 3.1.2, 3.1.3, 3.1.4 ja 4.3.2 (tiekartta s. 55). Aluekohtaista osuutta ei ole ilmoitettu. 3.2.3: 3 M€ käynnistysrahoitus (s. 61–62).",
+  "evidence": [
+   "E04",
+   "E05",
+   "E14"
+  ],
+  "expected_en": "Finnish effect not estimated. Closest published endpoint: referral-to-treatment in one Danish liver-cancer fast track fell from 53.2 to 35.9 days (E04, before/after); Norway saw no break at pathway introduction (E05).",
+  "expected_fi": "Vaikutusta Suomessa ei ole arvioitu. Lähin julkaistu päätetapahtuma: lähetteestä hoitoon -aika lyheni tanskalaisessa maksasyövän nopeutetussa polussa 53,2 päivästä 35,9 päivään (E04, ennen–jälkeen); Norjassa polkujen käyttöönotto ei näkynyt murroksena (E05).",
+  "monitor_en": "Monthly: oncology treatment queue and referrals (THL), plus the county's own referral-to-first-treatment days for cancer patients.",
+  "monitor_fi": "Kuukausittain: syöpätautien hoitojono ja lähetteet (THL) sekä alueen oma lähetteestä ensihoitoon -aika syöpäpotilailla.",
+  "failure_en": "The index may reflect follow-up visits or coding practice, not first treatments; faster in-pathway waits can lengthen waits outside it (E01).",
+  "failure_fi": "Indeksi voi kuvata seurantakäyntejä tai kirjaamiskäytäntöä eikä ensihoitoja; polun sisäinen nopeutuminen voi pidentää odotusta polun ulkopuolella (E01).",
+  "sources": [
+   "S11"
+  ]
+ },
+ "dx_endo_over90": {
+  "id": "A-D1",
+  "step": "diagnosis",
+  "action_en": "Pre-book endoscopy slots for suspected-cancer referrals (two-week track) and triage the endoscopy queue by symptom criteria and FIT result.",
+  "action_fi": "Varataan tähystysaikoja etukäteen syöpäepäilylähetteille (kahden viikon väylä) ja priorisoidaan tähystysjono oirekriteerien ja FIT-tuloksen mukaan.",
+  "owner_en": "Head of the endoscopy / gastroenterology unit and the county's director of diagnostics",
+  "owner_fi": "Endoskopia-/gastroenterologian yksikön ylilääkäri ja hyvinvointialueen diagnostiikan johtaja",
+  "roadmap": "2.5.2",
+  "roadmap_en": "Roadmap 2.5.2: standardised referral criteria and symptom-based pathways for at least the five most common cancers, piloted in the counties; 3.1.2 care chains.",
+  "budget_en": "Included in the funding of measure 3.1.1 (EUR 25 M over 5 years, roadmap pp. 52–53, 55). No county share is stated.",
+  "budget_fi": "Sisältyy toimenpiteen 3.1.1 rahoitukseen (25 M€/5 v, tiekartta s. 52–53, 55). Aluekohtaista osuutta ei ole ilmoitettu.",
+  "evidence": [
+   "E03",
+   "E01",
+   "E05"
+  ],
+  "expected_en": "Finnish effect not estimated: the public queue covers all endoscopy indications. Published: pre-booked slots cut referral-to-diagnosis from 24 to 7–10 days in one Danish head-and-neck programme (E03, before/after).",
+  "expected_fi": "Vaikutusta Suomessa ei ole arvioitu: julkinen jonotieto kattaa kaikki tähystysindikaatiot. Julkaistu: etukäteen varatut ajat lyhensivät lähetteestä diagnoosiin -aikaa 24 päivästä 7–10 päivään tanskalaisessa pään ja kaulan syöpien ohjelmassa (E03, ennen–jälkeen).",
+  "monitor_en": "Monthly: share of the endoscopy queue over 90 days (THL); locally, days from suspected-cancer referral to endoscopy.",
+  "monitor_fi": "Kuukausittain: yli 90 vrk tähystystä odottaneiden osuus (THL); paikallisesti päivät syöpäepäilylähetteestä tähystykseen.",
+  "failure_en": "Non-cancer patients are displaced (E01: +4 days outside the pathway); colorectal screening roll-out raises endoscopy demand at the same time.",
+  "failure_fi": "Muut potilaat siirtyvät jonossa taaksepäin (E01: +4 päivää polun ulkopuolella); suolistosyövän seulonnan laajeneminen lisää samalla tähystystarvetta.",
+  "sources": [
+   "S11"
+  ]
+ },
+ "ref_assess_over90": {
+  "id": "A-R1",
+  "step": "referral",
+  "action_en": "Adopt standardised referral criteria and a symptom-based fast track from primary care, including a route for non-specific but worrying symptoms, with a named coordinator in specialist outpatient care.",
+  "action_fi": "Otetaan käyttöön yhtenäiset lähetekriteerit ja oireperusteinen nopea väylä perusterveydenhuollosta, myös epäspesifeille mutta huolestuttaville oireille; nimetään koordinaattori erikoissairaanhoidon poliklinikalle.",
+  "owner_en": "County director of primary care with the heads of the specialist outpatient clinics",
+  "owner_fi": "Hyvinvointialueen perusterveydenhuollon johtaja ja erikoisalojen poliklinikoiden ylilääkärit",
+  "roadmap": "2.5.2",
+  "roadmap_en": "Roadmap 2.5.2: standardised referral criteria and symptom-based pathways, piloted in the counties (pp. 52–53).",
+  "budget_en": "Included in the funding of measure 3.1.1 (EUR 25 M over 5 years, roadmap p. 55). No county share is stated.",
+  "budget_fi": "Sisältyy toimenpiteen 3.1.1 rahoitukseen (25 M€/5 v, tiekartta s. 55). Aluekohtaista osuutta ei ole ilmoitettu.",
+  "evidence": [
+   "E01",
+   "E08",
+   "E07",
+   "E05"
+  ],
+  "expected_en": "Finnish effect not estimated: the public figure covers all referral reasons. Published: median diagnostic interval 17 days shorter after Danish cancer pathways (E01, before/after).",
+  "expected_fi": "Vaikutusta Suomessa ei ole arvioitu: julkinen tieto kattaa kaikki lähetesyyt. Julkaistu: diagnostinen viive lyheni mediaaniltaan 17 päivää Tanskan syöpäpolkujen jälkeen (E01, ennen–jälkeen).",
+  "monitor_en": "Monthly: share waiting over 90 days for first assessment (THL); locally, who gets onto the fast track by age, area and income (E07).",
+  "monitor_fi": "Kuukausittain: yli 90 vrk hoidon tarpeen arviointia odottaneiden osuus (THL); paikallisesti nopean väylän piiriin pääsy iän, alueen ja tulotason mukaan (E07).",
+  "failure_en": "A fast track can look good while access to it is unequal (E07); Norway saw no break when pathways were introduced (E05).",
+  "failure_fi": "Nopea väylä voi näyttää hyvältä, vaikka sille pääsy on epätasaista (E07); Norjassa polkujen käyttöönotto ei näkynyt murroksena (E05).",
+  "sources": [
+   "S11"
+  ]
+ },
+ "det_screen": {
+  "id": "A-S1",
+  "step": "detection",
+  "action_en": "Send a targeted text or letter reminder to invited people who have not returned a test or booked a visit. Recommendation only, not simulated.",
+  "action_fi": "Lähetetään kohdennettu tekstiviesti- tai kirjemuistutus kutsutuille, jotka eivät ole palauttaneet näytettä tai varanneet aikaa. Vain suositus, ei simuloitu.",
+  "owner_en": "County screening coordinator with the Mass Screening Registry (Finnish Cancer Registry)",
+  "owner_fi": "Hyvinvointialueen seulontakoordinaattori ja Joukkotarkastusrekisteri (Suomen Syöpärekisteri)",
+  "roadmap": "2.4.1",
+  "roadmap_en": "Roadmap 2.4.1 carries the 80% participation indicator (p. 48), but no 2.3/2.4 measure funds reminders. Closest funded lines: 1.3.1 targeted communication (EUR 400 000, p. 33) and 2.4.4 screening pilots (EUR 2.5 M, p. 50).",
+  "budget_en": "No roadmap budget line for reminder outreach. Not simulated.",
+  "budget_fi": "Tiekartassa ei ole määrärahaa muistutuksille. Ei simuloitu.",
+  "evidence": [
+   "E12",
+   "E13",
+   "E10",
+   "E11"
+  ],
+  "expected_en": "County effect not estimated. Published, narrow endpoint: SMS to FIT-kit non-returners raised 30-day return by 10.5 points in a Spanish trial (E12); mailed outreach +2.8 points in a US trial (E13).",
+  "expected_fi": "Aluevaikutusta ei ole arvioitu. Julkaistu, kapea päätetapahtuma: tekstiviesti FIT-näytteen palauttamatta jättäneille nosti 30 päivän palautusta 10,5 prosenttiyksikköä espanjalaisessa kokeessa (E12); postitettu muistutus +2,8 prosenttiyksikköä yhdysvaltalaisessa kokeessa (E13).",
+  "monitor_en": "Annually from the Cancer Registry; locally per invitation round.",
+  "monitor_fi": "Vuosittain Syöpärekisteristä; paikallisesti kutsukierroksittain.",
+  "failure_en": "Trial effects on kit return do not equal a rise in county participation; non-participation repeats (E10) and follows education (E11).",
+  "failure_fi": "Kokeiden vaikutus näytteen palautukseen ei ole sama kuin alueen osallistumisasteen nousu; osallistumattomuus toistuu (E10) ja seuraa koulutustasoa (E11).",
+  "sources": [
+   "S11"
+  ]
+ },
+ "data_gap": {
+  "id": "A-Q1",
+  "step": "all",
+  "action_en": "Report cancer-specific waiting times (referral, diagnosis, first treatment) to the national cancer quality register, so that this county can be seen at all.",
+  "action_fi": "Raportoidaan syöpäkohtaiset odotusajat (lähete, diagnoosi, ensihoito) kansalliseen syövän laaturekisteriin, jotta alueen tilanne ylipäätään näkyy.",
+  "owner_en": "County chief medical officer with THL",
+  "owner_fi": "Hyvinvointialueen johtajaylilääkäri ja THL",
+  "roadmap": "3.2.1",
+  "roadmap_en": "Roadmap 3.2.1: cancer quality register under THL, permanent from 2028; 3.2.2 annual peer review.",
+  "budget_en": "3.2.1: EUR 2.5 M start-up; 3.2.2: EUR 300 000 start-up (roadmap pp. 59–61).",
+  "budget_fi": "3.2.1: 2,5 M€ käynnistysrahoitus; 3.2.2: 300 000 € käynnistysrahoitus (tiekartta s. 59–61).",
+  "evidence": [
+   "E06",
+   "E15"
+  ],
+  "expected_en": "Not an outcome effect: makes the gap measurable. Define start, end and denominator of every interval (E15).",
+  "expected_fi": "Ei tulosvaikutus: tekee eron mitattavaksi. Määritellään jokaisen aikavälin alku, loppu ja nimittäjä (E15).",
+  "monitor_en": "Quarterly data completeness.",
+  "monitor_fi": "Tietojen kattavuus neljännesvuosittain.",
+  "failure_en": "Register without agreed reaction procedures changes nothing (roadmap 3.2.3).",
+  "failure_fi": "Rekisteri ilman sovittuja reagointimenettelyjä ei muuta mitään (tiekartta 3.2.3).",
+  "sources": [
+   "S11",
+   "S10"
+  ]
+ }
+}

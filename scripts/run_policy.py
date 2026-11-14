@@ -8,7 +8,8 @@ rec = pd.read_csv(ROOT / f"runs/model1/replay/{ts1}/records.csv", dtype={"county
 ser = json.load(open(ROOT / f"runs/model1/replay/{ts1}/series.json"))
 raw = pd.read_csv(ROOT / "data/tidy/signals.csv", parse_dates=["period", "available"], dtype={"county": str})
 raw = raw[~((raw.kind == "share") & (raw.num > raw.den))]
-K = 3; MIN_RUN = 6
+import os
+K = int(os.environ.get('K', 3)); MIN_RUN = int(os.environ.get('MIN_RUN', 6)); SENS = 'SENS' in os.environ   # SENS: sensitivity run, stored apart, never becomes LATEST
 MONTHS = pd.date_range("2021-01-31", "2026-10-31", freq="ME")
 POLICY = ["treat_onc_wait", "dx_endo_over90", "ref_assess_over90"]
 EFFECTS = {"zero (E05)": 0.0, "conservative (half of E04)": 0.1625, "high (E04: 53.2 -> 35.9 days)": 0.325}
@@ -122,13 +123,14 @@ for sig in POLICY:
     card["signals"][sig] = res
 git = subprocess.run(["git", "rev-parse", "--short", "HEAD"], capture_output=True, text=True, cwd=ROOT).stdout.strip()
 for m, log in slots.items():
+    if SENS: break
     out = ROOT / f"runs/{m}/policy/{ts}"; out.mkdir(parents=True); pd.DataFrame(log).to_csv(out / "slots.csv", index=False)
     json.dump(dict(model=m, produced_by="scripts/run_policy.py", timestamp=ts, git=git, inputs=f"runs/model1/replay/{ts1}", K=K, min_run=MIN_RUN, effects=EFFECTS), open(out / "meta.json", "w"), indent=1)
     (ROOT / f"runs/{m}/policy/LATEST").write_text(ts)
-out = ROOT / f"runs/compare/policy/{ts}"; out.mkdir(parents=True)
+out = ROOT / f"runs/compare/{'sensitivity_K%d_run%d' % (K, MIN_RUN) if SENS else 'policy'}/{ts}"; out.mkdir(parents=True)
 card["months"] = [str(m.date()) for m in MONTHS]
 json.dump(card, open(out / "scorecard.json", "w"), indent=1); json.dump(dict(produced_by="scripts/run_policy.py", timestamp=ts, git=git), open(out / "meta.json", "w"))
-(ROOT / "runs/compare/policy/LATEST").write_text(ts)
+if not SENS: (ROOT / "runs/compare/policy/LATEST").write_text(ts)
 for sig, res in card["signals"].items():
     print("\n==", sig)
     for m in ["model3", "model3fast", "model4"]:

@@ -34,3 +34,23 @@ Two-sided smoothed level per county and month with final parameters. A county-mo
 - P5 Model 4 coverage also exceeds Model 3-fast. If P4 holds and P5 fails, the advantage is publication lag only, and we say so.
 - P6 Model 4 precision is not lower than Model 3 precision by more than 5 points (no winning by spraying slots).
 - Success factors with no public data are reported `not estimated`. Signals where Model 4 loses are listed beside the wins.
+
+## Amendments (after results)
+
+None to the definitions or pass marks.
+
+### Sensitivity runs added after the first result (stored under `runs/compare/sensitivity_*`, never used as the headline)
+Coverage, Model 4 minus Model 3, points (80% bootstrap interval):
+
+| Setting | Oncology queue (Goal 3 proxy) | Endoscopy | Referral handover |
+|---|---|---|---|
+| K = 3, min run 6 (pre-committed headline) | +4 (−4 to +11): tie | +4 (−11 to +15): tie | **+32 (+19 to +45)** |
+| K = 2 | +4 (0 to +7): tie | −2 (−8 to +4): tie, Model 4 slightly behind | **+22 (+10 to +34)** |
+| K = 5 | +8 (+2 to +15) | +15 (+6 to +26) | **+38 (+24 to +50)** |
+| K = 3, min run 12 | +4 (−3 to +11): tie | +9 (−2 to +19): tie | **+34 (+22 to +45)** |
+
+Reading: the referral result does not depend on the assumed budget. The oncology and endoscopy results are ties at the pre-committed budget and only tip to Model 4 with five slots.
+
+### Pass marks, outcome
+- P1 **fail** (beats trend 10/10, persistence 5/10). P2 **fail** (2020 dip not flagged). P3 pass.
+- P4 **fail** on the Goal 3 signal (tie). P5: on referral Model 4 also beats Model 3-fast (+13, +3 to +24); on oncology it does not. P6 pass (Model 4 precision is higher on all three signals).

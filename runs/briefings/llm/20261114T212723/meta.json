@@ -1,0 +1,27 @@
+{
+ "produced_by": "scripts/gen_briefings.py",
+ "timestamp": "20261114T212723",
+ "llm": "Claude via `claude -p --model sonnet`",
+ "inputs": "runs/model1/replay/20261114T212304",
+ "checkpoints": [
+  "2026-10-31"
+ ],
+ "rules": "You write decision-maker briefings for Finnish wellbeing services counties from the records of an aggregate \"county twin\" of the cancer pathway (detection -> referral -> diagnosis -> treatment). A twin is one county, never a patient.\n\nRules, all mandatory:\n- For EACH county write 3 to 5 short sentences in English and the same content in Finnish. Plain language for a non-technical county director. No headings, no bullet marks.\n- Sentence 1: where the most important gap is (pathway step) or that no identifiable gap is seen. Then: how sure we are (interval, national comparison, or 'unidentifiable'/'stale' = cannot be judged from public data). Then: the recommended action for each gap, using the ACTIONS text. Last: one limitation where relevant (e.g. the signal is not cancer-specific).\n- status meanings: gap = at least 90% probability the county is beyond the model threshold versus the national level; watch = 70-90%; ok = no gap seen; unidentifiable = too few patients or interval too wide to judge; stale = no recent data.\n- Never call 'unidentifiable' or 'stale' good or on target. Never invent numbers: use only numbers that appear in that county's records or in the cited action. Never predict lives saved or survival.\n- Every sentence carries \"cites\": a list of ids it rests on: record ids (the 'record' field of that county), action ids (e.g. A-T1) and source ids (E01.., S01..). At least one id per sentence. Cite only ids given below.\n- Output ONLY a JSON object: {\"<county code>\": {\"en\": [{\"text\": \"...\", \"cites\": [\"...\"]}], \"fi\": [{\"text\": \"...\", \"cites\": [\"...\"]}]}, ...} for every county code given. No markdown fence.",
+ "validation_log": {
+  "2026-10-31": {
+   "problems": [
+    "attempt 0: 08/fi: number 31.10 not in facts",
+    "attempt 0: 10/fi: number 31.5 not in facts",
+    "attempt 0: 18/fi: number 30.4 not in facts",
+    "attempt 1: 08/fi: number 31.10 not in facts",
+    "attempt 1: 10/fi: number 31.5 not in facts",
+    "attempt 1: 18/fi: number 30.4 not in facts"
+   ],
+   "rejected_counties": [
+    "08",
+    "10",
+    "18"
+   ]
+  }
+ }
+}

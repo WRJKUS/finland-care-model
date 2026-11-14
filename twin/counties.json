@@ -1,0 +1,109 @@
+{
+ "01": {
+  "fi": "Itä-Uusimaa",
+  "en": "East Uusimaa"
+ },
+ "02": {
+  "fi": "Keski-Uusimaa",
+  "en": "Central Uusimaa"
+ },
+ "03": {
+  "fi": "Länsi-Uusimaa",
+  "en": "West Uusimaa"
+ },
+ "04": {
+  "fi": "Vantaa ja Kerava",
+  "en": "Vantaa and Kerava"
+ },
+ "05": {
+  "fi": "Varsinais-Suomi",
+  "en": "Southwest Finland"
+ },
+ "06": {
+  "fi": "Satakunta",
+  "en": "Satakunta"
+ },
+ "07": {
+  "fi": "Kanta-Häme",
+  "en": "Kanta-Häme"
+ },
+ "08": {
+  "fi": "Pirkanmaa",
+  "en": "Pirkanmaa"
+ },
+ "09": {
+  "fi": "Päijät-Häme",
+  "en": "Päijät-Häme"
+ },
+ "10": {
+  "fi": "Kymenlaakso",
+  "en": "Kymenlaakso"
+ },
+ "11": {
+  "fi": "Etelä-Karjala",
+  "en": "South Karelia"
+ },
+ "12": {
+  "fi": "Etelä-Savo",
+  "en": "South Savo"
+ },
+ "13": {
+  "fi": "Pohjois-Savo",
+  "en": "North Savo"
+ },
+ "14": {
+  "fi": "Pohjois-Karjala",
+  "en": "North Karelia"
+ },
+ "15": {
+  "fi": "Keski-Suomi",
+  "en": "Central Finland"
+ },
+ "16": {
+  "fi": "Etelä-Pohjanmaa",
+  "en": "South Ostrobothnia"
+ },
+ "17": {
+  "fi": "Pohjanmaa",
+  "en": "Ostrobothnia"
+ },
+ "18": {
+  "fi": "Keski-Pohjanmaa",
+  "en": "Central Ostrobothnia"
+ },
+ "19": {
+  "fi": "Pohjois-Pohjanmaa",
+  "en": "North Ostrobothnia"
+ },
+ "20": {
+  "fi": "Kainuu",
+  "en": "Kainuu"
+ },
+ "21": {
+  "fi": "Lappi",
+  "en": "Lapland"
+ },
+ "90": {
+  "fi": "Helsinki",
+  "en": "City of Helsinki"
+ },
+ "91": {
+  "fi": "Ahvenanmaa",
+  "en": "Åland"
+ },
+ "HUS": {
+  "fi": "HUS (Uusimaa ja Helsinki, erikoissairaanhoito)",
+  "en": "HUS (Uusimaa and Helsinki, specialist care)",
+  "members": [
+   "01",
+   "02",
+   "03",
+   "04",
+   "90"
+  ]
+ },
+ "FI": {
+  "fi": "Koko maa",
+  "en": "Finland"
+ }
+}
