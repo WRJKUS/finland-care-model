@@ -1,0 +1,4 @@
+__pycache__/
+*.pyc
+film/frames/
+data/raw/docs/*.pdf

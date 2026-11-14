@@ -1,0 +1,95 @@
+{
+ "fetched_utc": "2026-11-14T19:16:23.507000",
+ "files": [
+  {
+   "file": "jonotilanne_65.json",
+   "specialty": "65",
+   "sid": 862186
+  },
+  {
+   "file": "jonotilanne_30S.json",
+   "specialty": "30S",
+   "sid": 1071228
+  },
+  {
+   "file": "jonotilanne_10H.json",
+   "specialty": "10H",
+   "sid": 1071255
+  },
+  {
+   "file": "jonotilanne_20U.json",
+   "specialty": "20U",
+   "sid": 1071256
+  },
+  {
+   "file": "jonotilanne_20G.json",
+   "specialty": "20G",
+   "sid": 1071258
+  },
+  {
+   "file": "jonotilanne_10G.json",
+   "specialty": "10G",
+   "sid": 1071264
+  },
+  {
+   "file": "jonotilanne_80.json",
+   "specialty": "80",
+   "sid": 862301
+  },
+  {
+   "file": "jonotilanne_20.json",
+   "specialty": "20",
+   "sid": 1071284
+  },
+  {
+   "file": "jonotilanne_10.json",
+   "specialty": "10",
+   "sid": 1071224
+  },
+  {
+   "file": "jonotilanne_50.json",
+   "specialty": "50",
+   "sid": 738325
+  },
+  {
+   "file": "jonotilanne_20O.json",
+   "specialty": "20O",
+   "sid": 1071277
+  },
+  {
+   "file": "jonotilanne_55.json",
+   "specialty": "55",
+   "sid": 738357
+  },
+  {
+   "file": "jonotilanne_30.json",
+   "specialty": "30",
+   "sid": 738294
+  },
+  {
+   "file": "jonotilanne_ALL.json",
+   "specialty": "ALL",
+   "sid": 976324
+  },
+  {
+   "file": "jonoryhma_12.json",
+   "queue_group": "Eturauhasen liikakasvun toimenpide",
+   "sid": 980594
+  },
+  {
+   "file": "jonoryhma_1.json",
+   "queue_group": "Kaihileikkaus",
+   "sid": 980598
+  },
+  {
+   "file": "jonoryhma_27.json",
+   "queue_group": "Ruokatorven, mahalaukun tai suoliston tähystys",
+   "sid": 980596
+  },
+  {
+   "file": "jonoryhma_6.json",
+   "queue_group": "Polven tai lonkan tekonivelleikkaus",
+   "sid": 980602
+  }
+ ]
+}

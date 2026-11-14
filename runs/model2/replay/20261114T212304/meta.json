@@ -1,0 +1,747 @@
+{
+ "model": "model2",
+ "produced_by": "scripts/run_replay.py",
+ "timestamp": "20261114T212304",
+ "git": "",
+ "replay": [
+  "2016-01-31",
+  "2026-10-31"
+ ],
+ "q_grid": [
+  0.0005,
+  0.002,
+  0.008,
+  0.03,
+  0.1,
+  0.3
+ ],
+ "phi_grid": [
+  1.0,
+  3.0,
+  10.0,
+  30.0
+ ],
+ "q_selected": {
+  "treat_onc_wait": {
+   "2016-12-31": [
+    0.1,
+    3.0
+   ],
+   "2017-12-31": [
+    0.1,
+    3.0
+   ],
+   "2018-12-31": [
+    0.1,
+    3.0
+   ],
+   "2019-12-31": [
+    0.1,
+    3.0
+   ],
+   "2020-12-31": [
+    0.1,
+    3.0
+   ],
+   "2021-12-31": [
+    0.1,
+    3.0
+   ],
+   "2022-12-31": [
+    0.1,
+    1.0
+   ],
+   "2023-12-31": [
+    0.1,
+    1.0
+   ],
+   "2024-12-31": [
+    0.3,
+    1.0
+   ],
+   "2025-12-31": [
+    0.3,
+    1.0
+   ],
+   "2026-10-31": [
+    0.3,
+    1.0
+   ]
+  },
+  "treat_onc_over90": {
+   "2016-12-31": [
+    0.1,
+    1.0
+   ],
+   "2017-12-31": [
+    0.1,
+    1.0
+   ],
+   "2018-12-31": [
+    0.1,
+    1.0
+   ],
+   "2019-12-31": [
+    0.03,
+    1.0
+   ],
+   "2020-12-31": [
+    0.03,
+    1.0
+   ],
+   "2021-12-31": [
+    0.03,
+    1.0
+   ],
+   "2022-12-31": [
+    0.03,
+    1.0
+   ],
+   "2023-12-31": [
+    0.03,
+    1.0
+   ],
+   "2024-12-31": [
+    0.03,
+    1.0
+   ],
+   "2025-12-31": [
+    0.03,
+    1.0
+   ],
+   "2026-10-31": [
+    0.1,
+    1.0
+   ]
+  },
+  "treat_surg_over90": {
+   "2016-12-31": [
+    0.03,
+    10.0
+   ],
+   "2017-12-31": [
+    0.03,
+    10.0
+   ],
+   "2018-12-31": [
+    0.03,
+    10.0
+   ],
+   "2019-12-31": [
+    0.03,
+    10.0
+   ],
+   "2020-12-31": [
+    0.03,
+    10.0
+   ],
+   "2021-12-31": [
+    0.03,
+    10.0
+   ],
+   "2022-12-31": [
+    0.1,
+    1.0
+   ],
+   "2023-12-31": [
+    0.03,
+    3.0
+   ],
+   "2024-12-31": [
+    0.03,
+    3.0
+   ],
+   "2025-12-31": [
+    0.03,
+    3.0
+   ],
+   "2026-10-31": [
+    0.03,
+    3.0
+   ]
+  },
+  "dx_endo_over90": {
+   "2016-12-31": [
+    0.1,
+    1.0
+   ],
+   "2017-12-31": [
+    0.1,
+    1.0
+   ],
+   "2018-12-31": [
+    0.1,
+    1.0
+   ],
+   "2019-12-31": [
+    0.1,
+    1.0
+   ],
+   "2020-12-31": [
+    0.1,
+    1.0
+   ],
+   "2021-12-31": [
+    0.1,
+    1.0
+   ],
+   "2022-12-31": [
+    0.1,
+    1.0
+   ],
+   "2023-12-31": [
+    0.1,
+    1.0
+   ],
+   "2024-12-31": [
+    0.1,
+    1.0
+   ],
+   "2025-12-31": [
+    0.1,
+    1.0
+   ],
+   "2026-10-31": [
+    0.1,
+    1.0
+   ]
+  },
+  "ref_assess_over90": {
+   "2016-12-31": [
+    0.1,
+    3.0
+   ],
+   "2017-12-31": [
+    0.1,
+    3.0
+   ],
+   "2018-12-31": [
+    0.1,
+    3.0
+   ],
+   "2019-12-31": [
+    0.1,
+    3.0
+   ],
+   "2020-12-31": [
+    0.1,
+    3.0
+   ],
+   "2021-12-31": [
+    0.1,
+    3.0
+   ],
+   "2022-12-31": [
+    0.1,
+    3.0
+   ],
+   "2023-12-31": [
+    0.1,
+    3.0
+   ],
+   "2024-12-31": [
+    0.1,
+    3.0
+   ],
+   "2025-12-31": [
+    0.1,
+    3.0
+   ],
+   "2026-10-31": [
+    0.1,
+    1.0
+   ]
+  },
+  "ref_over21": {
+   "2016-12-31": [
+    0.1,
+    10.0
+   ],
+   "2017-12-31": [
+    0.03,
+    30.0
+   ],
+   "2018-12-31": [
+    0.03,
+    30.0
+   ],
+   "2019-12-31": [
+    0.03,
+    30.0
+   ],
+   "2020-12-31": [
+    0.03,
+    30.0
+   ],
+   "2021-12-31": [
+    0.1,
+    10.0
+   ],
+   "2022-12-31": [
+    0.1,
+    10.0
+   ],
+   "2023-12-31": [
+    0.1,
+    10.0
+   ],
+   "2024-12-31": [
+    0.1,
+    10.0
+   ],
+   "2025-12-31": [
+    0.1,
+    10.0
+   ],
+   "2026-10-31": [
+    0.1,
+    10.0
+   ]
+  },
+  "ref_volume_yoy": {
+   "2016-12-31": [
+    0.03,
+    30.0
+   ],
+   "2017-12-31": [
+    0.03,
+    30.0
+   ],
+   "2018-12-31": [
+    0.03,
+    30.0
+   ],
+   "2019-12-31": [
+    0.03,
+    30.0
+   ],
+   "2020-12-31": [
+    0.03,
+    30.0
+   ],
+   "2021-12-31": [
+    0.03,
+    30.0
+   ],
+   "2022-12-31": [
+    0.1,
+    30.0
+   ],
+   "2023-12-31": [
+    0.1,
+    30.0
+   ],
+   "2024-12-31": [
+    0.1,
+    30.0
+   ],
+   "2025-12-31": [
+    0.1,
+    30.0
+   ],
+   "2026-10-31": [
+    0.1,
+    30.0
+   ]
+  },
+  "ctrl_population_yoy": {
+   "2016-12-31": [
+    0.002,
+    30.0
+   ],
+   "2017-12-31": [
+    0.002,
+    30.0
+   ],
+   "2018-12-31": [
+    0.002,
+    30.0
+   ],
+   "2019-12-31": [
+    0.002,
+    30.0
+   ],
+   "2020-12-31": [
+    0.002,
+    30.0
+   ],
+   "2021-12-31": [
+    0.002,
+    30.0
+   ],
+   "2022-12-31": [
+    0.002,
+    30.0
+   ],
+   "2023-12-31": [
+    0.002,
+    30.0
+   ],
+   "2024-12-31": [
+    0.002,
+    30.0
+   ],
+   "2025-12-31": [
+    0.002,
+    30.0
+   ],
+   "2026-10-31": [
+    0.002,
+    30.0
+   ]
+  },
+  "det_screen_breast": {
+   "2016-12-31": [
+    0.0005,
+    1.0
+   ],
+   "2017-12-31": [
+    0.0005,
+    1.0
+   ],
+   "2018-12-31": [
+    0.0005,
+    1.0
+   ],
+   "2019-12-31": [
+    0.0005,
+    1.0
+   ],
+   "2020-12-31": [
+    0.0005,
+    1.0
+   ],
+   "2021-12-31": [
+    0.0005,
+    1.0
+   ],
+   "2022-12-31": [
+    0.0005,
+    1.0
+   ],
+   "2023-12-31": [
+    0.0005,
+    1.0
+   ],
+   "2024-12-31": [
+    0.0005,
+    1.0
+   ],
+   "2025-12-31": [
+    0.0005,
+    1.0
+   ],
+   "2026-10-31": [
+    0.0005,
+    1.0
+   ]
+  },
+  "det_screen_cervix": {
+   "2016-12-31": [
+    0.0005,
+    3.0
+   ],
+   "2017-12-31": [
+    0.0005,
+    1.0
+   ],
+   "2018-12-31": [
+    0.0005,
+    1.0
+   ],
+   "2019-12-31": [
+    0.0005,
+    1.0
+   ],
+   "2020-12-31": [
+    0.0005,
+    1.0
+   ],
+   "2021-12-31": [
+    0.0005,
+    1.0
+   ],
+   "2022-12-31": [
+    0.0005,
+    1.0
+   ],
+   "2023-12-31": [
+    0.0005,
+    1.0
+   ],
+   "2024-12-31": [
+    0.0005,
+    1.0
+   ],
+   "2025-12-31": [
+    0.0005,
+    1.0
+   ],
+   "2026-10-31": [
+    0.0005,
+    1.0
+   ]
+  },
+  "det_screen_colorectal": {
+   "2016-12-31": [
+    0.008,
+    1.0
+   ],
+   "2017-12-31": [
+    0.008,
+    1.0
+   ],
+   "2018-12-31": [
+    0.008,
+    1.0
+   ],
+   "2019-12-31": [
+    0.008,
+    1.0
+   ],
+   "2020-12-31": [
+    0.008,
+    1.0
+   ],
+   "2021-12-31": [
+    0.008,
+    1.0
+   ],
+   "2022-12-31": [
+    0.008,
+    1.0
+   ],
+   "2023-12-31": [
+    0.008,
+    1.0
+   ],
+   "2024-12-31": [
+    0.002,
+    1.0
+   ],
+   "2025-12-31": [
+    0.0005,
+    3.0
+   ],
+   "2026-10-31": [
+    0.0005,
+    3.0
+   ]
+  }
+ },
+ "signals": {
+  "treat_onc_wait": {
+   "step": "treatment",
+   "kind": "ratio",
+   "bad_direction": 1,
+   "delta": 1.5,
+   "delta_type": "rel",
+   "delta_origin": "model",
+   "ident_width": 2.5,
+   "stale_months": 6,
+   "trend_lag": 6,
+   "unit": "days",
+   "cancer_specific": true,
+   "label_en": "Oncology treatment queue, in days of referral inflow",
+   "label_fi": "Sy\u00f6p\u00e4tautien hoitojono, l\u00e4hetevirran p\u00e4ivin\u00e4",
+   "definition": "Patients waiting for treatment in specialty 65 (oncology) at the reference date, divided by oncology referrals per day in the same period. A queue-pressure index in days; NOT a measured referral-to-treatment or diagnosis-to-treatment time.",
+   "source": "THL eshjono/jonotilanne, specialty 65",
+   "min_num": 10,
+   "min_origin": "qc"
+  },
+  "treat_onc_over90": {
+   "step": "treatment",
+   "kind": "share",
+   "bad_direction": 1,
+   "delta": 0.05,
+   "delta_type": "abs",
+   "delta_origin": "model",
+   "ident_width": 0.25,
+   "stale_months": 6,
+   "trend_lag": 6,
+   "unit": "share",
+   "cancer_specific": true,
+   "label_en": "Oncology: share of treatment queue waiting over 90 days",
+   "label_fi": "Sy\u00f6p\u00e4taudit: yli 90 vrk hoitoa odottaneiden osuus",
+   "definition": "Of patients waiting for treatment in specialty 65 at the reference date, the share who have waited over 90 days. 90 days is THL's reporting band, not a cancer target time.",
+   "source": "THL eshjono/jonotilanne, specialty 65",
+   "min_den": 20,
+   "min_origin": "qc"
+  },
+  "treat_surg_over90": {
+   "step": "treatment",
+   "kind": "share",
+   "bad_direction": 1,
+   "delta": 0.1,
+   "delta_type": "abs",
+   "delta_origin": "model",
+   "ident_width": 0.25,
+   "stale_months": 6,
+   "trend_lag": 6,
+   "unit": "share",
+   "cancer_specific": false,
+   "label_en": "GI surgery + urology: share of treatment queue over 90 days (not cancer-specific)",
+   "label_fi": "Gastrokirurgia + urologia: yli 90 vrk hoitoa odottaneiden osuus (ei sy\u00f6p\u00e4kohtainen)",
+   "definition": "Share of the treatment queue over 90 days in specialties 20G and 20U, which operate colorectal, prostate and bladder cancer but mostly treat non-cancer patients. Capacity-pressure context only.",
+   "source": "THL eshjono/jonotilanne, specialties 20G, 20U",
+   "min_den": 20,
+   "min_origin": "qc"
+  },
+  "dx_endo_over90": {
+   "step": "diagnosis",
+   "kind": "share",
+   "bad_direction": 1,
+   "delta": 0.1,
+   "delta_type": "abs",
+   "delta_origin": "model",
+   "ident_width": 0.25,
+   "stale_months": 6,
+   "trend_lag": 6,
+   "unit": "share",
+   "cancer_specific": false,
+   "label_en": "Endoscopy queue: share waiting over 90 days (not cancer-specific)",
+   "label_fi": "T\u00e4hystysjono: yli 90 vrk odottaneiden osuus (ei sy\u00f6p\u00e4kohtainen)",
+   "definition": "Of patients waiting for oesophageal, gastric or intestinal endoscopy, the share waiting over 90 days. Endoscopy is the diagnostic step for colorectal and gastric cancer, but the queue includes all indications.",
+   "source": "THL eshjono/jonoryhma, group 27",
+   "min_den": 20,
+   "min_origin": "qc"
+  },
+  "ref_assess_over90": {
+   "step": "referral",
+   "kind": "share",
+   "bad_direction": 1,
+   "delta": 0.1,
+   "delta_type": "abs",
+   "delta_origin": "model",
+   "ident_width": 0.25,
+   "stale_months": 6,
+   "trend_lag": 6,
+   "unit": "share",
+   "cancer_specific": false,
+   "label_en": "Waiting for first specialist assessment over 90 days, cancer-diagnosing specialties (not cancer-specific)",
+   "label_fi": "Hoidon tarpeen arviointia yli 90 vrk odottaneet, sy\u00f6pi\u00e4 diagnosoivat erikoisalat (ei sy\u00f6p\u00e4kohtainen)",
+   "definition": "Of patients waiting for assessment of need for care in pulmonology, gastroenterology, GI surgery, urology and gynaecology, the share waiting over 90 days. All referral reasons.",
+   "source": "THL eshjono/jonotilanne, specialties 80, 10G, 20G, 20U, 30",
+   "min_den": 20,
+   "min_origin": "qc"
+  },
+  "ref_over21": {
+   "step": "referral",
+   "kind": "share",
+   "bad_direction": 1,
+   "delta": 0.05,
+   "delta_type": "abs",
+   "delta_origin": "model",
+   "ident_width": 0.25,
+   "stale_months": 6,
+   "trend_lag": 6,
+   "unit": "share",
+   "cancer_specific": false,
+   "label_en": "Referrals processed later than 21 days, all specialties",
+   "label_fi": "Yli 21 vrk:ssa k\u00e4sitellyt l\u00e4hetteet, kaikki erikoisalat",
+   "definition": "Share of referrals to specialist care processed in more than 21 days (statutory limit: assessment must begin within 3 weeks of referral). All specialties.",
+   "source": "THL eshjono/jonotilanne, all specialties",
+   "min_den": 20,
+   "min_origin": "qc"
+  },
+  "ref_volume_yoy": {
+   "step": "referral",
+   "kind": "ratio",
+   "bad_direction": 0,
+   "delta": 1,
+   "delta_type": "rel",
+   "delta_origin": "model",
+   "ident_width": 2.5,
+   "stale_months": 6,
+   "trend_lag": 6,
+   "unit": "ratio",
+   "cancer_specific": false,
+   "label_en": "Referral volume vs same period a year earlier, all specialties",
+   "label_fi": "L\u00e4hetem\u00e4\u00e4r\u00e4 suhteessa edellisvuoden vastaavaan jaksoon",
+   "definition": "Referrals to specialist care in the period divided by the same period one year earlier. Flow signal for the pathway twin and the 2020 positive control.",
+   "source": "THL eshjono/jonotilanne, all specialties",
+   "min_origin": "qc"
+  },
+  "ctrl_population_yoy": {
+   "step": "control",
+   "kind": "ratio",
+   "bad_direction": 0,
+   "delta": 1,
+   "delta_type": "rel",
+   "delta_origin": "model",
+   "ident_width": 2.5,
+   "stale_months": 6,
+   "trend_lag": 6,
+   "unit": "ratio",
+   "cancer_specific": false,
+   "label_en": "Negative control: resident population vs a year earlier",
+   "label_fi": "Negatiivinen kontrolli: asukasluku suhteessa edellisvuoteen",
+   "definition": "Resident population reported in the same THL cube, year on year. Should not react to care disruptions.",
+   "source": "THL eshjono/jonotilanne, Asukasluku",
+   "min_origin": "qc"
+  },
+  "det_screen_breast": {
+   "step": "detection",
+   "kind": "pct",
+   "bad_direction": -1,
+   "delta": 0.05,
+   "delta_type": "abs",
+   "delta_origin": "model",
+   "target": 0.8,
+   "target_origin": "strategy",
+   "ident_width": 0.25,
+   "stale_months": 30,
+   "trend_lag": 3,
+   "unit": "share",
+   "cancer_specific": true,
+   "score_forecast": true,
+   "label_en": "Breast screening participation",
+   "label_fi": "Rintasy\u00f6v\u00e4n seulontaan osallistuminen",
+   "definition": "Participants as % of invited, mammography screening. Strategy target: 80% in every county.",
+   "source": "Finnish Cancer Registry via Sotkanet 3621",
+   "min_origin": "qc"
+  },
+  "det_screen_cervix": {
+   "step": "detection",
+   "kind": "pct",
+   "bad_direction": -1,
+   "delta": 0.05,
+   "delta_type": "abs",
+   "delta_origin": "model",
+   "target": 0.8,
+   "target_origin": "strategy",
+   "ident_width": 0.25,
+   "stale_months": 30,
+   "trend_lag": 3,
+   "unit": "share",
+   "cancer_specific": true,
+   "label_en": "Cervical screening participation",
+   "label_fi": "Kohdunkaulasy\u00f6v\u00e4n seulontaan osallistuminen",
+   "definition": "Participants as % of invited, cervical screening. Strategy target: 80% in every county.",
+   "source": "Finnish Cancer Registry via Sotkanet 3620",
+   "min_origin": "qc"
+  },
+  "det_screen_colorectal": {
+   "step": "detection",
+   "kind": "pct",
+   "bad_direction": -1,
+   "delta": 0.05,
+   "delta_type": "abs",
+   "delta_origin": "model",
+   "target": 0.8,
+   "target_origin": "strategy",
+   "ident_width": 0.25,
+   "stale_months": 30,
+   "trend_lag": 1,
+   "unit": "share",
+   "cancer_specific": true,
+   "score_forecast": false,
+   "label_en": "Colorectal screening participation",
+   "label_fi": "Suolistosy\u00f6v\u00e4n seulontaan osallistuminen",
+   "definition": "Participants as % of invited, colorectal (FIT) screening, programme rolled out from 2022. Strategy target: 80% in every county.",
+   "source": "Finnish Cancer Registry via Sotkanet 6103",
+   "min_origin": "qc"
+  }
+ },
+ "n_records": 1330
+}
