@@ -6,7 +6,9 @@ Junction 2026, AstraZeneca challenge. A streaming, aggregate "twin" of the cance
 
 ## Open the demo
 
-Open `demo/index.html` in a browser. It is one self-contained file: no server, no network, no API call. Press **Play**, click a county, switch pathway step, switch EN/FI. Click any source chip to see the source.
+**Live site: https://equal-care-across-finland.vercel.app/** The explanation is on the site: the opening popup starts a guided showcase of what the twin shows and why it matters, and **About** shows how the twin works on one page.
+
+Offline: open `demo/index.html` in a browser. It is one self-contained file: no server, no network, no API call. Press **Play**, click a county, switch pathway step, switch EN/FI. Click any source chip to see the source.
 
 ## Where things are
 
