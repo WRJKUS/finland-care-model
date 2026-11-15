@@ -35,11 +35,12 @@ python scripts/build_signals.py      # data/tidy/signals.csv
 python scripts/run_replay.py         # Models 1 and 2, baselines, controls
 python scripts/run_policy.py         # Models 3, 3-fast and 4, scorecard
 python scripts/gen_briefings.py      # AI briefings on the replay (LLM calls; optional, stored result is used)
+python scripts/export_circuit.py     # visuals/circuit/data.json
+typst compile visuals/circuit/circuit.typ   # visuals/circuit/circuit.pdf
+typst compile --format svg --pages 1 visuals/circuit/circuit.typ visuals/circuit/circuit-p1.svg   # page 1, shown in the demo's About panel
 python scripts/build_demo.py         # demo/index.html
 python scripts/render_film.py        # film/film.mp4
 python scripts/export_visuals.py     # visuals/*.png
-python scripts/export_circuit.py     # visuals/circuit/data.json
-typst compile visuals/circuit/circuit.typ   # visuals/circuit/circuit.pdf
 ```
 
 Figures, demo and film read from `runs/`; they never recompute.

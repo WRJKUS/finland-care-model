@@ -370,7 +370,13 @@ function paperPanel(kf, a) {
 function SL(lt, dur) {
   const CTL = D.county, L = CTL.live, RM = D.replay_months, n = RM.length;
   header(lt, '2 · THE TWIN, LIVE', `County twin: ${CTL.name}`, 'Replayed month by month, 2016–2026, using only the figures published by then.');
-  const kf = eio(pr(lt, 1.0, dur - 2.5)) * (n - 1), k = Math.floor(kf);
+  // replay clock: run up to the referral gap, dwell on the gap months (so the GAP is readable while it is narrated), then finish
+  const rs = L.ref_assess_over90.status; let g1 = rs.indexOf('gap'), g2 = g1; while (g1 >= 0 && rs[g2 + 1] === 'gap') g2++;
+  const kf = g1 < 0 ? eio(pr(lt, 1.0, dur - 2.5)) * (n - 1)
+    : lt < 9.5 ? eo(pr(lt, 1.0, 9.5)) * g1
+    : lt < 12.5 ? g1 + (lt - 9.5) / 3 * (g2 - g1 + .99)
+    : g2 + .99 + eio(pr(lt, 12.5, dur - .8)) * (n - 1 - g2 - .99);
+  const k = Math.floor(kf);
   const nodes = [
     ['Detection', 'det_screen_breast', 'attend breast screening'],
     ['Referral', 'ref_assess_over90', 'wait > 90 days for a first hospital assessment'],
