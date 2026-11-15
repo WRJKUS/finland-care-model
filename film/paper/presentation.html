@@ -1,0 +1,687 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Paper to Twin</title>
+<style>
+  :root { --bg: #89CFF0; }
+  html, body { margin: 0; background: var(--bg); overflow: hidden; }
+  canvas { display: block; }
+  #ui { position: fixed; right: 12px; bottom: 12px; font: 12px "DejaVu Sans", sans-serif; color: #0E3B5C; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1920" height="1080"></canvas>
+<div id="ui"></div>
+<script src="data.js"></script>
+<script>
+/* Two-minute film, deterministic: render(t) draws the frame at t seconds, so frames can be captured one by one.
+   All numbers come from data.js (scripts/export_paper_film.py), or are quoted from Khalife et al. 2025 / MASTER_PROMPT.md.
+   Naming: "Finland Cancer Plan Simulation" = Model 3 (strategy monitoring); "Simulation Using County Twins" = Model 4 (challenger). */
+const cv = document.getElementById('c'), X = cv.getContext('2d');
+const W = 1920, H = 1080;
+const BB = '#89CFF0', BBL = '#BDE5F8', BBP = '#E6F5FD', BBD = '#4FA8D8', INK = '#0E3B5C', INK2 = '#2B6A92', WH = '#FFFFFF';
+const GOLD = '#D4A537';
+const F = '"DejaVu Sans", sans-serif', M = '"IBM Plex Mono", "DejaVu Sans Mono", monospace', SERIF = '"LM Roman 10", "Latin Modern Roman", Georgia, serif';
+const S = D.summary, PM = D.policy_months;
+const P3 = 'Finland Cancer Plan Simulation', P4 = 'Simulation Using County Twins';
+
+// ---------- helpers ----------
+const cl = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
+const pr = (t, a, b) => cl((t - a) / (b - a));
+const eo = p => 1 - Math.pow(1 - p, 3);
+const eio = p => p < .5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
+const back = p => { const c1 = 1.70158, c3 = c1 + 1; return 1 + c3 * Math.pow(p - 1, 3) + c1 * Math.pow(p - 1, 2); };
+const pct = v => Math.round(v * 100) + '%';
+const MON = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+function rr(x, y, w, h, r) { X.beginPath(); X.roundRect(x, y, w, h, r); }
+function fillRR(x, y, w, h, r, c) { rr(x, y, w, h, r); X.fillStyle = c; X.fill(); }
+function fontOf(sz, o) { return `${o.st || ''} ${o.w || 'normal'} ${sz}px ${o.f || F}`.trim(); }
+function txt(s, x, y, sz, c = INK, o = {}) {
+  X.font = fontOf(sz, o); X.fillStyle = c; X.textAlign = o.a || 'left'; X.textBaseline = o.b || 'alphabetic';
+  X.globalAlpha *= (o.al ?? 1); X.fillText(s, x, y); X.globalAlpha /= (o.al ?? 1) || 1;
+}
+function wrap(s, x, y, maxW, sz, lh, c = INK, o = {}) {
+  X.font = fontOf(sz, o); const words = s.split(' '); let line = '', yy = y, n = 0;
+  for (const w of words) { const tst = line ? line + ' ' + w : w; if (X.measureText(tst).width > maxW && line) { txt(line, x, yy, sz, c, o); line = w; yy += lh; n++; } else line = tst; }
+  if (line) { txt(line, x, yy, sz, c, o); n++; } return n;
+}
+function measure(s, sz, o = {}) { X.font = fontOf(sz, o); return X.measureText(s).width; }
+function alpha(a, fn) { if (a <= 0) return; X.save(); X.globalAlpha *= cl(a); fn(); X.restore(); }
+function shift(dx, dy, fn) { X.save(); X.translate(dx, dy); fn(); X.restore(); }
+function star(x, y, r, c) { X.beginPath(); for (let i = 0; i < 8; i++) { const a = i * Math.PI / 4, rr2 = i % 2 ? r * .32 : r; X.lineTo(x + Math.cos(a) * rr2, y + Math.sin(a) * rr2); } X.closePath(); X.fillStyle = c; X.fill(); }
+function hash(i) { const s = Math.sin(i * 127.1 + 311.7) * 43758.5453; return s - Math.floor(s); }
+function chip(x, y, s, sz, bg, fg, o = {}) { X.font = `${o.w || 'bold'} ${sz}px ${o.f || F}`; const w = X.measureText(s).width + sz * 1.2; fillRR(x, y, w, sz * 1.8, sz * .9, bg); txt(s, x + sz * .6, y + sz * 1.25, sz, fg, { w: o.w || 'bold', f: o.f }); return w; }
+function check(x, y, s, ok) {
+  X.save(); X.lineWidth = s * .16; X.lineCap = 'round'; X.strokeStyle = ok ? INK : '#B4413C'; X.beginPath();
+  if (ok) { X.moveTo(x - s * .4, y); X.lineTo(x - s * .1, y + s * .3); X.lineTo(x + s * .45, y - s * .35); }
+  else { X.moveTo(x - s * .35, y - s * .35); X.lineTo(x + s * .35, y + s * .35); X.moveTo(x + s * .35, y - s * .35); X.lineTo(x - s * .35, y + s * .35); }
+  X.stroke(); X.restore();
+}
+// simple pictograms for the pathway steps
+function pictogram(type, cx, cy, s, col) {
+  X.save(); X.translate(cx, cy); X.strokeStyle = col; X.fillStyle = col; X.lineWidth = Math.max(2, s * .09); X.lineCap = 'round'; X.lineJoin = 'round';
+  if (type === 'detect') { X.beginPath(); X.arc(-s * .08, -s * .08, s * .3, 0, 7); X.stroke(); X.lineWidth = s * .14; X.beginPath(); X.moveTo(s * .14, s * .14); X.lineTo(s * .4, s * .4); X.stroke(); }
+  else if (type === 'refer') { X.strokeRect(-s * .42, -s * .28, s * .84, s * .56); X.beginPath(); X.moveTo(-s * .42, -s * .28); X.lineTo(0, s * .06); X.lineTo(s * .42, -s * .28); X.stroke(); }
+  else if (type === 'diag') {
+    X.beginPath(); X.moveTo(-s * .15, -s * .4); X.lineTo(-s * .15, s * .24); X.arc(0, s * .24, s * .15, Math.PI, 0, true); X.lineTo(s * .15, -s * .4); X.stroke();
+    X.beginPath(); X.moveTo(-s * .26, -s * .4); X.lineTo(s * .26, -s * .4); X.stroke();
+    X.beginPath(); X.moveTo(-s * .15, s * .02); X.lineTo(-s * .15, s * .24); X.arc(0, s * .24, s * .15, Math.PI, 0, true); X.lineTo(s * .15, s * .02); X.closePath(); X.globalAlpha *= .45; X.fill();
+  }
+  else if (type === 'treat') { const a = s * .13, b = s * .38; X.beginPath(); [[-a, -b], [a, -b], [a, -a], [b, -a], [b, a], [a, a], [a, b], [-a, b], [-a, a], [-b, a], [-b, -a], [-a, -a]].forEach(([x, y], i) => i ? X.lineTo(x, y) : X.moveTo(x, y)); X.closePath(); X.fill(); }
+  X.restore();
+}
+
+// ---------- background: baby-blue gradient, drifting white bubbles ----------
+function bg(t) {
+  const g = X.createLinearGradient(0, 0, W, H); g.addColorStop(0, '#9AD7F3'); g.addColorStop(.55, BB); g.addColorStop(1, '#74C2EA');
+  X.fillStyle = g; X.fillRect(0, 0, W, H);
+  for (let i = 0; i < 26; i++) {
+    const r = 6 + hash(i) * 34, sp = 18 + hash(i + 9) * 40;
+    const x = (hash(i + 3) * W + Math.sin(t * .5 + i) * 30) % W, y = H + 60 - ((t * sp + hash(i + 5) * (H + 200)) % (H + 200));
+    X.beginPath(); X.arc(x, y, r, 0, 7); X.fillStyle = 'rgba(255,255,255,.13)'; X.fill();
+    X.lineWidth = 2; X.strokeStyle = 'rgba(255,255,255,.28)'; X.stroke();
+  }
+}
+function header(lt, kicker, title, sub) {
+  const p = eo(pr(lt, 0, .7));
+  alpha(p, () => shift(0, (1 - p) * -30, () => {
+    if (kicker) chip(110, 62, kicker, 22, WH, INK2);
+    txt(title, 110, 160, 56, WH, { w: 'bold' });
+    if (sub) txt(sub, 112, 206, 26, INK, { al: .85 });
+  }));
+}
+function caption(lt, dur, lines) {
+  if (!lines || !lines.length) return;
+  const i = Math.min(lines.length - 1, Math.floor(lt / (dur / lines.length)));
+  const lp = lt - i * dur / lines.length, a = pr(lp, 0, .3) * (1 - pr(lt, dur - .35, dur));
+  alpha(a, () => {
+    X.font = `24px ${F}`; const w = Math.min(1640, X.measureText(lines[i]).width + 60);
+    fillRR((W - w) / 2, H - 92, w, 54, 27, 'rgba(14,59,92,.82)');
+    txt(lines[i], W / 2, H - 56, 24, WH, { a: 'center' });
+  });
+}
+function source(s) { txt(s, W - 60, H - 112, 15, INK, { a: 'right', f: M, al: .75 }); }
+
+// ---------- S0: toothbrush, title, and the paper we start from ----------
+function toothbrush(t, cx, cy, sc, rot) {
+  X.save(); X.translate(cx, cy); X.rotate(rot); X.scale(sc, sc);
+  X.shadowColor = 'rgba(14,59,92,.25)'; X.shadowBlur = 30; X.shadowOffsetY = 14;
+  rr(-430, -34, 640, 68, 34); const hg = X.createLinearGradient(0, -34, 0, 34); hg.addColorStop(0, '#B6E3F8'); hg.addColorStop(.5, BB); hg.addColorStop(1, BBD); X.fillStyle = hg; X.fill();
+  X.shadowColor = 'transparent';
+  for (let i = 0; i < 5; i++) fillRR(-360 + i * 46, -20, 22, 40, 11, 'rgba(255,255,255,.9)');
+  rr(-430, -34, 640, 22, 20); X.fillStyle = 'rgba(255,255,255,.35)'; X.fill();
+  X.beginPath(); X.moveTo(200, -26); X.quadraticCurveTo(260, -22, 300, -18); X.lineTo(300, 18); X.quadraticCurveTo(260, 22, 200, 26); X.closePath(); X.fillStyle = BBD; X.fill();
+  fillRR(290, -36, 210, 64, 30, WH);
+  for (let i = 0; i < 12; i++) {
+    const bx = 304 + i * 16, wig = Math.sin(t * 22 + i * .8) * 4, h = 70 + (i % 2) * 10;
+    rr(bx + wig * .3, -36 - h, 12, h + 6, 6); X.fillStyle = i % 2 ? WH : '#A8DCF5'; X.fill();
+    X.lineWidth = 1.5; X.strokeStyle = 'rgba(79,168,216,.6)'; X.stroke();
+    X.beginPath(); X.arc(bx + 6 + wig, -36 - h, 7, Math.PI, 0); X.fillStyle = i % 2 ? WH : '#A8DCF5'; X.fill();
+  }
+  X.lineWidth = 22; X.lineCap = 'round';
+  for (let k = 0; k < 2; k++) {
+    X.strokeStyle = k ? BBL : WH; X.beginPath();
+    for (let i = 0; i <= 40; i++) { const u = i / 40, x = 300 + u * 190, y = -128 - Math.sin(u * Math.PI * 3 + t * 3) * 10 - k * 4; i ? X.lineTo(x, y) : X.moveTo(x, y); }
+    X.stroke(); X.lineWidth = 9;
+  }
+  X.restore();
+}
+function S0(lt, dur) {
+  const enter = back(pr(lt, 0, .8)), brush = pr(lt, .8, 2.1), BY = 400;
+  const x = -500 + enter * 1300 + Math.sin(brush * Math.PI * 6) * 70 * (brush > 0 && brush < 1 ? 1 : 0);
+  const rot = -0.18 + (1 - enter) * -0.5 + Math.sin(lt * 2) * .02;
+  for (let i = 0; i < 34; i++) {
+    const born = .8 + hash(i) * 1.5, age = lt - born; if (age < 0) continue;
+    const bx = x + 220 + hash(i + 1) * 260 - 80 + Math.sin(age * 3 + i) * 20, by = BY - 150 - age * (70 + hash(i + 2) * 130);
+    const r = (8 + hash(i + 3) * 24) * eo(cl(age * 2.5)), a = 1 - pr(age, 1.6, 2.8);
+    alpha(a, () => { X.beginPath(); X.arc(bx, by, r, 0, 7); X.fillStyle = 'rgba(255,255,255,.75)'; X.fill(); X.lineWidth = 2; X.strokeStyle = WH; X.stroke();
+      X.beginPath(); X.arc(bx - r * .35, by - r * .35, r * .22, 0, 7); X.fillStyle = WH; X.fill(); });
+  }
+  toothbrush(lt, x, BY, 1.0, rot);
+  for (let i = 0; i < 9; i++) {
+    const ts = 1.7 + i * .16, a = Math.sin(pr(lt, ts, ts + 1.1) * Math.PI);
+    if (a > 0) star(260 + hash(i + 20) * 1400, 120 + hash(i + 30) * 420, 12 + 22 * a, i % 4 === 1 ? `rgba(242,210,113,${a})` : `rgba(255,255,255,${a})`);
+  }
+  const tp = eo(pr(lt, 2.0, 2.8)), pp = eo(pr(lt, 2.5, 3.3));
+  alpha(tp, () => shift(0, (1 - tp) * 40, () => {
+    txt('Equal Care Across Finland', W / 2, 668, 76, WH, { a: 'center', w: 'bold' });
+    const gw = 300 * eo(pr(lt, 2.4, 3.2)); X.fillStyle = GOLD; X.fillRect(W / 2 - gw / 2, 694, gw, 3);
+    txt('From a Nordic lung-cancer paper to county twins', W / 2, 744, 32, INK, { a: 'center' });
+  }));
+  alpha(pp, () => shift(0, (1 - pp) * 30, () => {
+    fillRR(250, 778, 1420, 128, 22, 'rgba(255,255,255,.9)');
+    chip(282, 796, 'THE PAPER WE START FROM', 15, INK, WH);
+    txt('Comparative study of lung cancer care and survival outcomes across the Nordic countries', 282, 858, 25, INK, { w: 'bold' });
+    txt('Khalife G, Warisa J, Bødtger U, et al. · Acta Oncologica 2025;64:42778 · doi 10.2340/1651-226X.2025.42778', 282, 886, 18, INK2);
+    txt('Junction 2026 · AstraZeneca challenge · public aggregate data only', W / 2, 952, 20, INK, { a: 'center', al: .85 });
+  }));
+}
+
+// ---------- 1 · the paper ----------
+function S1(lt, dur) {
+  header(lt, '1 · THE PAPER', 'Finland trails the Nordics on lung cancer', 'Khalife et al. 2025: a survey of Nordic lung-cancer clinicians, checked in two expert workshops');
+  const q = eo(pr(lt, .3, 1.1));
+  alpha(q, () => shift(0, (1 - q) * 40, () => {
+    fillRR(110, 260, 1100, 600, 28, 'rgba(255,255,255,.22)');
+    txt('Five-year lung-cancer survival, men', 150, 322, 30, WH, { w: 'bold' });
+    txt('2018–2022', 150, 358, 22, INK);
+    [['Finland', 16.7], ['Denmark', 26.2], ['Iceland', 28.4]].forEach((b, i) => {
+      const g = eo(pr(lt, .7 + i * .25, 2.0 + i * .25)), bw = b[1] / 30 * 760 * g;
+      fillRR(340, 410 + i * 120, 820, 76, 18, 'rgba(255,255,255,.25)'); fillRR(340, 410 + i * 120, Math.max(24, bw), 76, 18, i ? WH : INK);
+      txt(b[0], 150, 460 + i * 120, 32, INK, { w: 'bold' }); txt((b[1] * g).toFixed(1) + '%', 340 + Math.max(24, bw) + 16, 462 + i * 120, 34, i ? WH : INK, { w: 'bold' });
+    });
+    txt('Finland’s figure has risen from 9.7% in 1998–2002, but is still the lowest.', 150, 812, 22, INK);
+  }));
+  const r = eo(pr(lt, 1.8, 2.6));
+  alpha(r, () => shift((1 - r) * 60, 0, () => {
+    fillRR(1250, 260, 560, 600, 28, WH);
+    txt('Found at stage I', 1290, 322, 30, INK2, { w: 'bold' });
+    txt('17%', 1290, 486, 150, INK, { w: 'bold' }); txt('Finland', 1294, 530, 26, INK);
+    txt('over 25%', 1290, 680, 80, BBD, { w: 'bold' }); txt('Denmark and Norway', 1294, 722, 26, INK);
+    wrap('Stage is recorded inconsistently in Finland, so early cancers may be even rarer.', 1290, 790, 490, 20, 26, INK2);
+  }));
+  caption(lt, dur, ['The paper compares lung-cancer care across the five Nordic countries.', 'Finland has the lowest survival, and finds the fewest cancers at stage I.']);
+  source('Khalife et al. 2025 · 42 clinicians, Finland 12 (8 of 21 regions) · descriptive · funded by MSD Finland');
+}
+function S2(lt, dur) {
+  header(lt, '1 · THE PAPER', 'Finland waits longest at every step', 'Typical waits reported by clinicians in each country (the paper’s Table 2)');
+  const rows = [
+    ['Health-centre appointment with symptoms', 14, '14 d', [2, 7], '2–7 d', 'detection'],
+    ['GP → specialist consultation', [2, 4], '2–4 wk', [1, 2], '1–2 wk', 'referral'],
+    ['Specialist → diagnosis', 4, '4 wk', [2, 4], '2–4 wk (SE 4)', 'diagnosis'],
+  ];
+  const max = [16, 5, 5];
+  rows.forEach((r, i) => {
+    const y = 290 + i * 170, a = eo(pr(lt, .3 + i * .5, 1.0 + i * .5));
+    alpha(a, () => shift((1 - a) * -60, 0, () => {
+      fillRR(110, y, 1700, 140, 26, i === 1 ? WH : 'rgba(255,255,255,.75)');
+      chip(140, y + 20, r[5].toUpperCase(), 16, i === 1 ? INK : BB, WH);
+      txt(r[0], 140, y + 96, 30, INK, { w: 'bold' });
+      const bx = 1000, bw = 780, g = eo(pr(lt, .6 + i * .5, 1.9 + i * .5));
+      const span = v => Array.isArray(v) ? v : [v, v];
+      [[r[1], r[2], INK, 'Finland', 26], [r[3], r[4], BB, 'SE · DK · NO', 82]].forEach(([v, lab, col, who, dy]) => {
+        const [lo, hi] = span(v); const x0 = bx + 150, x1 = x0 + hi / max[i] * (bw - 260) * g, xl = x0 + lo / max[i] * (bw - 260) * g;
+        txt(who, bx, y + dy + 24, 20, INK2, { w: 'bold' });
+        fillRR(x0, y + dy, Math.max(14, x1 - x0), 34, 17, col === INK ? INK : BB);
+        if (hi > lo) fillRR(x0, y + dy, Math.max(14, xl - x0), 34, 17, col === INK ? '#245C80' : BBD);
+        txt(lab, x1 + 14, y + dy + 26, 22, INK, { w: 'bold' });
+      });
+    }));
+  });
+  const b = eo(pr(lt, 2.6, 3.4));
+  alpha(b, () => {
+    fillRR(110, 812, 1700, 92, 24, INK);
+    txt('Doctor at first contact', 150, 870, 28, WH, { w: 'bold' });
+    txt('Finland 40–60%', 560, 870, 34, BB, { w: 'bold' }); txt('Sweden 80–100%   ·   DK, NO, IS 100%', 900, 870, 28, WH);
+  });
+  caption(lt, dur, ['The gap opens at the front of the pathway: getting seen, and getting referred.', 'After the specialist, Finland’s 4 weeks to diagnosis matches Sweden’s.']);
+  source('Khalife et al. 2025, Table 2');
+}
+function S3(lt, dur) {
+  header(lt, '1 · THE PAPER', 'And Finland does not watch its outcomes', 'Outcome tracking and access to a doctor, from the paper’s results and discussion');
+  const cards = [
+    ['No', 'national lung-cancer quality register', 'Sweden, Denmark, Norway and Iceland all have one.'],
+    ['0 of 8', 'Finnish hospital respondents report survival tracking', 'Swedish and Danish hospitals discuss outcomes regularly.'],
+    ['35%', 'waited over 14 days for a primary-care doctor (2023)', '14% waited 1–3 months. Figures from THL, Finland’s public-health institute.'],
+  ];
+  cards.forEach((c, i) => {
+    const a = back(pr(lt, .3 + i * .45, 1.1 + i * .45)), x = 110 + i * 580;
+    X.save(); X.translate(x + 270, 580); X.scale(cl(a, 0, 1.2), cl(a, 0, 1.2)); X.translate(-(x + 270), -580);
+    fillRR(x, 256, 540, 660, 32, WH);
+    txt(c[0], x + 40, 430, 140, INK, { w: 'bold' });
+    wrap(c[1], x + 40, 530, 470, 34, 44, INK2, { w: 'bold' });
+    wrap(c[2], x + 40, 760, 470, 25, 34, INK);
+    X.restore();
+  });
+  caption(lt, dur, ['Registry data arrives late, and hospitals do not close the loop.', 'Caution: the experts said a few weeks of waiting does not explain the survival gap.']);
+  source('Khalife et al. 2025, Table 3 and Discussion (THL Avohilmo, ref. 31)');
+}
+
+// ---------- 2 · what a county twin is ----------
+const GEO = D.geo;
+const GC = Object.fromEntries(GEO.map(f => { const big = f.rings.reduce((a, r) => r.length > a.length ? r : a, []); let sx = 0, sy = 0; big.forEach(p => { sx += p[0]; sy += p[1]; }); return [f.code, [sx / big.length, sy / big.length]]; }));
+function countyPath(f, ox, oy, sc) { X.beginPath(); for (const ring of f.rings) { ring.forEach((p, i) => i ? X.lineTo(ox + p[0] * sc, oy + p[1] * sc) : X.moveTo(ox + p[0] * sc, oy + p[1] * sc)); X.closePath(); } }
+const STATIONS = [
+  { name: 'Detection', icon: 'detect', what: 'Finding cancer early: screening and first symptoms', watch: 'Share of invited people who attend screening', paper: 'paper: 17% found at stage I' },
+  { name: 'Referral', icon: 'refer', what: 'The GP refers the patient; a hospital specialist assesses the referral', watch: 'Share waiting over 90 days for that first assessment', paper: 'paper: 2–4 weeks to a specialist' },
+  { name: 'Diagnosis', icon: 'diag', what: 'Tests that confirm the cancer, such as endoscopy', watch: 'Share waiting over 90 days for endoscopy', paper: 'paper: 4 weeks, as in Sweden' },
+  { name: 'Treatment', icon: 'treat', what: 'Surgery or cancer drugs begin', watch: 'The oncology queue and surgery waits', paper: 'paper: survival is not tracked' },
+];
+function S4(lt, dur) {
+  header(lt, '2 · THE TWIN', 'What a county twin is', 'One county, never a patient: a small model of its cancer pathway, updated every month from public figures.');
+  const CTL = D.county, Lr = CTL.live.ref_assess_over90, RM = D.replay_months;
+  // the mini replay in the lower half decides when the referral step lights up
+  const i0 = RM.indexOf('2019-01-31'), i1 = RM.indexOf('2021-01-31'), m = i1 - i0;
+  const playM = eio(pr(lt, 7.6, 12.0)) * m, ic = i0 + Math.floor(playM);
+  let ig = -1; for (let i = i0; i <= i1; i++) if (Lr.status[i] === 'gap') { ig = i; break; }
+  const ga = ig >= 0 && ic >= ig ? eo(cl((i0 + playM - ig) / 1.2)) : 0;
+  // map: one twin per county
+  const ox = 140, oy = 262, sc = 620;
+  GEO.forEach((f, i) => {
+    const a = eo(pr(lt, .2 + i * .035, .7 + i * .035)); if (a <= 0) return;
+    alpha(a, () => {
+      countyPath(f, ox, oy, sc);
+      const sel = f.code === CTL.code, hl = sel ? eo(pr(lt, 1.6, 2.2)) : 0;
+      X.fillStyle = sel ? `rgba(14,59,92,${0.12 + 0.5 * hl + 0.38 * ga})` : 'rgba(255,255,255,.93)'; X.fill();
+      X.lineWidth = 1.3; X.strokeStyle = BBD; X.stroke();
+    });
+  });
+  GEO.forEach((f, i) => {
+    const a = eo(pr(lt, 1.0 + i * .02, 1.4 + i * .02)), c = GC[f.code]; if (a <= 0) return;
+    const x = ox + c[0] * sc, y = oy + c[1] * sc, pulse = .5 + .5 * Math.sin(lt * 4 + i), sel = f.code === CTL.code;
+    alpha(a, () => {
+      if (sel && ga > 0) { X.beginPath(); X.arc(x, y, 14 + 10 * pulse, 0, 7); X.fillStyle = `rgba(255,255,255,${.35 * ga})`; X.fill(); }
+      X.beginPath(); X.arc(x, y, 4.5 + 2 * pulse, 0, 7); X.fillStyle = sel ? WH : INK; X.fill();
+    });
+  });
+  const lc = GC[CTL.code], lx = ox + lc[0] * sc, ly = oy + lc[1] * sc;
+  alpha(eo(pr(lt, 1.8, 2.4)), () => txt(CTL.name, lx, ly + 34, 18, WH, { a: 'center', w: 'bold' }));
+  alpha(eo(pr(lt, 1.4, 2.0)), () => { wrap('One twin for each', 316, 914, 400, 19, 23, INK, { a: 'center', w: 'bold' }); wrap('wellbeing services county', 316, 937, 400, 19, 23, INK, { a: 'center', w: 'bold' }); });
+  const con = eo(pr(lt, 2.0, 2.8));
+  if (con > 0) { X.save(); X.strokeStyle = WH; X.lineWidth = 3; X.setLineDash([10, 8]); X.beginPath(); X.moveTo(lx, ly); X.lineTo(lx + (560 - lx) * con, ly + (300 - ly) * con); X.stroke(); X.restore(); }
+  // the twin card
+  const ca = eo(pr(lt, 2.2, 3.0));
+  alpha(ca, () => shift((1 - ca) * 60, 0, () => {
+    fillRR(560, 240, 1250, 690, 28, 'rgba(255,255,255,.96)');
+    txt(`Inside the twin for ${CTL.name}: the four steps of its cancer pathway`, 600, 290, 26, INK, { w: 'bold' });
+    const cx = i => 720 + i * 310, cy = 370, R = 50;
+    // patient journey dot along the arrows
+    if (lt > 3.6) { const u = ((lt - 3.6) / 2.6) % 1, jx = cx(0) + u * (cx(3) - cx(0)); X.beginPath(); X.arc(jx, cy, 7, 0, 7); X.fillStyle = BBD; X.fill(); }
+    STATIONS.forEach((s, i) => {
+      const ap = back(pr(lt, 3.0 + i * .5, 3.6 + i * .5)), at = eo(pr(lt, 3.2 + i * .5, 3.9 + i * .5)), isRef = i === 1, lit = isRef ? ga : 0;
+      if (i < 3) alpha(eo(pr(lt, 3.4 + i * .5, 4.0 + i * .5)), () => {
+        X.strokeStyle = INK; X.lineWidth = 3; X.beginPath(); X.moveTo(cx(i) + R + 8, cy); X.lineTo(cx(i + 1) - R - 14, cy); X.stroke();
+        X.fillStyle = INK; X.beginPath(); X.moveTo(cx(i + 1) - R - 6, cy); X.lineTo(cx(i + 1) - R - 16, cy - 7); X.lineTo(cx(i + 1) - R - 16, cy + 7); X.fill();
+      });
+      X.save(); X.translate(cx(i), cy); X.scale(cl(ap, 0, 1.15), cl(ap, 0, 1.15));
+      if (lit > 0) { X.beginPath(); X.arc(0, 0, R + 10 + 6 * Math.sin(lt * 8), 0, 7); X.fillStyle = `rgba(14,59,92,${.25 * lit})`; X.fill(); }
+      X.beginPath(); X.arc(0, 0, R, 0, 7); X.fillStyle = lit > .5 ? INK : BBP; X.fill(); X.lineWidth = 3; X.strokeStyle = BBD; X.stroke();
+      pictogram(s.icon, 0, 0, 58, lit > .5 ? WH : INK);
+      X.restore();
+      if (lit > 0) alpha(lit, () => { fillRR(cx(i) + 26, cy - 66, 64, 26, 13, INK); txt('GAP', cx(i) + 58, cy - 47, 15, WH, { a: 'center', w: 'bold' }); });
+      alpha(at, () => {
+        txt(s.name, cx(i), 458, 27, INK, { a: 'center', w: 'bold' });
+        wrap(s.what, cx(i), 488, 280, 17, 22, INK, { a: 'center' });
+        X.letterSpacing = '1px'; txt('THE TWIN WATCHES', cx(i), 556, 12, BBD, { a: 'center', w: 'bold' }); X.letterSpacing = '0px';
+        wrap(s.watch, cx(i), 580, 280, 17, 22, INK2, { a: 'center', w: 'bold' });
+        const pw = measure(s.paper, 14) + 22; fillRR(cx(i) - pw / 2, 620, pw, 26, 13, BBP); txt(s.paper, cx(i), 638, 14, INK2, { a: 'center' });
+      });
+    });
+    // how the twin decides: the real Lapland referral record, 2019–2020
+    const da = eo(pr(lt, 7.0, 7.6));
+    alpha(da, () => {
+      X.fillStyle = BBL; X.fillRect(600, 668, 1170, 2);
+      txt(`How the twin decides, month by month · ${CTL.name}, referral step, 2019–2020`, 600, 700, 17, INK2, { w: 'bold' });
+      const cx0 = 650, cw = 600, cy0 = 716, ch = 150, xs = i => cx0 + (i - i0) / m * cw, ys = v => cy0 + ch - v / 0.45 * ch;
+      [0, .2, .4].forEach(v => { X.fillStyle = 'rgba(14,59,92,.12)'; X.fillRect(cx0, ys(v), cw, 1); txt(pct(v), cx0 - 8, ys(v) + 5, 13, INK2, { a: 'right' }); });
+      for (let i = i0; i <= i1; i++) if (RM[i].slice(5, 7) === '01') txt(RM[i].slice(0, 4), xs(i), cy0 + ch + 20, 13, INK2, { a: 'center' });
+      X.beginPath(); for (let i = i0; i <= ic; i++) X.lineTo(xs(i), ys(Lr.hi[i])); for (let i = ic; i >= i0; i--) X.lineTo(xs(i), ys(Lr.lo[i])); X.closePath(); X.fillStyle = 'rgba(137,207,240,.6)'; X.fill();
+      X.save(); X.strokeStyle = INK; X.lineWidth = 1.6; X.setLineDash([6, 4]); X.beginPath(); for (let i = i0; i <= ic; i++) X.lineTo(xs(i), ys(Lr.thr[i])); X.stroke(); X.restore();
+      X.strokeStyle = INK; X.lineWidth = 2.6; X.beginPath(); for (let i = i0; i <= ic; i++) X.lineTo(xs(i), ys(Lr.level[i])); X.stroke();
+      for (let i = i0; i <= ic; i++) if (i === i0 || Lr.data_through[i] !== Lr.data_through[i - 1]) { X.beginPath(); X.arc(xs(i), ys(Lr.num[i] / Lr.den[i]), 4.5, 0, 7); X.fillStyle = BBD; X.fill(); X.lineWidth = 1.5; X.strokeStyle = WH; X.stroke(); }
+      if (ic > i0) txt('Finland + 10 points', xs(ic) - 6, ys(Lr.thr[ic]) - 8, 13, INK, { a: 'right', w: 'bold' });
+      const steps = [['New public figures arrive (dots)', 7.8], ['The twin updates its estimate and how sure it is (line and band)', 8.6], ['If the county is very likely above Finland + 10 points, it flags a GAP', 9.4]];
+      steps.forEach(([s, t0], k) => alpha(eo(pr(lt, t0, t0 + .5)), () => {
+        X.beginPath(); X.arc(1314, 728 + k * 54, 14, 0, 7); X.fillStyle = k === 2 && ga > 0 ? INK : BBD; X.fill(); txt(String(k + 1), 1314, 734 + k * 54, 15, WH, { a: 'center', w: 'bold' });
+        wrap(s, 1340, 734 + k * 54, 440, 17, 21, INK, { w: k === 2 ? 'bold' : 'normal' });
+      }));
+      alpha(eo(pr(lt, 12.2, 12.8)), () => txt(`Flags like this decide where the ${P4} sends its fast-track pilots.`, 600, 906, 17, INK2, { st: 'italic' }));
+    });
+  }));
+  caption(lt, dur, ['A county twin is one county, never a patient: a small model of its cancer pathway.', 'Each step is watched with public figures: screening, and waits for assessment, endoscopy and treatment.', 'Each month the twin updates; when a step is clearly worse than Finland’s, it flags a gap.']);
+  source('outlines: data/raw/geo/hva.geojson · signals: twin/signals.json · Lapland: Model 1 records');
+}
+
+// ---------- 2 · the twin, live, with one panel of the research-paper figure ----------
+const STC = { gap: INK, watch: BBD, ok: WH, unidentifiable: 'rgba(255,255,255,.45)', stale: 'rgba(14,59,92,.3)', 'n/a': 'rgba(255,255,255,.15)' };
+const STL = { gap: 'GAP', watch: 'WATCH', ok: 'OK', unidentifiable: 'CANNOT JUDGE', stale: 'STALE', 'n/a': 'NO DATA' };
+function monLab(s) { return s ? MON[+s.slice(5, 7) - 1].slice(0, 3) + ' ' + s.slice(0, 4) : '—'; }
+function paperPanel(kf, a) {
+  const s = D.county.live.ref_assess_over90, RM = D.replay_months, n = RM.length, j = Math.floor(kf);
+  const x = 330, y = 586, w = 1260, h = 366;
+  alpha(a, () => {
+    X.save(); X.shadowColor = 'rgba(14,59,92,.28)'; X.shadowBlur = 18; X.shadowOffsetY = 4; fillRR(x, y, w, h, 4, WH); X.restore();
+    X.letterSpacing = '1.5px'; txt('FROM THE RESEARCH-PAPER VERSION OF THIS TWIN · FIGURE 1(e)', x + 28, y + 28, 12, INK2, { w: 'bold' }); X.letterSpacing = '0px';
+    txt(`${D.county.name}: share waiting over 90 days for a first hospital assessment`, x + 28, y + 60, 22, '#1A2630', { f: SERIF, w: 'bold' });
+    const st = s.status[j] || 'n/a';
+    if (s.level[j] != null) txt(`now ${(s.level[j] * 100).toFixed(1)}% [80%: ${(s.lo[j] * 100).toFixed(1)}–${(s.hi[j] * 100).toFixed(1)}%] · Finland ${(s.ref[j] * 100).toFixed(1)}% · threshold ${(s.thr[j] * 100).toFixed(1)}% · data to ${monLab(s.data_through[j])}`, x + 28, y + 84, 14, '#5D6C78');
+    X.font = `bold 13px ${F}`; const cw = X.measureText(STL[st]).width + 18;
+    fillRR(x + w - 28 - cw, y + 44, cw, 22, 11, st === 'gap' ? INK : st === 'ok' ? '#D4ECF8' : '#E4E7EA'); txt(STL[st], x + w - 28 - cw / 2, y + 60, 13, st === 'gap' ? WH : INK, { a: 'center', w: 'bold' });
+    const px = x + 78, pw = w - 106, py = y + 98, ph = 150, xf = i => px + i / (n - 1) * pw, yf = v => py + ph - v / 0.4 * ph, xc = xf(kf);
+    X.fillStyle = '#F4F7F9'; X.fillRect(xc, py, px + pw - xc, ph);
+    [0, .1, .2, .3, .4].forEach(v => { X.fillStyle = '#E5ECF1'; X.fillRect(px, yf(v), pw, 1); txt(Math.round(v * 100) + '%', px - 8, yf(v) + 4, 12, '#5D6C78', { a: 'right' }); });
+    X.save(); X.beginPath(); X.rect(px, py - 1, pw, ph + 2); X.clip();
+    X.beginPath(); for (let i = 0; i <= j; i++) X.lineTo(xf(i), yf(s.hi[i])); for (let i = j; i >= 0; i--) X.lineTo(xf(i), yf(s.lo[i])); X.closePath(); X.fillStyle = 'rgba(137,207,240,.55)'; X.fill();
+    const ln = (arr, c, lw, d) => { X.save(); X.strokeStyle = c; X.lineWidth = lw; X.setLineDash(d || []); X.beginPath(); for (let i = 0; i <= j; i++) if (arr[i] != null) X.lineTo(xf(i), yf(arr[i])); X.stroke(); X.restore(); };
+    ln(s.ref, '#7F8E99', 1.5, [2, 4]); ln(s.thr, INK, 1.5, [6, 4]); ln(s.level, INK, 2.5);
+    X.restore();
+    X.fillStyle = '#8E9EAA'; X.fillRect(px, py + ph, pw, 1);
+    const rib = { gap: INK, watch: BBD, ok: '#BFE3F6', unidentifiable: '#D3D8DD', stale: '#A9B3BC' };
+    for (let i = 0; i <= j; i++) { const c = rib[s.status[i]]; if (c) { X.fillStyle = c; X.fillRect(xf(i) - pw / (n - 1) / 2, py + ph + 4, pw / (n - 1) + .5, 6); } }
+    for (let i = 0; i < n; i++) if (RM[i].slice(5, 7) === '01' && +RM[i].slice(0, 4) % 2 === 0) txt(RM[i].slice(0, 4), xf(i), py + ph + 28, 12, '#5D6C78', { a: 'center' });
+    X.fillStyle = INK; X.fillRect(xc - .5, py - 3, 1, ph + 14);
+    if (s.level[j] != null) { X.beginPath(); X.arc(xf(j), yf(s.level[j]), 4.5, 0, 7); X.fillStyle = INK; X.fill(); X.lineWidth = 2; X.strokeStyle = WH; X.stroke(); }
+    wrap('Share of patients waiting for a first assessment in pulmonology, gastroenterology, GI surgery, urology or gynaecology who have waited over 90 days (THL, the Finnish Institute for Health and Welfare). Solid line: the twin’s estimate; band: 80% interval; dashed: Finland + 10 points; dotted: Finland. A gap is flagged when the county is very likely above the dashed line; the strip under the axis marks those months.',
+      x + 28, y + 298, w - 56, 16.5, 19, '#1A2630', { f: SERIF });
+  });
+}
+function SL(lt, dur) {
+  const CTL = D.county, L = CTL.live, RM = D.replay_months, n = RM.length;
+  header(lt, '2 · THE TWIN, LIVE', `County twin: ${CTL.name}`, 'Replayed month by month, 2016–2026, using only the figures published by then.');
+  const kf = eio(pr(lt, 1.0, dur - 2.5)) * (n - 1), k = Math.floor(kf);
+  const nodes = [
+    ['Detection', 'det_screen_breast', 'attend breast screening'],
+    ['Referral', 'ref_assess_over90', 'wait > 90 days for a first hospital assessment'],
+    ['Diagnosis', 'dx_endo_over90', 'wait > 90 days for endoscopy'],
+    ['Treatment', 'treat_surg_over90', 'wait > 90 days for surgery or urology']];
+  const NX = [250, 700, 1150, 1600], NY = 392, R = 76, ap = eo(pr(lt, .3, 1.3));
+  for (let i = 0; i < 3; i++) {
+    const sg = L[nodes[i + 1][1]], den = sg.den[k] || 0, lvl = sg.level[k] || 0, x0 = NX[i] + R, x1 = NX[i + 1] - R, dens = cl(Math.sqrt(den) / 30), y = NY;
+    alpha(ap, () => {
+      fillRR(x0 - 4, y - 24, x1 - x0 + 8, 48, 24, 'rgba(255,255,255,.18)');
+      for (let j = 0; j < 70; j++) {
+        if (hash(j + i * 97) > dens) continue;
+        const late = hash(j * 3 + i * 31 + 7) < lvl, sp = late ? .12 : .32, u = (lt * sp + hash(j + i * 13)) % 1;
+        const px = x0 + u * (x1 - x0), py = y + (hash(j + 5 + i) - .5) * 30 + Math.sin(u * 9 + j) * 3;
+        X.beginPath(); X.arc(px, py, late ? 7 : 5, 0, 7); X.fillStyle = late ? INK : WH; X.fill();
+      }
+      txt(den ? `${Math.round(den)} waiting` : 'no queue figure', (x0 + x1) / 2, y + 52, 17, INK, { a: 'center', f: M });
+    });
+  }
+  nodes.forEach(([name, sgk, sub], i) => {
+    const sg = L[sgk], st = sg.status[k] || 'n/a', lvl = sg.level[k], pop = back(pr(lt, .4 + i * .2, 1.2 + i * .2));
+    X.save(); X.translate(NX[i], NY); X.scale(cl(pop, 0, 1.2), cl(pop, 0, 1.2));
+    const flash = st === 'gap' ? .5 + .5 * Math.sin(lt * 10) : 0;
+    if (st === 'gap') { X.beginPath(); X.arc(0, 0, R + 16 + flash * 12, 0, 7); X.fillStyle = `rgba(14,59,92,${.25 + .2 * flash})`; X.fill(); }
+    X.beginPath(); X.arc(0, 0, R, 0, 7); X.fillStyle = WH; X.fill();
+    X.lineWidth = 12; X.strokeStyle = 'rgba(137,207,240,.35)'; X.beginPath(); X.arc(0, 0, R - 9, 0, 7); X.stroke();
+    if (lvl != null) { X.strokeStyle = st === 'gap' ? INK : BBD; X.lineCap = 'round'; X.beginPath(); X.arc(0, 0, R - 9, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * cl(lvl)); X.stroke(); }
+    txt(lvl == null ? '—' : (lvl * 100).toFixed(1) + '%', 0, 10, 32, INK, { a: 'center', w: 'bold' });
+    if (sg.lo[k] != null) txt(`${(sg.lo[k] * 100).toFixed(0)}–${(sg.hi[k] * 100).toFixed(0)}%`, 0, 38, 15, INK2, { a: 'center', f: M });
+    X.restore();
+    alpha(ap, () => {
+      txt(name, NX[i], NY - R - 42, 30, i === 1 ? WH : INK, { a: 'center', w: 'bold' }); txt(sub, NX[i], NY - R - 14, 17, INK, { a: 'center' });
+      X.font = `bold 15px ${F}`; const lab = STL[st], w = X.measureText(lab).width + 22;
+      fillRR(NX[i] - w / 2, NY + R + 12, w, 28, 14, STC[st]); txt(lab, NX[i], NY + R + 31, 15, (st === 'gap' || st === 'stale' || st === 'watch') ? WH : INK, { a: 'center', w: 'bold' });
+    });
+  });
+  const ow = L.treat_onc_wait, os = ow.status[k] || 'n/a';
+  alpha(ap, () => { fillRR(1430, 520, 340, 34, 17, 'rgba(14,59,92,.85)'); txt(`oncology queue: ${ow.num[k] ?? '—'} waiting · ${STL[os].toLowerCase()}`, 1600, 543, 15, WH, { a: 'center' }); });
+  alpha(ap, () => {
+    fillRR(1500, 64, 310, 110, 24, WH); txt(RM[k].slice(0, 7), 1655, 128, 48, INK, { a: 'center', w: 'bold' });
+    txt('data through ' + (L.ref_assess_over90.data_through[k] || '').slice(0, 7), 1655, 160, 17, INK2, { a: 'center', f: M });
+  });
+  paperPanel(kf, eo(pr(lt, .8, 1.8)));
+  caption(lt, dur, [`${CTL.name}, picked at random: its twin replayed month by month, 2016–2026.`, 'Dots are patients waiting between steps; dark dots have waited over 90 days.',
+    'Late 2020: the referral wait jumps above Finland + 10 points, and the twin flags a gap.']);
+  source(`${D.source.model1_run}/records.csv · county ${CTL.code}`);
+}
+
+// ---------- 3 · results ----------
+function S5(lt, dur) {
+  const s = S.ref_assess_over90;
+  header(lt, '3 · RESULTS', 'Who got help when a county fell behind?', 'Referral step, 2021–2026: the wait for a first hospital assessment after a GP’s referral. Same 3 pilots for both.');
+  const rows = s.rows.slice(0, 9), n = PM.length;
+  const x0 = 470, gw = 1340, cw = gw / n, y0 = 320, rh = 54;
+  const play = eio(pr(lt, 1.0, dur - 6)) * n, ap = eo(pr(lt, .3, 1.2));
+  alpha(ap, () => {
+    let lx = 110; const ly = 252;
+    X.fillStyle = 'rgba(14,59,92,.28)'; X.fillRect(lx, ly - 17, 30, 22); txt('County worse than Finland that month', lx + 40, ly, 18, INK, { w: 'bold' }); lx += 40 + measure('County worse than Finland that month', 18, { w: 'bold' }) + 40;
+    X.fillStyle = INK; X.fillRect(lx, ly - 12, 30, 12); txt(`Pilot: ${P3} (yearly)`, lx + 40, ly, 18, INK, { w: 'bold' }); lx += 40 + measure(`Pilot: ${P3} (yearly)`, 18, { w: 'bold' }) + 40;
+    X.fillStyle = WH; X.fillRect(lx, ly - 12, 30, 12); txt(`Pilot: ${P4} (monthly)`, lx + 40, ly, 18, INK, { w: 'bold' });
+  });
+  for (let k = 0; k < n; k++) if (PM[k].slice(5, 7) === '01') {
+    const x = x0 + k * cw; X.strokeStyle = 'rgba(255,255,255,.55)'; X.lineWidth = 2; X.beginPath(); X.moveTo(x, y0 - 30); X.lineTo(x, y0 + rows.length * rh); X.stroke();
+    txt(PM[k].slice(0, 4), x + 6, y0 - 38, 20, INK, { w: 'bold' });
+  }
+  rows.forEach((r, i) => {
+    const y = y0 + i * rh;
+    alpha(ap, () => { txt(r.name.replace(' (Uusimaa and Helsinki, specialist care)', ''), x0 - 20, y + 34, 22, INK, { a: 'right', w: 'bold' }); fillRR(x0, y + 6, gw, rh - 12, 8, 'rgba(255,255,255,.18)'); });
+    for (let k = 0; k < Math.min(n, Math.ceil(play)); k++) {
+      const x = x0 + k * cw, fade = cl(play - k);
+      alpha(fade, () => {
+        if (r.truth[k]) { X.fillStyle = 'rgba(14,59,92,.28)'; X.fillRect(x, y + 6, cw + .5, rh - 12); }
+        if (r.m3[k]) { X.fillStyle = INK; X.fillRect(x, y + 10, cw + .5, 13); }
+        if (r.m4[k]) { X.fillStyle = WH; X.fillRect(x, y + rh - 23, cw + .5, 13); }
+      });
+    }
+  });
+  if (play > 0 && play < n) {
+    const x = x0 + play * cw; X.strokeStyle = WH; X.lineWidth = 4; X.beginPath(); X.moveTo(x, y0 - 20); X.lineTo(x, y0 + rows.length * rh); X.stroke();
+    chip(x - 50, y0 + rows.length * rh + 8, PM[Math.min(n - 1, Math.floor(play))].slice(0, 7), 16, WH, INK);
+  }
+  let need = 0, h3 = 0, h4 = 0; const kk = Math.min(n, Math.floor(play));
+  s.rows.forEach(r => { for (let k = 0; k < kk; k++) if (r.truth[k]) { need++; if (r.m3[k]) h3++; if (r.m4[k]) h4++; } });
+  const c3 = need ? h3 / need : 0, c4 = need ? h4 / need : 0, gy = 860;
+  [[c3, `${P3}: months behind with a pilot`, INK], [c4, `${P4}: months behind with a pilot`, WH]].forEach(([c, lab, col], i) => {
+    const x = 110 + i * 860;
+    alpha(ap, () => {
+      fillRR(x, gy, 820, 96, 22, 'rgba(255,255,255,.25)');
+      txt(lab, x + 24, gy + 36, 18, INK, { w: 'bold' }); fillRR(x + 24, gy + 54, 560, 22, 11, 'rgba(14,59,92,.15)'); fillRR(x + 24, gy + 54, Math.max(10, 560 * c), 22, 11, col);
+      txt(pct(c), x + 790, gy + 80, 54, col === WH ? WH : INK, { a: 'right', w: 'bold' });
+    });
+  });
+  const fin = eo(pr(lt, dur - 5.2, dur - 4.4));
+  alpha(fin, () => {
+    const cx = W / 2, x = 400, w = 1120, y = 372, h = 400;
+    fillRR(x, y, w, h, 34, WH); X.lineWidth = 3; X.strokeStyle = GOLD; rr(x + 1.5, y + 1.5, w - 3, h - 3, 33); X.stroke();
+    txt('A pilot was in place in', cx, y + 64, 30, INK2, { a: 'center', w: 'bold' });
+    txt(pct(s.m3.coverage), cx - 280, y + 188, 110, INK, { a: 'center', w: 'bold' }); txt(P3, cx - 280, y + 232, 21, INK, { a: 'center' });
+    txt('→', cx, y + 176, 80, GOLD, { a: 'center', w: 'bold' });
+    txt(pct(s.m4.coverage), cx + 280, y + 188, 110, BBD, { a: 'center', w: 'bold' }); txt(P4, cx + 280, y + 232, 21, INK, { a: 'center' });
+    txt('of the months a county was behind Finland on the referral step', cx, y + 292, 24, INK, { a: 'center' });
+    txt(`Same budget · difference +${Math.round(s.diff.point * 100)} points (80% interval +${Math.round(s.diff.lo80 * 100)} to +${Math.round(s.diff.hi80 * 100)})`, cx, y + 336, 18, INK2, { a: 'center' });
+    txt(`Stretches of 3 or more months behind that got a pilot: ${s.m3.episodes_reached} → ${s.m4.episodes_reached} of ${s.m4.episodes}`, cx, y + 364, 18, INK2, { a: 'center' });
+  });
+  caption(lt, dur, ['Each row is a county. Grey months: its referral wait was clearly worse than Finland’s.',
+    `Navy bars: pilots placed by the ${P3}, once a year, from two-year-old figures.`,
+    `White bars: pilots placed by the ${P4}, every month, from the twins.`,
+    `Same budget: a pilot was in place in ${pct(s.m4.coverage)} of the months a county was behind, against ${pct(s.m3.coverage)}.`]);
+  source(`runs/compare/policy/${D.source.policy_run}/scorecard.json · signal ref_assess_over90`);
+}
+function S6(lt, dur) {
+  header(lt, '3 · RESULTS', 'Where it wins, and where it ties', 'Share of the months a county was behind with a pilot in place, at three steps of the pathway');
+  const cards = [
+    ['ref_assess_over90', 'refer', 'Referral step', 'Waiting for a first hospital assessment after a GP’s referral'],
+    ['dx_endo_over90', 'diag', 'Endoscopy queue', 'Waiting for endoscopy, the test that finds bowel and stomach cancer'],
+    ['treat_onc_wait', 'treat', 'Oncology queue', 'Patients waiting for cancer treatment (the Goal 3 proxy)'],
+  ];
+  cards.forEach(([k, ic, name, what], i) => {
+    const s = S[k], x = 110 + i * 580, y = 246, a = eo(pr(lt, .3 + i * .3, 1.0 + i * .3));
+    alpha(a, () => shift(0, (1 - a) * 30, () => {
+      fillRR(x, y, 540, 470, 26, WH);
+      X.beginPath(); X.arc(x + 74, y + 76, 46, 0, 7); X.fillStyle = BBP; X.fill(); X.lineWidth = 3; X.strokeStyle = BBD; X.stroke(); pictogram(ic, x + 74, y + 76, 56, INK);
+      txt(name, x + 140, y + 70, 30, INK, { w: 'bold' }); wrap(what, x + 140, y + 98, 370, 17, 22, INK2);
+      [[P3, s.m3.coverage, INK], [P4, s.m4.coverage, BBD]].forEach(([lab, v, c], r) => {
+        const by = y + 194 + r * 90, g = eo(pr(lt, .7 + i * .3, 2.0 + i * .3));
+        txt(lab, x + 36, by, 18, INK, { w: 'bold' }); fillRR(x + 36, by + 14, 380, 30, 15, 'rgba(14,59,92,.1)'); fillRR(x + 36, by + 14, Math.max(16, 380 * v * g), 30, 15, c);
+        txt(pct(v * g), x + 430, by + 39, 28, INK, { w: 'bold' });
+      });
+      const d = s.diff, win = d.lo80 > 0;
+      chip(x + 36, y + 392, win ? 'WIN' : 'TIE', 22, win ? INK : 'rgba(14,59,92,.35)', WH);
+      txt(`${d.point >= 0 ? '+' : ''}${Math.round(d.point * 100)} points`, x + 130, y + 424, 24, INK, { w: 'bold' });
+      txt(`80% interval ${Math.round(d.lo80 * 100)} to ${Math.round(d.hi80 * 100)}`, x + 290, y + 424, 17, INK2);
+    }));
+  });
+  const r = eo(pr(lt, 3.4, 4.2));
+  alpha(r, () => {
+    fillRR(110, 738, 1700, 212, 26, 'rgba(255,255,255,.3)');
+    txt('Where it falls short (pass marks set before the first run)', 140, 776, 22, INK, { w: 'bold' });
+    // forecasting: 10 squares each
+    txt('Forecasting next month', 140, 812, 18, INK, { w: 'bold' });
+    for (let q = 0; q < 10; q++) fillRR(140 + q * 24, 828, 18, 18, 4, INK);
+    txt('beats a straight line: 10 of 10', 390, 843, 16, INK); check(720, 836, 20, true);
+    for (let q = 0; q < 10; q++) fillRR(140 + q * 24, 858, 18, 18, 4, q < 5 ? INK : 'rgba(14,59,92,.15)');
+    txt('beats “same as last month”: 5 of 10', 390, 873, 16, INK); check(720, 866, 20, false);
+    // the 2020 dip
+    txt('The 2020 pandemic dip', 760, 812, 18, INK, { w: 'bold' });
+    X.save(); X.strokeStyle = INK; X.lineWidth = 3; X.lineJoin = 'round'; X.beginPath(); X.moveTo(760, 846); X.lineTo(800, 846); X.lineTo(818, 878); X.lineTo(836, 850); X.lineTo(880, 846); X.stroke(); X.restore();
+    check(912, 858, 30, false);
+    wrap('Referrals fell in spring 2020; the alarm did not fire (z = −0.76, it needs 3).', 950, 840, 330, 16, 21, INK);
+    // the Goal 3 signal
+    const so = S.treat_onc_wait;
+    txt('Goal 3 signal: the oncology queue', 1320, 812, 18, INK, { w: 'bold' });
+    fillRR(1320, 830, 200 * so.m3.coverage / .7, 16, 8, INK); txt(pct(so.m3.coverage), 1330 + 200 * so.m3.coverage / .7, 844, 15, INK, { w: 'bold' });
+    fillRR(1320, 854, 200 * so.m4.coverage / .7, 16, 8, BBD); txt(pct(so.m4.coverage), 1330 + 200 * so.m4.coverage / .7, 868, 15, INK, { w: 'bold' });
+    txt('= a tie, not the win we hoped for', 1320, 904, 16, INK);
+  });
+  caption(lt, dur, ['The win is on the referral step: the one the paper says is slow in Finland.', 'Endoscopy and the oncology queue are ties, and we show where the model falls short.']);
+  source('SCORECARD.md · runs/compare/policy');
+}
+
+// ---------- 4 · how it works ----------
+function secHead(lt, L, name, line) {
+  const p = back(pr(lt, 0, .9));
+  X.save(); X.translate(190, 150); X.scale(cl(p, 0, 1.3), cl(p, 0, 1.3)); X.beginPath(); X.arc(0, 0, 70, 0, 7); X.fillStyle = WH; X.fill();
+  txt(L, 0, 28, 80, BBD, { a: 'center', w: 'bold' }); X.restore();
+  const q = eo(pr(lt, .3, 1.1));
+  alpha(q, () => shift((1 - q) * 40, 0, () => { chip(290, 70, '4 · HOW IT WORKS · section ' + L, 18, INK, WH); txt(name, 290, 160, 58, WH, { w: 'bold' }); txt(line, 292, 204, 24, INK); }));
+}
+function SA(lt, dur) {
+  secHead(lt, 'A', 'Inputs', 'Public, aggregate numbers only. The paper’s survey data is not public (its data statement), so it is evidence, not input.');
+  const src = [
+    ['S01', 'THL specialist-care queues', 'by specialty, per provider', 'monthly from 2021, 3× a year before'],
+    ['S02', 'THL procedure queues', 'incl. endoscopy (group 27)', 'monthly from 2021'],
+    ['S03–05', 'Sotkanet screening', 'breast, cervix, colorectal, per county', 'yearly'],
+  ];
+  src.forEach((s, i) => {
+    const a = eo(pr(lt, .8 + i * .6, 1.8 + i * .6)), y = 270 + i * 160;
+    alpha(a, () => shift((1 - a) * -100, 0, () => { fillRR(110, y, 760, 136, 24, WH); chip(136, y + 18, s[0], 18, BB, WH, { f: M });
+      txt(s[1], 136, y + 88, 32, INK, { w: 'bold' }); txt(s[2] + ' · ' + s[3], 136, y + 120, 19, INK2); }));
+    const f = pr(lt, 1.6 + i * .6, 3 + i * .6); X.save(); X.strokeStyle = WH; X.lineWidth = 6; X.setLineDash([16, 14]); X.lineDashOffset = -lt * 60;
+    X.beginPath(); X.moveTo(870, y + 68); X.bezierCurveTo(1000, y + 68, 1000, 500, 870 + 260 * f, 500); X.stroke(); X.restore();
+  });
+  const g = back(pr(lt, 3, 4));
+  X.save(); X.translate(1300, 500); X.scale(cl(g, 0, 1.2), cl(g, 0, 1.2));
+  fillRR(-170, -140, 340, 280, 40, INK); txt('Publication', 0, -64, 26, BBL, { a: 'center' }); txt('gate', 0, -30, 26, BBL, { a: 'center' });
+  txt('+45 d', 0, 40, 64, WH, { a: 'center', w: 'bold' }); txt('after the snapshot', 0, 80, 20, BBL, { a: 'center' }); X.restore();
+  const n = eo(pr(lt, 4.2, 5.2));
+  alpha(n, () => {
+    fillRR(1520, 270, 300, 450, 24, 'rgba(255,255,255,.35)'); txt('Watch out', 1546, 314, 24, INK, { w: 'bold' });
+    wrap('Queues are counted where the patient waits, not where they live. No age or sex split. Before 2023, hospital districts are mapped onto counties.', 1546, 356, 250, 19, 27, INK);
+    chip(1546, 610, 'NEXT INPUT', 15, INK, WH); wrap('Avohilmo 14-day primary-care access, as cited by the paper', 1546, 660, 250, 17, 23, INK, { w: 'bold' });
+  });
+  const t = eo(pr(lt, 1.2, 2.2));
+  alpha(t, () => {
+    fillRR(110, 770, 1710, 104, 22, 'rgba(255,255,255,.92)');
+    txt('THL', 140, 836, 40, INK, { w: 'bold' });
+    wrap('Finnish Institute for Health and Welfare (Terveyden ja hyvinvoinnin laitos), the national public-health agency. It publishes how many patients wait, and for how long, in every county. Sotkanet is its regional statistics service.', 260, 812, 1530, 21, 28, INK);
+  });
+  caption(lt, dur, ['Everything the twin sees is a published, aggregate count, used only after its publication date.', 'The paper’s primary-care figure points to the next input: THL Avohilmo.']);
+  source('visuals/circuit/circuit.typ §A · scripts/fetch_thl.py · DATA_MANIFEST.md');
+}
+function SE(lt, dur) {
+  const e = D.example;
+  secHead(lt, 'E', 'Judge', `Two questions per record. Example: North Ostrobothnia, endoscopy queue, ${e.t}.`);
+  const x0 = 160, x1 = 1180, y0 = 760, sx = v => x0 + (v - .05) / .4 * (x1 - x0);
+  const mu = e.level, sd = (e.hi - e.lo) / 2.563, a = eo(pr(lt, .8, 2.4));
+  fillRR(110, 260, 1120, 560, 26, 'rgba(255,255,255,.25)');
+  X.save(); X.beginPath(); X.rect(x0, 280, (x1 - x0) * a, 500); X.clip();
+  const pdf = v => Math.exp(-.5 * ((v - mu) / sd) ** 2), amp = 380;
+  X.beginPath(); X.moveTo(sx(.05), y0); for (let v = .05; v <= .45; v += .002) X.lineTo(sx(v), y0 - pdf(v) * amp); X.lineTo(sx(.45), y0); X.closePath(); X.fillStyle = 'rgba(255,255,255,.5)'; X.fill();
+  const sh = pr(lt, 3, 4.4);
+  X.beginPath(); X.moveTo(sx(e.thr), y0); for (let v = e.thr; v <= .45; v += .002) X.lineTo(sx(v), y0 - pdf(v) * amp); X.lineTo(sx(.45), y0); X.closePath(); X.fillStyle = `rgba(14,59,92,${.75 * sh})`; X.fill();
+  X.restore();
+  X.strokeStyle = INK; X.lineWidth = 3; X.beginPath(); X.moveTo(x0, y0); X.lineTo(x1, y0); X.stroke();
+  [.1, .2, .3, .4].forEach(v => txt(pct(v), sx(v), y0 + 30, 18, INK, { a: 'center' }));
+  const lines = [[e.ref, 'Finland ' + pct(e.ref), 1.6, BBD], [e.thr, 'Finland + δ 10 pts = ' + pct(e.thr), 2.2, INK], [e.level, 'county level ' + (e.level * 100).toFixed(1) + '%', 2.6, WH]];
+  lines.forEach(([v, lab, t0, c], i) => {
+    const q = eo(pr(lt, t0, t0 + .6));
+    alpha(q, () => { X.strokeStyle = c; X.lineWidth = 4; X.setLineDash(i < 2 ? [10, 8] : []); X.beginPath(); X.moveTo(sx(v), y0); X.lineTo(sx(v), y0 - 420 * q); X.stroke(); X.setLineDash([]);
+      txt(lab, sx(v) + (i === 0 ? -10 : 10), 320 + i * 34, 19, c === WH ? INK : c, { a: i === 0 ? 'right' : 'left', w: 'bold' }); });
+  });
+  const pg = eo(pr(lt, 4, 5));
+  alpha(pg, () => { fillRR(sx(.33), 450, 220, 120, 20, INK); txt('P(gap)', sx(.33) + 110, 494, 22, BBL, { a: 'center' }); txt((e.p_gap * pg).toFixed(2), sx(.33) + 110, 550, 50, WH, { a: 'center', w: 'bold' }); });
+  const qc = [['80% interval width', `${Math.round((e.hi - e.lo) * 100)} pts ≤ 25`, true], ['data age', '2 months ≤ 6', true], ['queue size', `${e.den} ≥ 20`, true]];
+  txt('Enough data to judge?', 1290, 300, 28, WH, { w: 'bold' });
+  qc.forEach(([k, v, ok], i) => {
+    const q = back(pr(lt, 2 + i * .7, 2.8 + i * .7)), y = 340 + i * 130;
+    alpha(cl(q), () => { fillRR(1290, y, 520, 110, 22, WH); check(1340, y + 55, 40 * cl(q, 0, 1.2), ok); txt(k, 1390, y + 46, 24, INK, { w: 'bold' }); txt(v, 1390, y + 82, 22, INK2, { f: M }); });
+  });
+  const r = eo(pr(lt, 5.4, 6.2)); alpha(r, () => { fillRR(1290, 740, 520, 80, 22, INK); txt('→ status: GAP', 1550, 794, 32, WH, { a: 'center', w: 'bold' }); });
+  caption(lt, dur, ['Is the county worse than Finland by more than a margin, and how sure is the twin?', 'With too little data it says it cannot judge. The margin δ is our choice, not a target.']);
+  source('runs/model1/replay · circuit §E · DECISIONS.md #11');
+}
+function SF(lt, dur) {
+  secHead(lt, 'F', 'Status', 'One word per signal, county and month.');
+  const words = [
+    ['GAP', INK, WH, 'Very likely worse than Finland by more than the margin (probability 90% or more)'],
+    ['WATCH', BBD, WH, 'Probably worse (probability 70–90%)'],
+    ['OK', WH, INK, 'No sign of a gap'],
+    ['CANNOT JUDGE', '#E4E7EA', '#45515B', 'Too few patients, too uncertain, or no recent figure'],
+  ];
+  words.forEach(([w, bgc, fg, mean], i) => {
+    const y = 266 + i * 124, a = back(pr(lt, .3 + i * .3, 1.0 + i * .3));
+    X.save(); X.translate(340, y + 48); X.scale(cl(a, 0, 1.15), cl(a, 0, 1.15)); X.translate(-340, -(y + 48));
+    fillRR(110, y, 460, 96, 48, bgc); txt(w, 340, y + 64, w.length > 6 ? 38 : 46, fg, { a: 'center', w: 'bold' }); X.restore();
+    alpha(eo(pr(lt, .6 + i * .3, 1.3 + i * .3)), () => wrap(mean, 620, y + 60, 1180, 30, 36, INK));
+  });
+  const ex = eo(pr(lt, 2.6, 3.4)), lr = D.county.live.ref_assess_over90, ig = D.replay_months.indexOf('2020-10-31');
+  alpha(ex, () => {
+    fillRR(110, 774, 1710, 116, 26, 'rgba(14,59,92,.88)');
+    txt(`Example: ${D.county.name} · referral step · October 2020`, 150, 828, 30, WH, { w: 'bold' });
+    txt(`${pct(lr.level[ig])} waiting over 90 days, against ${pct(lr.ref[ig])} in Finland`, 150, 866, 22, BBL);
+    const cw = measure('GAP', 34, { w: 'bold' }) + 48; fillRR(1810 - 30 - cw, 798, cw, 68, 34, WH); txt('GAP', 1810 - 30 - cw / 2, 845, 34, INK, { a: 'center', w: 'bold' });
+  });
+  caption(lt, dur, ['“Gap” means worse than Finland by more than the margin. It is not a verdict on care.']);
+  source('records.csv: status · scripts/run_replay.py');
+}
+
+// ---------- 5 · conclusion ----------
+function SZ(lt, dur) {
+  header(lt, '5 · CONCLUSION', 'What this shows', 'From one paper’s finding to a twin of every county, using public data only');
+  const s = S.ref_assess_over90;
+  const items = [
+    ['1', 'The paper', 'Finland loses time at the front of the cancer pathway: getting seen, and getting referred to a specialist.'],
+    ['2', 'The county twins', 'Watch that step in every county, every month, and flag where a county falls behind Finland.'],
+  ];
+  items.forEach(([n, h, b], i) => {
+    const y = 258 + i * 150, a = eo(pr(lt, .4 + i * .6, 1.1 + i * .6));
+    alpha(a, () => shift(0, (1 - a) * 30, () => {
+      fillRR(110, y, 1700, 128, 26, 'rgba(255,255,255,.92)');
+      X.beginPath(); X.arc(178, y + 64, 36, 0, 7); X.fillStyle = INK; X.fill(); txt(n, 178, y + 78, 36, WH, { a: 'center', w: 'bold' });
+      txt(h, 240, y + 52, 28, INK, { w: 'bold' }); wrap(b, 240, y + 92, 1540, 24, 30, INK2);
+    }));
+  });
+  const a3 = eo(pr(lt, 1.6, 2.4));
+  alpha(a3, () => shift(0, (1 - a3) * 30, () => {
+    const y = 558;
+    fillRR(110, y, 1700, 250, 26, WH);
+    X.beginPath(); X.arc(178, y + 64, 36, 0, 7); X.fillStyle = INK; X.fill(); txt('3', 178, y + 78, 36, WH, { a: 'center', w: 'bold' });
+    txt('The result, with the same 3 pilots and the same budget', 240, y + 52, 28, INK, { w: 'bold' });
+    txt(pct(s.m4.coverage), 240, y + 176, 104, BBD, { w: 'bold' });
+    const uw = measure(pct(s.m4.coverage), 104, { w: 'bold' }) * eo(pr(lt, 2.4, 3.2)); X.fillStyle = GOLD; X.fillRect(240, y + 192, uw, 4);
+    wrap(`of the months a county was behind on the referral step had a pilot in place with the ${P4},`, 500, y + 112, 1270, 24, 30, INK);
+    wrap(`against ${pct(s.m3.coverage)} with the ${P3}.`, 500, y + 190, 1270, 24, 30, INK, { w: 'bold' });
+  }));
+  const a4 = eo(pr(lt, 3.4, 4.2));
+  alpha(a4, () => {
+    fillRR(110, 834, 1700, 96, 26, 'rgba(14,59,92,.85)');
+    txt('Not shown: any effect on survival.', 150, 892, 26, WH, { w: 'bold' });
+    txt('Next: add primary-care access (THL Avohilmo), the step before referral.', 700, 892, 24, BBL);
+  });
+  caption(lt, dur, ['The paper points at referral; that is where the county twins help most.', 'They do not show an effect on survival, and we do not claim one.']);
+  source('SCORECARD.md · runs/compare/policy · Khalife et al. 2025');
+}
+
+// ---------- timeline: [scene, seconds on screen, seconds it was designed for] ----------
+const SCENES = [[S0, 7], [S1, 7], [S2, 8], [S3, 7], [S4, 15], [SL, 15], [S5, 17], [S6, 10], [SA, 8, 11], [SE, 8, 11], [SF, 7], [SZ, 11]];
+let acc = 0; const TL = SCENES.map(([f, d, d0]) => { const o = { f, d, d0: d0 || d, t0: acc }; acc += d; return o; });
+window.DURATION = acc;
+window.render = function (t) {
+  X.setTransform(1, 0, 0, 1, 0, 0); X.globalAlpha = 1; X.letterSpacing = '0px'; bg(t);
+  const i = TL.findIndex(s => t < s.t0 + s.d); const s = TL[i === -1 ? TL.length - 1 : i]; const lt = Math.min(t - s.t0, s.d);
+  const fin = pr(lt, 0, .45), fout = 1 - pr(lt, s.d - .35, s.d);
+  X.save(); X.globalAlpha = Math.min(fin, fout); X.translate(0, (1 - eo(fin)) * 24);
+  s.f(lt * s.d0 / s.d, s.d0); X.restore();
+  X.fillStyle = 'rgba(255,255,255,.7)'; X.fillRect(0, H - 6, W * t / acc, 6);
+};
+// live preview: ?t= for a still, otherwise play
+const q = new URLSearchParams(location.search);
+if (q.has('t')) render(+q.get('t'));
+else if (!q.has('capture')) { const t0 = performance.now(); (function loop() { const t = ((performance.now() - t0) / 1000) % acc; render(t); document.getElementById('ui').textContent = t.toFixed(1) + ' / ' + acc + ' s'; requestAnimationFrame(loop); })(); }
+</script>
+</body>
+</html>

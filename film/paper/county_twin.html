@@ -1,0 +1,464 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>County Twin Figure</title>
+<style>
+  :root { --bg: #89CFF0; --ink: #0E3B5C; }
+  html, body { margin: 0; height: 100%; overflow: hidden; background: linear-gradient(135deg, #9AD7F3, #89CFF0 55%, #74C2EA); }
+  body { display: grid; place-items: center; }
+  canvas { display: block; width: min(100vw, calc(100vh * 16 / 9)); height: auto; }
+  #ui { position: fixed; left: 50%; bottom: 12px; transform: translateX(-50%); display: flex; gap: 8px; align-items: center;
+        font: 13px "DejaVu Sans", sans-serif; color: var(--ink); background: rgba(255,255,255,.96); padding: 6px 12px; border-radius: 18px;
+        box-shadow: 0 2px 12px rgba(14,59,92,.25); transition: opacity .4s; }
+  #ui.hide { opacity: 0; }
+  #ui button, #ui select { font: inherit; color: var(--ink); background: #fff; border: 1px solid #BDE5F8; border-radius: 12px; padding: 3px 10px; cursor: pointer; }
+  #ui input[type=range] { width: min(40vw, 420px); accent-color: #4FA8D8; }
+  #ui span { min-width: 72px; font-variant-numeric: tabular-nums; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1920" height="1080"></canvas>
+<div id="ui">
+  <button id="pp">Pause</button>
+  <input id="sc" type="range" min="0" max="1000" value="0" aria-label="Replay position">
+  <span id="tt"></span>
+  <select id="sp" aria-label="Replay speed">
+    <option value="0.5">0.5 month/s</option><option value="1" selected>1 month/s</option><option value="2">2 months/s</option><option value="4">4 months/s</option>
+  </select>
+</div>
+<script src="data.js"></script>
+<script>
+/* The county twin as a research-paper figure page. Each panel is one Model 1 signal for one county, replayed month by month,
+   with a caption saying what the signal measures (twin/signals.json, DATA_MANIFEST.md) and what the twin has seen so far.
+   Numbers come only from data.js (scripts/export_paper_film.py <- runs/model1/replay/.../records.csv).
+   render(t) is deterministic: the same page plays live and is captured to video by scripts/render_paper_film.mjs. */
+const q = new URLSearchParams(location.search), CAPTURE = q.has('capture');
+const cv = document.getElementById('c'), X = cv.getContext('2d'), W = 1920, H = 1080;
+const DPR = CAPTURE ? 1 : Math.min(2, window.devicePixelRatio || 1);
+cv.width = W * DPR; cv.height = H * DPR;
+
+// white page, navy ink, baby-blue accents
+const INK = '#0E3B5C', INK2 = '#2B6A92', BB = '#89CFF0', BBD = '#4FA8D8', BBL = '#BDE5F8', BBP = '#EAF6FD';
+const TXT = '#1A2630', MUT = '#5D6C78', GRID = '#E5ECF1', AXC = '#8E9EAA', FUT = '#F4F7F9';
+const SERIF = '"LM Roman 10", "Latin Modern Roman", "Bitstream Charter", Georgia, serif';
+const SANS = '"DejaVu Sans", Arial, sans-serif', MONO = '"IBM Plex Mono", "DejaVu Sans Mono", monospace';
+
+const CT = D.county, L = CT.live, RM = D.replay_months, N = RM.length, SG = D.signals;
+const INTRO = 2.5, SPM = 1, HOLD = 1.5, OUTRO = 7, T_END = INTRO + (N - 1) * SPM;
+window.DURATION = T_END + HOLD + OUTRO;
+
+const cl = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v)), pr = (t, a, b) => cl((t - a) / (b - a)), eo = p => 1 - Math.pow(1 - p, 3);
+function hash(i) { const s = Math.sin(i * 127.1 + 311.7) * 43758.5453; return s - Math.floor(s); }
+const MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const mlab = s => MON[+s.slice(5, 7) - 1] + ' ' + s.slice(0, 4);
+const fmtInt = v => Math.round(v).toLocaleString('en-US');
+const isFlow = k => SG[k].kind === 'ratio' && k !== 'treat_onc_wait';
+const fmt = (k, v) => v == null ? '—' : isFlow(k) ? '×' + v.toFixed(2) : k === 'treat_onc_wait' ? v.toFixed(1) + ' d' : (v * 100).toFixed(1) + '%';
+const bare = (k, v) => v == null ? '—' : isFlow(k) ? '×' + v.toFixed(2) : k === 'treat_onc_wait' ? v.toFixed(1) : (v * 100).toFixed(1);
+const through = (k, s) => !s ? '—' : SG[k].kind === 'pct' ? s.slice(0, 4) : mlab(s);
+
+// ---------- drawing helpers ----------
+function font(sz, fam = SERIF, st = '') { X.font = `${st} ${sz}px ${fam}`.trim(); }
+function txt(s, x, y, sz, c = TXT, o = {}) { font(sz, o.f || SERIF, o.st || ''); X.fillStyle = c; X.textAlign = o.a || 'left'; X.textBaseline = 'alphabetic'; X.fillText(s, x, y); }
+function fit(s, x, y, maxW, sz, c = TXT, o = {}) {
+  let z = sz; font(z, o.f || SERIF, o.st || ''); while (X.measureText(s).width > maxW && z > 8) { z -= 0.5; font(z, o.f || SERIF, o.st || ''); }
+  X.fillStyle = c; X.textAlign = o.a || 'left'; X.textBaseline = 'alphabetic'; X.fillText(s, x, y);
+}
+function wrapLines(s, maxW, sz, fam, st) {
+  font(sz, fam, st); const out = []; let line = '';
+  for (const w of s.split(' ')) { const t2 = line ? line + ' ' + w : w; if (X.measureText(t2).width > maxW && line) { out.push(line); line = w; } else line = t2; }
+  if (line) out.push(line); return out;
+}
+function para(s, x, y, maxW, sz, lh, c = TXT, o = {}) {
+  const fam = o.f || SERIF, st = o.st || '', max = o.max || 99, ls = wrapLines(s, maxW, sz, fam, st), show = ls.slice(0, max);
+  if (ls.length > max && max > 0) { let last = show[max - 1]; font(sz, fam, st); while (X.measureText(last + ' …').width > maxW && last.includes(' ')) last = last.slice(0, last.lastIndexOf(' ')); show[max - 1] = last + ' …'; }
+  show.forEach((l, i) => txt(l, x, y + i * lh, sz, c, o)); return show.length;
+}
+function rr(x, y, w, h, r) { X.beginPath(); X.roundRect(x, y, w, h, r); }
+function fillRR(x, y, w, h, r, c) { rr(x, y, w, h, r); X.fillStyle = c; X.fill(); }
+function hline(x1, x2, y, w = 1, c = INK) { X.fillStyle = c; X.fillRect(x1, y - w / 2, x2 - x1, w); }
+function alpha(a, fn) { if (a <= 0) return; X.save(); X.globalAlpha *= cl(a); fn(); X.restore(); }
+function path(arr, j, xf, yf) { const runs = []; let cur = null; for (let i = 0; i <= j; i++) { const v = arr[i]; if (v == null) { cur = null; continue; } if (!cur) { cur = []; runs.push(cur); } cur.push([xf(i), yf(v)]); } return runs; }
+function stroke(runs, c, w, dash) {
+  X.save(); X.strokeStyle = c; X.lineWidth = w; X.setLineDash(dash || []); X.lineJoin = 'round';
+  for (const r of runs) { X.beginPath(); r.forEach(([x, y], i) => i ? X.lineTo(x, y) : X.moveTo(x, y)); if (r.length === 1) { X.moveTo(r[0][0] - 1.5, r[0][1]); X.lineTo(r[0][0] + 1.5, r[0][1]); } X.stroke(); }
+  X.restore();
+}
+function band(lo, hi, j, xf, yf, c) {
+  X.fillStyle = c; let i = 0;
+  while (i <= j) {
+    if (lo[i] == null || hi[i] == null) { i++; continue; }
+    let e = i; while (e + 1 <= j && lo[e + 1] != null && hi[e + 1] != null) e++;
+    X.beginPath();
+    if (e === i) X.rect(xf(i) - 1.5, yf(hi[i]), 3, yf(lo[i]) - yf(hi[i]));
+    else { for (let a = i; a <= e; a++) X.lineTo(xf(a), yf(hi[a])); for (let a = e; a >= i; a--) X.lineTo(xf(a), yf(lo[a])); X.closePath(); }
+    X.fill(); i = e + 1;
+  }
+}
+
+// ---------- status vocabulary (run_replay.py) ----------
+const ST = {
+  gap: { lab: 'GAP', bg: INK, fg: '#FFFFFF', rib: INK },
+  watch: { lab: 'WATCH', bg: BBD, fg: '#FFFFFF', rib: BBD },
+  ok: { lab: 'OK', bg: '#D4ECF8', fg: INK, rib: '#BFE3F6' },
+  unidentifiable: { lab: 'CANNOT JUDGE', bg: '#E4E7EA', fg: '#45515B', rib: '#D3D8DD' },
+  stale: { lab: 'STALE', bg: '#C9D0D6', fg: '#2E3A43', rib: '#A9B3BC' },
+  'n/a': { lab: 'NO GAP RULE', bg: '#FFFFFF', fg: MUT, rib: '#EEF1F3' },
+  none: { lab: 'NO DATA YET', bg: '#FFFFFF', fg: MUT, rib: null },
+};
+const stOf = (k, j) => L[k].status[j] || 'none';
+const word = s => ({ gap: 'gap', watch: 'watch', ok: 'OK', unidentifiable: 'cannot judge', stale: 'stale', 'n/a': 'no rule' }[s] || 'no data');
+
+// ---------- panels: what each signal measures ----------
+const PANELS = [
+  { id: 'b', k: 'det_screen_breast', col: 0, row: 0, title: 'Breast screening participation', short: 'Breast screening',
+    cap: 'Participants as % of those invited to mammography screening. Finnish Cancer Registry via Sotkanet 3621; yearly, each year usable from 31 December of the next. Gap: below national − 5 pts (model). Dash-dot line: the strategy’s 80% target.' },
+  { id: 'c', k: 'det_screen_cervix', col: 0, row: 1, title: 'Cervical screening participation', short: 'Cervical screening',
+    cap: 'Participants as % of those invited to cervical screening. Finnish Cancer Registry via Sotkanet 3620; yearly, each year usable from 31 December of the next. Gap: below national − 5 pts (model). Target 80% (strategy).' },
+  { id: 'd', k: 'det_screen_colorectal', col: 0, row: 2, title: 'Colorectal screening participation', short: 'Colorectal screening',
+    cap: 'Participants as % of those invited to colorectal (FIT) screening, rolled out from 2022, so the series starts late. Sotkanet 6103; yearly, usable from 31 December of the next year. Gap: below national − 5 pts (model). Target 80% (strategy).' },
+  { id: 'e', k: 'ref_assess_over90', col: 1, row: 0, title: 'Waiting over 90 days for assessment', short: 'Assessment > 90 d',
+    cap: 'Share of patients awaiting a first assessment in pulmonology, gastroenterology, GI surgery, urology or gynaecology who have waited over 90 days. All referral reasons, so not cancer-specific. THL queues (S01). Gap: above national + 10 pts (model).' },
+  { id: 'f', k: 'ref_over21', col: 1, row: 1, title: 'Referrals handled after 21 days', short: 'Referrals > 21 d',
+    cap: 'Share of referrals to specialist care, all specialties, processed in more than 21 days; by law, assessment must begin within 3 weeks of referral. Not cancer-specific. THL queues (S01). Gap: above national + 5 pts (model).' },
+  { id: 'g', k: 'ref_volume_yoy', col: 1, row: 2, title: 'Referral volume vs a year earlier', short: 'Referral volume',
+    cap: 'Referrals to specialist care in the period ÷ the same period a year earlier, all specialties; log scale. A flow signal for the pathway twin and the 2020 positive control, with no gap rule. THL queues (S01).' },
+  { id: 'h', k: 'dx_endo_over90', col: 2, row: 0, title: 'Endoscopy: waiting over 90 days', short: 'Endoscopy > 90 d',
+    cap: 'Share of patients waiting for oesophageal, gastric or intestinal endoscopy who have waited over 90 days. The diagnostic step for colorectal and gastric cancer, but every indication is counted. THL procedure queues, group 27 (S02). Gap: above national + 10 pts (model).' },
+  { id: 'i', k: 'ctrl_population_yoy', col: 2, row: 1, title: 'Negative control: population', short: 'Population (control)',
+    cap: 'Residents reported in the same THL cube ÷ a year earlier; log scale. It should not react to care disruptions, so a jump here points at the data, not at the county. No gap rule.' },
+  { id: 'j', k: 'treat_onc_wait', col: 3, row: 0, title: 'Oncology queue (Goal 3 proxy)', short: 'Oncology queue',
+    cap: 'Patients waiting for oncology treatment (specialty 65) ÷ oncology referrals per day: a queue-pressure index in days, not a measured time to treatment. Judged with 10 or more waiting. Gap: above 1.5 × national (model).' },
+  { id: 'k', k: 'treat_onc_over90', col: 3, row: 1, title: 'Oncology: waiting over 90 days', short: 'Oncology > 90 d',
+    cap: 'Share of the oncology treatment queue (specialty 65) waiting over 90 days; 90 days is THL’s reporting band, not a cancer target time. Judged with 20 or more waiting. Gap: above national + 5 pts (model). Cancer-specific.' },
+  { id: 'l', k: 'treat_surg_over90', col: 3, row: 2, title: 'GI surgery + urology: over 90 days', short: 'Surgery + urology > 90 d',
+    cap: 'Share of the treatment queue in GI surgery (20G) and urology (20U) waiting over 90 days. These specialties operate colorectal, prostate and bladder cancer but mostly treat other patients: capacity context only. THL queues (S01). Gap: above national + 10 pts (model).' },
+];
+const LEAD = 'Each panel shows one Model 1 signal for this county as the twin knew it at the replay month: estimate (solid line), 80% interval (band), gap threshold (dashed) and national level (dotted). Only figures already published by then are used: THL queue snapshots from 45 days after the reference date (three a year until 2020, monthly from 2021) and yearly registry figures from 31 December of the following year. Thresholds marked (model) are our choices, not official targets. Public aggregate data only: the twin is one county, never a patient.';
+const CAP_A = 'Boxes give each step’s status: the worst among its signals, shown as OK only when a cancer-specific signal is OK, otherwise “no gap on proxies” (DECISIONS.md #12). Streams are the patients waiting to enter the next step in the latest THL snapshot: dots scale with the square root of the queue, and dark dots have waited over 90 days. They are separate queues, counted where the patient waits, not the same patients moving along.';
+
+// ---------- layout ----------
+const PX0 = 52, PW = 1816, COLW = 433, GUT = 28, colX = c => PX0 + c * (COLW + GUT);
+const GRID_Y = 328, CELLH = 238, ROWG = 4, rowY = r => GRID_Y + r * (CELLH + ROWG);
+
+// ---------- fixed axes per signal (so scales never jump during the replay) ----------
+function niceStep(range, maxN, steps) { for (const s of steps) if (range / s <= maxN + 1e-9) return s; return steps[steps.length - 1]; }
+const DOM = {};
+for (const p of PANELS) {
+  const k = p.k, s = L[k], nn = a => a.filter(v => v != null);
+  if (isFlow(k)) { DOM[k] = { log: true, lo: 0.25, hi: 4, ticks: [0.5, 1, 2], tl: v => '×' + v }; continue; }
+  if (k === 'treat_onc_wait') {
+    const m = Math.max(...nn(s.hi)) * 1.08, st = niceStep(m, 3, [1, 2, 5, 10, 20]), hi = Math.ceil(m / st) * st;
+    DOM[k] = { lo: 0, hi, ticks: [...Array(Math.round(hi / st) + 1).keys()].map(i => i * st), tl: v => v + ' d' }; continue;
+  }
+  const ext = [...nn(s.lo), ...nn(s.hi), ...nn(s.thr), ...nn(s.ref)]; if (SG[k].target) ext.push(SG[k].target);
+  let lo, hi, st;
+  if (SG[k].kind === 'pct') { lo = Math.floor((Math.min(...ext) - 0.01) / 0.05) * 0.05; hi = Math.ceil((Math.max(...ext) + 0.01) / 0.05) * 0.05; st = niceStep(hi - lo, 3, [0.05, 0.1, 0.2]); }
+  else { const m = Math.max(...ext) * 1.02; st = niceStep(m, 3, [0.01, 0.02, 0.05, 0.1, 0.2, 0.25, 0.5]); lo = 0; hi = Math.min(1, Math.ceil(m / st) * st); }
+  const ticks = []; for (let v = Math.ceil(lo / st - 1e-9) * st; v <= hi + 1e-9; v += st) ticks.push(+v.toFixed(4));
+  DOM[k] = { lo, hi, ticks, tl: v => Math.round(v * 100) + '%' };
+}
+function ymap(d, v, y0, h) {
+  if (d.log) { const a = Math.log(d.lo), b = Math.log(d.hi); return y0 + h - (Math.log(Math.max(v, 1e-3)) - a) / (b - a) * h; }
+  return y0 + h - (v - d.lo) / (d.hi - d.lo) * h;
+}
+
+// ---------- text that follows the records ----------
+function reading(k, j) {
+  const s = L[k]; if (s.level[j] == null) return 'No figure published yet at this replay month.';
+  let r = `now ${fmt(k, s.level[j])} [80%: ${bare(k, s.lo[j])}–${fmt(k, s.hi[j])}]`;
+  if (s.thr[j] != null) r += ` · thr. ${fmt(k, s.thr[j])}`;
+  if (s.ref[j] != null) r += ` · nat. ${fmt(k, s.ref[j])}`;
+  return r + ` · data to ${through(k, s.data_through[j])}`;
+}
+function runsOf(idx) { const out = []; for (const i of idx) { const r = out[out.length - 1]; if (r && i === r[1] + 1) r[1] = i; else out.push([i, i]); } return out; }
+const rlab = ([a, b]) => a === b ? mlab(RM[a]) : `${mlab(RM[a])}–${mlab(RM[b])}`;
+function observed(k, j) {
+  const s = L[k], st = s.status.slice(0, j + 1), known = st.filter(v => v != null).length;
+  if (!known) return 'So far: no figure published yet.';
+  if (isFlow(k)) {
+    let best = null;
+    for (let i = 0; i <= j; i++) {
+      if (s.num[i] == null || !s.den[i] || (i > 0 && s.data_through[i] === s.data_through[i - 1])) continue;
+      const r = s.num[i] / s.den[i]; if (!best || Math.abs(Math.log(r)) > Math.abs(Math.log(best.r))) best = { r, i };
+    }
+    if (!best) return 'So far: no gap rule applies.';
+    const what = k === 'ctrl_population_yoy' ? 'residents' : 'referrals', big = Math.abs(Math.log(best.r)) > Math.log(2);
+    return `So far: largest one-period change ×${best.r.toFixed(2)} (${mlab(s.data_through[best.i])}: ${fmtInt(s.num[best.i])} ${what} against ${fmtInt(s.den[best.i])} a year earlier)`
+      + (big ? '. Implausible for a single period, so most likely a data artefact.' : '.');
+  }
+  const gi = [], wi = []; st.forEach((v, i) => { if (v === 'gap') gi.push(i); if (v === 'watch') wi.push(i); });
+  const cj = st.filter(v => v === 'unidentifiable' || v === 'stale').length, judged = st.filter(v => v === 'ok' || v === 'gap' || v === 'watch').length;
+  if (gi.length || wi.length) {
+    const all = [...gi, ...wi], sg = SG[k].bad || 1;
+    const pk = all.reduce((a, i) => sg * (s.level[i] - s.thr[i]) > sg * (s.level[a] - s.thr[a]) ? i : a, all[0]);
+    let out = 'So far: ' + [...runsOf(gi).map(r => 'gap ' + rlab(r)), ...runsOf(wi).map(r => 'watch ' + rlab(r))].slice(0, 3).join(', ') + ` (peak ${fmt(k, s.level[pk])} vs thr. ${fmt(k, s.thr[pk])})`;
+    const refs = s.ref.slice(0, j + 1).filter(v => v != null).sort((a, b) => a - b), med = refs[Math.floor(refs.length / 2)];
+    const low = all.filter(i => s.ref[i] != null && s.ref[i] < 0.5 * med).map(i => s.ref[i]);
+    if (sg > 0 && low.length === all.length)
+      out += `, when the national level dipped to ${Math.min(...low) === Math.max(...low) ? fmt(k, low[0]) : bare(k, Math.min(...low)) + '–' + fmt(k, Math.max(...low))} (median ${fmt(k, med)}): the flag follows the national series, not a rise here`;
+    return out + '.' + (cj ? ` Cannot judge in ${cj} of ${known} months.` : '');
+  }
+  if (judged) return `So far: no gap in ${judged} judged month${judged > 1 ? 's' : ''}${cj ? `; cannot judge in ${cj} of ${known}` : ''}.`;
+  return `So far: cannot judge in all ${known} months (too few patients waiting, interval too wide or data stale).`;
+}
+
+// ---------- Table 1 rows: status changes, implausible single figures, context ----------
+const EVENTS = (() => {
+  const ev = [];
+  for (const [m, s] of [['2020-03-31', 'COVID-19 pandemic begins'], ['2021-01-31', 'THL snapshots become monthly'], ['2023-01-31', 'County reform: series break']]) {
+    const i = RM.indexOf(m); if (i >= 0) ev.push({ i, panel: '—', change: 'context', reading: s, ctx: true });
+  }
+  for (const p of PANELS) {
+    const k = p.k, s = L[k];
+    for (let i = 1; i < N; i++) {
+      const a = s.status[i - 1], b = s.status[i];
+      if (b != null && a !== b && (['gap', 'watch'].includes(a) || ['gap', 'watch'].includes(b)))
+        ev.push({ i, panel: `(${p.id}) ${p.short}`, change: `${word(a)} → ${word(b)}`, reading: s.thr[i] != null ? `${fmt(k, s.level[i])} vs thr. ${fmt(k, s.thr[i])}` : fmt(k, s.level[i]), hot: b === 'gap' });
+      if (isFlow(k) && s.num[i] != null && s.den[i] && s.data_through[i] !== s.data_through[i - 1]) {
+        const r = s.num[i] / s.den[i];
+        if (Math.abs(Math.log(r)) > Math.log(2)) ev.push({ i, panel: `(${p.id}) ${p.short}`, change: 'implausible figure', reading: `×${r.toFixed(2)} vs a year earlier`, ctx: true });
+      }
+    }
+  }
+  return ev.sort((a, b) => a.i - b.i || (b.ctx ? 1 : 0) - (a.ctx ? 1 : 0));
+})();
+
+// ---------- page parts ----------
+function header(kf, a) {
+  const j = Math.floor(kf);
+  alpha(a, () => {
+    X.letterSpacing = '1.5px'; txt('EQUAL CARE ACROSS FINLAND  ·  COUNTY PATHWAY TWIN  ·  WORKING FIGURE', PX0, 38, 11.5, INK2, { f: SANS, st: 'bold' }); X.letterSpacing = '0px';
+    txt(`Model 1 records: ${D.source.model1_run}/records.csv · county ${CT.code}`, PX0 + PW, 38, 11.5, MUT, { f: MONO, a: 'right' });
+    hline(PX0, PX0 + PW, 46, 1, INK);
+    txt(`Figure 1. The county twin for ${CT.name} (${CT.code}), replayed month by month, 2016–2026`, PX0, 80, 27, TXT, { st: 'bold' });
+    para(LEAD, PX0, 102, 1450, 14, 16.5, TXT, { max: 3 });
+    const cx = 1530, cw = PX0 + PW - cx;
+    fillRR(cx, 56, cw, 80, 6, BBP); X.strokeStyle = BBL; X.lineWidth = 1; rr(cx + .5, 56.5, cw - 1, 79, 6); X.stroke();
+    X.letterSpacing = '1px'; txt('REPLAY MONTH', cx + 14, 74, 10.5, INK2, { f: SANS, st: 'bold' }); X.letterSpacing = '0px';
+    txt(mlab(RM[j]), cx + 14, 106, 30, INK, { st: 'bold' });
+    fit(`THL data to ${through('ref_assess_over90', L.ref_assess_over90.data_through[j])} · registry data to ${through('det_screen_breast', L.det_screen_breast.data_through[j])}`, cx + 14, 124, cw - 28, 11, MUT, { f: SANS });
+    fillRR(cx + 14, 129, cw - 28, 3, 1.5, '#D6E8F3'); fillRR(cx + 14, 129, Math.max(3, (cw - 28) * kf / (N - 1)), 3, 1.5, BBD);
+  });
+}
+
+const STEPS = [['Detection', ['det_screen_breast', 'det_screen_cervix', 'det_screen_colorectal']], ['Referral', ['ref_assess_over90', 'ref_over21']],
+  ['Diagnosis', ['dx_endo_over90']], ['Treatment', ['treat_onc_wait', 'treat_onc_over90', 'treat_surg_over90']]];
+const NODE = { gap: ['GAP', INK, '#FFFFFF'], watch: ['WATCH', BBD, '#FFFFFF'], ok: ['OK', '#D4ECF8', INK], proxy: ['NO GAP ON PROXIES', '#FFFFFF', INK], cannot: ['CANNOT JUDGE', '#E4E7EA', '#45515B'] };
+function stepState(sigs, j) {
+  const sts = sigs.map(k => [k, stOf(k, j)]);
+  if (sts.some(([, s]) => s === 'gap')) return 'gap';
+  if (sts.some(([, s]) => s === 'watch')) return 'watch';
+  if (sts.some(([k, s]) => s === 'ok' && SG[k].cs)) return 'ok';
+  if (sts.some(([, s]) => s === 'ok')) return 'proxy';
+  return 'cannot';
+}
+function pathway(kf, t, a) {
+  const j = Math.floor(kf), x0 = PX0, wA = 1212, y = 146;
+  alpha(a, () => {
+    txt('(a) Pathway state and queues at the replay month', x0, y + 16, 15, TXT, { st: 'bold' });
+    const bw = 124, bh = 46, gap = (wA - 4 * bw) / 3, by = y + 26, cy = by + bh / 2, bx = i => x0 + i * (bw + gap);
+    const lanes = [
+      { i: 0, items: [{ k: 'ref_assess_over90', name: 'Assessment queue', dy: 0, h: 16 }] },
+      { i: 1, items: [{ k: 'dx_endo_over90', name: 'Endoscopy queue', dy: 0, h: 16 }] },
+      { i: 2, items: [{ k: 'treat_surg_over90', name: 'Surgery + urology', dy: -8, h: 12 }, { k: 'treat_onc_over90', name: 'Oncology', dy: 9, h: 9 }] },
+    ];
+    lanes.forEach(({ i, items }) => {
+      const lx0 = bx(i) + bw + 10, lx1 = bx(i + 1) - 14, lw = lx1 - lx0;
+      items.forEach((it, m) => {
+        const s = L[it.k], den = s.den[j], num = s.num[j], ly = cy + it.dy;
+        fillRR(lx0, ly - it.h / 2, lw, it.h, it.h / 2, BBP);
+        X.fillStyle = INK; X.beginPath(); X.moveTo(lx1 + 10, ly); X.lineTo(lx1 + 2, ly - 4); X.lineTo(lx1 + 2, ly + 4); X.fill();
+        if (den != null && den > 0) {
+          const n = Math.min(70, Math.max(1, Math.round(1.7 * Math.sqrt(den)))), late = cl(num / den);
+          for (let d = 0; d < n; d++) {
+            const seed = d * 7.3 + i * 101 + m * 37, isLate = hash(seed + 3) < late;
+            const u = (t * (isLate ? 0.045 : 0.11) + hash(seed)) % 1, px = lx0 + 4 + u * (lw - 8), py = ly + (hash(seed + 1) - .5) * Math.max(0, it.h - 6);
+            X.beginPath(); X.arc(px, py, isLate ? 2.8 : 2.2, 0, 7); X.fillStyle = isLate ? INK : BBD; X.fill();
+          }
+        }
+        if (items.length === 1) {
+          fit(it.name, lx0 + lw / 2, ly - it.h / 2 - 6, lw, 11.5, TXT, { f: SANS, st: 'bold', a: 'center' });
+          fit(den == null ? 'no figure yet' : `${fmtInt(den)} waiting · ${fmtInt(num)} over 90 d`, lx0 + lw / 2, ly + it.h / 2 + 14, lw, 11.5, MUT, { f: SANS, a: 'center' });
+        } else {
+          const lab = den == null ? `${it.name}: no figure yet` : `${it.name}: ${fmtInt(den)} · ${fmtInt(num)} over 90 d`;
+          fit(lab, lx0 + lw / 2, m === 0 ? ly - it.h / 2 - 5 : ly + it.h / 2 + 13, lw, 11, m === 0 ? TXT : MUT, { f: SANS, a: 'center', st: m === 0 ? 'bold' : '' });
+        }
+      });
+    });
+    STEPS.forEach(([name, sigs], i) => {
+      const [lab, bg, fg] = NODE[stepState(sigs, j)];
+      fillRR(bx(i), by, bw, bh, 6, bg); X.strokeStyle = INK; X.lineWidth = 1.2; rr(bx(i) + .6, by + .6, bw - 1.2, bh - 1.2, 6); X.stroke();
+      txt(name, bx(i) + bw / 2, by + 20, 15, fg === '#FFFFFF' ? '#FFFFFF' : TXT, { st: 'bold', a: 'center' });
+      fit(lab, bx(i) + bw / 2, by + 37, bw - 10, 10.5, fg, { f: SANS, st: 'bold', a: 'center' });
+    });
+    para(CAP_A, x0, y + 98, wA, 13.5, 15, TXT, { max: 3 });
+  });
+}
+
+function table1(kf, a) {
+  const j = Math.floor(kf), x = 1292, w = PX0 + PW - 1292, y = 146, cols = [0, 70, 236, 386];
+  alpha(a, () => {
+    txt('Table 1. What the twin flagged, in replay order', x, y + 16, 15, TXT, { st: 'bold' });
+    hline(x, x + w, y + 25, 1.2, INK);
+    ['Month', 'Panel', 'Change', 'Reading'].forEach((h, c) => txt(h, x + cols[c], y + 40, 11.5, TXT, { f: SANS, st: 'bold' }));
+    hline(x, x + w, y + 46, 0.7, INK);
+    const seen = EVENTS.filter(e => e.i <= j).slice(-5);
+    seen.forEach((e, r) => {
+      const yy = y + 61 + r * 17, age = kf - e.i;
+      if (age < 2) { X.fillStyle = `rgba(137,207,240,${0.5 * (1 - age / 2)})`; X.fillRect(x, yy - 12, w, 16); }
+      const o = { f: SANS, st: e.ctx ? 'italic' : (e.hot ? 'bold' : '') }, c = e.ctx ? MUT : TXT;
+      fit(mlab(RM[e.i]), x + cols[0], yy, 66, 11.5, c, o); fit(e.panel, x + cols[1], yy, cols[2] - cols[1] - 6, 11.5, c, o);
+      fit(e.change, x + cols[2], yy, cols[3] - cols[2] - 6, 11.5, c, o); fit(e.reading, x + cols[3], yy, w - cols[3], 11.5, c, o);
+    });
+    if (!seen.length) txt('Nothing flagged yet.', x, y + 61, 11.5, MUT, { f: SANS, st: 'italic' });
+    hline(x, x + w, y + 136, 1.2, INK);
+    fit('Changes into or out of gap or watch; italic rows are context or implausible single figures.', x, y + 151, w, 12.5, MUT, { st: 'italic' });
+  });
+}
+
+const COLS = [['DETECTION', 'Sotkanet · yearly'], ['REFERRAL', 'THL queues (S01)'], ['DIAGNOSIS AND CONTROL', 'THL queues (S02, S01)'], ['TREATMENT', 'THL queues (S01)']];
+function colHeads(a) {
+  alpha(a, () => COLS.forEach(([h, sub], c) => {
+    const x = colX(c); X.letterSpacing = '1.5px'; txt(h, x, 312, 12, INK2, { f: SANS, st: 'bold' }); X.letterSpacing = '0px';
+    txt(sub, x + COLW, 312, 11, MUT, { f: SANS, a: 'right' }); hline(x, x + COLW, 318, 1.2, INK2);
+  }));
+}
+
+function panel(p, kf, a) {
+  const k = p.k, s = L[k], d = DOM[k], j = Math.floor(kf), x = colX(p.col), y = rowY(p.row), w = COLW;
+  alpha(a, () => {
+    const S = ST[stOf(k, j)];
+    font(11, SANS, 'bold'); const cw = X.measureText(S.lab).width + 14;
+    fit(`(${p.id}) ${p.title}`, x, y + 14, w - cw - 10, 15, TXT, { st: 'bold' });
+    fillRR(x + w - cw, y + 1, cw, 18, 9, S.bg);
+    if (S.bg === '#FFFFFF') { X.strokeStyle = '#C9D3DA'; X.lineWidth = 1; rr(x + w - cw + .5, y + 1.5, cw - 1, 17, 8.5); X.stroke(); }
+    txt(S.lab, x + w - cw / 2, y + 14, 11, S.fg, { f: SANS, st: 'bold', a: 'center' });
+    fit(reading(k, j), x, y + 31, w, 11.5, MUT, { f: SANS });
+    const px = x + 42, pw = w - 46, py = y + 40, ph = 68, xf = i => px + i / (N - 1) * pw, yf = v => ymap(d, v, py, ph), xc = xf(kf);
+    X.fillStyle = FUT; X.fillRect(xc, py, px + pw - xc, ph);
+    for (const v of d.ticks) { const yy = yf(v); hline(px, px + pw, yy, 1, GRID); txt(d.tl(v), px - 6, yy + 4, 10.5, MUT, { f: SANS, a: 'right' }); }
+    X.save(); X.beginPath(); X.rect(px, py - 1, pw, ph + 2); X.clip();
+    band(s.lo, s.hi, j, xf, yf, 'rgba(137,207,240,.55)');
+    if (SG[k].target) stroke([[[px, yf(SG[k].target)], [xc, yf(SG[k].target)]]], BBD, 1.4, [7, 3, 1.5, 3]);
+    stroke(path(s.ref, j, xf, yf), '#7F8E99', 1.3, [1.5, 3]);
+    stroke(path(s.thr, j, xf, yf), INK, 1.3, [5, 3]);
+    stroke(path(s.level, j, xf, yf), INK, 2);
+    X.restore();
+    hline(px, px + pw, py + ph, 1, AXC);
+    const rw = pw / (N - 1);
+    for (let i = 0; i <= j; i++) { const c = ST[stOf(k, i)].rib; if (c) { X.fillStyle = c; X.fillRect(xf(i) - rw / 2, py + ph + 3, rw + .5, 5); } }
+    for (let i = 0; i < N; i++) if (RM[i].slice(5, 7) === '01') {
+      X.fillStyle = AXC; X.fillRect(xf(i), py + ph, 1, 3);
+      if (+RM[i].slice(0, 4) % 2 === 0) txt(RM[i].slice(0, 4), xf(i), py + ph + 20, 10.5, MUT, { f: SANS, a: 'center' });
+    }
+    X.fillStyle = INK; X.fillRect(xc - .5, py - 3, 1, ph + 11);
+    if (s.level[j] != null) {
+      const cx = xf(j), cy = yf(d.log ? s.level[j] : cl(s.level[j], d.lo, d.hi));
+      const fresh = j > 0 && s.data_through[j] !== s.data_through[j - 1] ? 1 - (kf - j) : 0;
+      if (fresh > 0) { X.beginPath(); X.arc(cx, cy, 4 + 9 * (1 - fresh), 0, 7); X.strokeStyle = `rgba(79,168,216,${fresh})`; X.lineWidth = 2; X.stroke(); }
+      X.beginPath(); X.arc(cx, cy, 3.6, 0, 7); X.fillStyle = INK; X.fill(); X.lineWidth = 1.5; X.strokeStyle = '#FFFFFF'; X.stroke();
+    }
+    const off = [];
+    if (!d.log) { if (s.thr[j] != null && s.thr[j] > d.hi) off.push('thr. ' + fmt(k, s.thr[j])); if (s.ref[j] != null && s.ref[j] > d.hi) off.push('nat. ' + fmt(k, s.ref[j])); }
+    if (off.length) { const ot = '↑ above scale: ' + off.join(', '); font(10, SANS); const ow = X.measureText(ot).width + 8; X.fillStyle = 'rgba(255,255,255,.92)'; X.fillRect(px + pw - ow, py + 1, ow, 14); txt(ot, px + pw - 4, py + 12, 10, INK2, { f: SANS, a: 'right' }); }
+    const n1 = para(p.cap, x, y + 145, w, 13.5, 15, TXT, { max: 4 });
+    para(observed(k, j), x, y + 145 + n1 * 15, w, 13.5, 15, INK2, { st: 'italic', max: 6 - n1 + 1 });
+  });
+}
+
+function box1(a) {
+  const x = colX(2), y = rowY(2), w = COLW;
+  alpha(a, () => {
+    fillRR(x, y - 2, w, CELLH - 4, 6, '#F7FBFE'); X.strokeStyle = BBL; X.lineWidth = 1; rr(x + .5, y - 1.5, w - 1, CELLH - 5, 6); X.stroke();
+    txt('Box 1. How to read a panel', x + 14, y + 18, 15, TXT, { st: 'bold' });
+    const glyph = (gx, gy, type) => {
+      if (type === 'band') { X.fillStyle = 'rgba(137,207,240,.55)'; X.fillRect(gx, gy - 5, 26, 10); return; }
+      if (type === 'cursor') { X.fillStyle = INK; X.fillRect(gx + 12, gy - 7, 1, 14); X.fillStyle = FUT; X.fillRect(gx + 13, gy - 7, 13, 14); return; }
+      const sty = { level: [INK, 2, []], thr: [INK, 1.3, [5, 3]], ref: ['#7F8E99', 1.3, [1.5, 3]], target: [BBD, 1.4, [7, 3, 1.5, 3]] }[type];
+      stroke([[[gx, gy], [gx + 26, gy]]], ...sty);
+    };
+    [['level', 'twin estimate'], ['band', '80% interval'], ['thr', 'gap threshold (national ± δ)'], ['ref', 'national level'], ['target', 'strategy target (screening)'], ['cursor', 'replay month; grey: not yet published']]
+      .forEach(([ty, lab], m) => { const gx = x + 14 + (m % 2) * 196, gy = y + 40 + Math.floor(m / 2) * 18; glyph(gx, gy - 4, ty); fit(lab, gx + 34, gy, 160, 11.5, TXT, { f: SANS }); });
+    txt('Ribbon under each plot: status in each month', x + 14, y + 104, 11.5, MUT, { f: SANS, st: 'bold' });
+    [['gap', 'gap (P ≥ 0.9)'], ['watch', 'watch (P 0.7–0.9)'], ['ok', 'OK'], ['unidentifiable', 'cannot judge'], ['stale', 'stale'], ['n/a', 'no gap rule']]
+      .forEach(([k2, lab], m) => {
+        const gx = x + 14 + (m % 3) * 138, gy = y + 122 + Math.floor(m / 3) * 18;
+        X.fillStyle = ST[k2].rib; X.fillRect(gx, gy - 9, 16, 9);
+        if (k2 === 'n/a') { X.strokeStyle = '#C9D3DA'; X.lineWidth = 1; X.strokeRect(gx + .5, gy - 8.5, 15, 8); }
+        txt(lab, gx + 22, gy, 11.5, TXT, { f: SANS });
+      });
+    para('P is the probability that the county is worse than the threshold. Cannot judge: 80% interval wider than 25 points (2.5-fold for ratios) or fewer than 20 cases (10 waiting patients for the oncology index). Stale: no new figure for 6 months (30 for screening). δ is our model choice, not an official target (DECISIONS.md #2, #11).',
+      x + 14, y + 160, w - 28, 12.5, 14, TXT, { max: 5 });
+  });
+}
+
+function table2(a) {
+  alpha(a, () => {
+    X.fillStyle = 'rgba(14,59,92,.3)'; X.fillRect(0, 0, W, H);
+    const w = 1180, h = 536, x = (W - w) / 2, y = (H - h) / 2;
+    X.save(); X.shadowColor = 'rgba(14,59,92,.35)'; X.shadowBlur = 30; X.shadowOffsetY = 10; fillRR(x, y, w, h, 6, '#FFFFFF'); X.restore();
+    const ix = x + 44, iw = w - 88, c0 = 390, kinds = ['gap', 'watch', 'ok', 'unidentifiable', 'stale', 'n/a', 'none'];
+    const heads = ['Gap', 'Watch', 'OK', 'Cannot judge', 'Stale', 'No rule', 'No data'], cw = (iw - c0) / kinds.length;
+    txt(`Table 2. ${CT.name} (${CT.code}): replay months by status, January 2016 – October 2026`, ix, y + 50, 21, TXT, { st: 'bold' });
+    txt(`${N} replay months per signal, counted from the Model 1 records.`, ix, y + 74, 14, MUT, { st: 'italic' });
+    hline(ix, ix + iw, y + 92, 1.4, INK);
+    txt('Panel and signal', ix, y + 112, 13, TXT, { f: SANS, st: 'bold' });
+    heads.forEach((hd, c) => txt(hd, ix + c0 + (c + .5) * cw, y + 112, 13, TXT, { f: SANS, st: 'bold', a: 'center' }));
+    hline(ix, ix + iw, y + 120, 0.8, INK);
+    PANELS.forEach((p, r) => {
+      const yy = y + 142 + r * 29, s = L[p.k];
+      if (r % 2 === 0) { X.fillStyle = '#F6FAFD'; X.fillRect(ix, yy - 19, iw, 29); }
+      txt(`(${p.id}) ${p.title}`, ix, yy, 15, TXT);
+      kinds.forEach((sk, c) => {
+        const n = s.status.filter(v => (v || 'none') === sk).length, strong = (sk === 'gap' || sk === 'watch') && n > 0;
+        txt(n ? String(n) : '·', ix + c0 + (c + .5) * cw, yy, 14, strong ? INK : (n ? TXT : '#B8C2CA'), { f: SANS, st: strong ? 'bold' : '', a: 'center' });
+      });
+    });
+    const yb = y + 142 + PANELS.length * 29 - 12;
+    hline(ix, ix + iw, yb, 1.4, INK);
+    para('Cannot judge: 80% interval too wide or too few cases. Stale: no new figure for 6 months (30 for screening). No rule: flow and control signals carry no gap rule. No data: nothing published yet for that signal. The gap and watch months are listed in Table 1 and in each panel’s caption.',
+      ix, yb + 24, iw, 14, 17, MUT, { st: 'italic', max: 3 });
+  });
+}
+
+window.render = function (t) {
+  X.setTransform(DPR, 0, 0, DPR, 0, 0); X.globalAlpha = 1; X.letterSpacing = '0px';
+  const g = X.createLinearGradient(0, 0, W, H); g.addColorStop(0, '#9AD7F3'); g.addColorStop(.55, BB); g.addColorStop(1, '#74C2EA'); X.fillStyle = g; X.fillRect(0, 0, W, H);
+  const kf = cl((t - INTRO) / SPM, 0, N - 1), ap = eo(pr(t, 0, .9));
+  X.save(); X.globalAlpha = ap; X.translate(0, (1 - ap) * 24);
+  X.shadowColor = 'rgba(14,59,92,.3)'; X.shadowBlur = 24; X.shadowOffsetY = 6; fillRR(16, 12, W - 32, H - 24, 4, '#FFFFFF'); X.restore();
+  X.save(); X.translate(0, (1 - ap) * 24);
+  header(kf, ap);
+  pathway(kf, t, eo(pr(t, .4, 1.3)));
+  table1(kf, eo(pr(t, .6, 1.5)));
+  colHeads(eo(pr(t, .6, 1.5)));
+  PANELS.forEach((p, n) => panel(p, kf, eo(pr(t, .7 + n * .08, 1.6 + n * .08))));
+  box1(eo(pr(t, 1.6, 2.4)));
+  X.restore();
+  const ta = eo(pr(t, T_END + HOLD, T_END + HOLD + .8)); if (ta > 0) table2(ta);
+};
+
+// ---------- live playback: pause, scrub, speed; ?t= draws one still; ?capture=1 is for the renderer ----------
+const ui = document.getElementById('ui'), pp = document.getElementById('pp'), sc = document.getElementById('sc'), tt = document.getElementById('tt'), sp = document.getElementById('sp');
+if (CAPTURE) ui.style.display = 'none';
+if (q.has('t')) render(+q.get('t'));
+else if (!CAPTURE) {
+  let t = 0, last = performance.now(), playing = true, speed = 1, hideT;
+  pp.onclick = () => { playing = !playing; pp.textContent = playing ? 'Pause' : 'Play'; };
+  sc.oninput = () => { t = sc.value / 1000 * DURATION; };
+  sp.onchange = () => { speed = +sp.value; };
+  addEventListener('keydown', e => { if (e.code === 'Space') { e.preventDefault(); pp.click(); } });
+  const wake = () => { ui.classList.remove('hide'); clearTimeout(hideT); hideT = setTimeout(() => ui.classList.add('hide'), 2500); };
+  addEventListener('mousemove', wake); wake();
+  (function loop(now) {
+    if (playing) { t += (now - last) / 1000 * speed; if (t > DURATION) t = 0; }
+    last = now; render(t); sc.value = t / DURATION * 1000; tt.textContent = mlab(RM[Math.floor(cl((t - INTRO) / SPM, 0, N - 1))]);
+    requestAnimationFrame(loop);
+  })(last);
+}
+</script>
+</body>
+</html>

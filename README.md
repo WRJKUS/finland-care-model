@@ -15,6 +15,7 @@ Open `demo/index.html` in a browser. It is one self-contained file: no server, n
 | Live demo | `demo/index.html` (built from `demo/template.html`) |
 | Film (1080p, captions burned in) | `film/film.mp4`; scene list `film/scenes.json` |
 | One visual per model | `visuals/model1.png` … `model4.png` |
+| The system drawn as a circuit (Typst, 8 pages) | `visuals/circuit/circuit.pdf`; source `visuals/circuit/circuit.typ`, data from `scripts/export_circuit.py` |
 | Pitch script | `PITCH.md` |
 | Scorecard definition (committed before the first Model 3/4 run) | `SCORECARD.md` |
 | Sources, data manifest, effect registry | `SOURCES.md`, `DATA_MANIFEST.md`, `EFFECTS.md` |
@@ -37,6 +38,8 @@ python scripts/gen_briefings.py      # AI briefings on the replay (LLM calls; op
 python scripts/build_demo.py         # demo/index.html
 python scripts/render_film.py        # film/film.mp4
 python scripts/export_visuals.py     # visuals/*.png
+python scripts/export_circuit.py     # visuals/circuit/data.json
+typst compile visuals/circuit/circuit.typ   # visuals/circuit/circuit.pdf
 ```
 
 Figures, demo and film read from `runs/`; they never recompute.
