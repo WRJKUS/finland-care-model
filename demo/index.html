@@ -141,7 +141,7 @@ header{transition:filter .35s}main{transition:padding .28s,filter .35s}
 @media(prefers-reduced-motion:reduce){.bigplay::before,.introcard.nudge{animation:none}}
 /* how-to showcase: a spotlight that walks through the page, with one card of explanation per stop */
 #spot{position:fixed;z-index:55;border-radius:14px;pointer-events:none;box-shadow:0 0 0 3px #fff,0 0 0 8px #89cff0,0 0 0 9999px rgba(20,28,38,.62)}
-#spot[hidden],#tourcard[hidden]{display:none}
+#spot[hidden],#tourcard[hidden]{display:none}body.tour-on main{padding-bottom:70vh}
 #tourcard{position:fixed;z-index:56;bottom:20px;left:20px;width:min(450px,calc(100vw - 24px));background:#fff;border-radius:18px;padding:15px 18px 14px;box-shadow:0 24px 60px rgba(20,28,38,.55);transition:left .3s}
 #tourcard .tk{display:flex;justify-content:space-between;align-items:center;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--mut);font-weight:650}
 #tourcard h3{font-size:21px;line-height:1.22;margin:5px 0 6px;font-weight:750}#tourcard p{margin:0 0 13px;font-size:14.5px;line-height:1.5}
@@ -214,7 +214,7 @@ const S={t:tIdx(Q.get('t')),county:D.counties[Q.get('county')]?Q.get('county'):'
 let SB=[];   // side-panel history for the back button
 let tour=-1,locked=false;   // how-to showcase: the current stop (-1 = off); whether the page behind an overlay is locked
 // the popup shows on a plain visit; a link to a specific view opens directly, unless it carries intro=1 (intro=0 always skips it)
-let introOpen=!FILM&&Q.get('intro')!=='0'&&(Q.get('intro')==='1'||!['county','t','step','sig','open'].some(k=>Q.has(k)));
+let introOpen=!FILM&&Q.get('intro')!=='0';   // the popup shows on every load, shared links included
 const TX={en:{detection:'Detection',referral:'Referral',diagnosis:'Diagnosis',treatment:'Treatment start',all:'Any step',control:'Control',g:'gap',w:'watch',o:'no gap seen',u:'cannot be judged',s:'no recent data',n:'not judged',x:'no data','-':'no data',
  play:'▶ Play',pause:'❚❚ Pause',mapT:'Where is the gap?',mapC:'Each county coloured by its worst signal at the selected pathway step, as known on the replay date. Hatched = too few patients to judge; never read as "fine".',
  national:'national',level:'Level',interval:'80% interval',status:'Status',through:'Data through',source:'Source',signal:'Signal',step:'Step',
@@ -679,11 +679,11 @@ const BEHIND=()=>document.querySelectorAll('header,main,#side');
 function lockPage(){const lock=introOpen||tour>=0;if(lock!==locked){locked=lock;BEHIND().forEach(e=>e.inert=lock)}}
 // intro popup: the page is blurred; a press outside only nudges the card; Play starts the replay, the showcase button starts the tour
 function drawIntro(){const m=$('intro');lockPage();if(m.hidden===introOpen){m.hidden=!introOpen;document.body.classList.toggle('intro-open',introOpen)}
- if(!introOpen)return;$('introT').textContent=T('introT');$('introTag').textContent=T('tag');$('introH').textContent=T('howT');$('introL').innerHTML=['how1','how2','how3',...(CIRCUIT_URL?['how4']:[])].map(k=>`<li><span>${T(k)}</span></li>`).join('');
- $('introTourT').textContent=T('tourK');$('introTourS').textContent=T('tourS');$('introPlay').setAttribute('aria-label',T('introT'));
+ if(!introOpen)return;$('introT').textContent=T('tourK');$('introTag').textContent=T('tag');$('introH').textContent=T('howT');$('introL').innerHTML=['how1','how2','how3',...(CIRCUIT_URL?['how4']:[])].map(k=>`<li><span>${T(k)}</span></li>`).join('');
+ $('introTourT').textContent=T('introT');$('introTourS').textContent=EN()?'Skip the tour and replay the months':'Ohita kierros ja toista kuukaudet';$('introPlay').setAttribute('aria-label',T('tourK'));
  m.querySelectorAll('[data-l]').forEach(b=>b.classList.toggle('on',b.dataset.l===S.lang));if(!m.contains(document.activeElement))$('introPlay').focus()}
-$('introPlay').onclick=$('introT').onclick=()=>{introOpen=false;setPlay(true)};
-$('introTour').onclick=()=>tourGo(0);
+$('introPlay').onclick=$('introT').onclick=()=>tourGo(0);   // the big button starts the how-to showcase
+$('introTour').onclick=()=>{introOpen=false;setPlay(true)};
 $('intro').onclick=e=>{if(e.target.closest('#introAbout')){introOpen=false;S.open='about';SB=[];render();return}if(e.target.closest('.introcard'))return;const c=$('intro').firstElementChild;c.classList.remove('nudge');void c.offsetWidth;c.classList.add('nudge')};
 $('intro').querySelectorAll('[data-l]').forEach(b=>b.onclick=()=>{S.lang=b.dataset.l;render()});
 // ---------- how-to showcase: six stops; each sets the view it needs, scrolls there and puts a spotlight on it ----------
@@ -699,7 +699,7 @@ function tourText(i){const E=EN(),cs=D.card.signals.ref_assess_over90,pc=v=>Math
   [E?'…and says what is needed':'…ja kertoo, mitä tarvitaan',E?'Each gap is tied to a concrete action: who owns it, which line of the national cancer roadmap pays for it, the published evidence, and how it could fail.':'Jokaiseen eroon liittyy konkreettinen toimenpide: vastuutaho, kansallisen syöpästrategian tiekartan rahoituslinja, julkaistu näyttö ja se, miten toimi voi epäonnistua.'],
   [E?'Knowing sooner puts help in the right place':'Aikaisempi tieto vie avun oikeaan paikkaan',E?`Same ${D.card.budget.K} fast-track pilots, same budget, 2021–2026. Placed every month from the twins, a pilot was running in ${pc(cs.model4.coverage)} of the months a county was behind. Placed once a year from two-year-old figures: ${pc(cs.model3.coverage)}.`:`Samat ${D.card.budget.K} nopean väylän pilottia, sama budjetti, 2021–2026. Kun pilotit kohdennettiin kuukausittain kaksosten perusteella, pilotti oli käynnissä ${pc(cs.model4.coverage)}:ssa kuukausista, joina alue oli jäljessä. Kerran vuodessa kaksi vuotta vanhoista luvuista kohdennettuna: ${pc(cs.model3.coverage)}:ssa.`],
   [E?'It also says what it cannot show':'Se kertoo myös, mitä se ei näytä',E?`${ties} of ${nsig} comparisons are ties. ${nne} of ${rows.length} success factors cannot be estimated from public data, and the page says so. Every figure links to its source.`:`${nsig} vertailusta ${ties} on tasapelejä. ${rows.length} menestystekijästä ${nne}:ää ei voi arvioida julkisesta datasta, ja sivu kertoo sen. Jokainen luku viittaa lähteeseensä.`]][i]}
-function drawTour(){const c=$('tourcard');lockPage();c.hidden=tour<0;if(tour<0)return;const [h,p]=tourText(tour),last=tour===TOUR.length-1;
+function drawTour(){const c=$('tourcard');lockPage();document.body.classList.toggle('tour-on',tour>=0);c.hidden=tour<0;if(tour<0)return;const [h,p]=tourText(tour),last=tour===TOUR.length-1;
  $('tourN').textContent=`${T('tourK')} · ${tour+1} / ${TOUR.length}`;$('tourT').textContent=h;$('tourP').textContent=p;$('tourX').setAttribute('aria-label',T('close'));$('tourX').title=T('close')+' (Esc)';
  $('tourB').textContent='← '+T('back');$('tourB').style.visibility=tour?'visible':'hidden';$('tourF').textContent=last?T('introT').replace('!','')+' ▶':T('next')+' →';
  $('tourD').innerHTML=TOUR.map((_,k)=>`<i class="${k===tour?'on':''}"></i>`).join('')}
@@ -715,7 +715,7 @@ function tourScroll(){if(tour<0)return;const q=tourRect();if(!q||q.fixed)return;
  window.scrollTo({top:Math.max(0,scrollY+q.t-hh-Math.max(14,(avail-q.h)/2)),behavior:'smooth'})}
 function tourGo(i){if(i>=TOUR.length){tourEnd(true);return}const first=tour<0,st=TOUR[Math.max(0,i)];tour=Math.max(0,i);introOpen=false;
  S.county='21';S.t=st.t==='end'?D.months.length-1:tIdx(st.t);S.step='all';S.sig='ref_assess_over90';S.open=st.open||'';SB=[];
- setPlay(false);$('tourF').focus();if(first)requestAnimationFrame(tourPlace);setTimeout(tourScroll,40)}
+ setPlay(false);$('tourF').focus();if(first)requestAnimationFrame(tourPlace);setTimeout(tourScroll,40);setTimeout(tourScroll,420)}   // again once the side panel has finished closing
 function tourEnd(play){tour=-1;S.open='';SB=[];window.scrollTo({top:0,behavior:'smooth'});if(play)setPlay(true);else render()}
 $('tourF').onclick=()=>tourGo(tour+1);$('tourB').onclick=()=>tourGo(tour-1);$('tourX').onclick=()=>tourEnd();
 render();requestAnimationFrame(()=>requestAnimationFrame(()=>document.body.classList.remove('noanim')));  // a shared link opens with its panel already in place
