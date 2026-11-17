@@ -67,6 +67,18 @@
   "url": "https://files.hackjunction.app/resources/Kansallinen_syopastrategia_toimeenpanon_tiekartta_2026_2031.pdf",
   "accessed": "2026-11-14"
  },
+ "S12": {
+  "kind": "document",
+  "title": "Valtioneuvoston asetus sosiaali- ja terveydenhuollon yhteistyöalueista 91/2022, §1: the five collaborative areas (YTA) and the wellbeing services counties, Helsinki and HUS in each",
+  "url": "https://www.finlex.fi/api/media/statute/20090/mainPdf/main.pdf",
+  "accessed": "2026-11-15"
+ },
+ "S13": {
+  "kind": "document",
+  "title": "Valtiovarainministeriö: Hyvinvointialueet ja yhteistyöalueet. The county in each collaborative area that maintains a university hospital (HUS in the south)",
+  "url": "https://vm.fi/hyvinvointi-ja-yhteistyoalueet",
+  "accessed": "2026-11-15"
+ },
  "E01": {
   "kind": "paper",
   "title": "Jensen et al. 2015, BMC Cancer (Denmark). Diagnostic intervals before and after cancer patient pathways: adjusted median diagnostic interval 17 days shorter (95% CI 15–19); outside the pathway 4 days longer (1–7). Before/after.",
@@ -178,5 +190,33 @@
   "url": "https://consensus.app/papers/vedsted-weller-diagnostic-pathways-for-breast-cancer-in-10/w:e58ee793-fa11-462d-9332-19d573203db3/",
   "accessed": "2026-11-14",
   "note": "Published result, not a Finnish county observation. Accessed via Consensus."
+ },
+ "E17": {
+  "kind": "paper",
+  "title": "Jensen et al. 2007, Radiother Oncol (Denmark). Head and neck cancer, scans before and after the wait for radiotherapy (median 28 days, 61 patients): 12 (20%) new lymph-node metastases, 10 (16%) progressed in TNM classification; the faster-growing half doubled in volume in 30 days.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/17493700/",
+  "accessed": "2026-11-17",
+  "note": "Published result, not a Finnish county observation."
+ },
+ "E18": {
+  "kind": "paper",
+  "title": "O'Rourke, Edwards 2000, Clin Oncol (UK). 29 lung cancer patients awaiting curative radiotherapy: 6 (21%) became incurable on the waiting list; median 54 days between diagnostic and planning scans.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/10942328/",
+  "accessed": "2026-11-17",
+  "note": "Published result, not a Finnish county observation."
+ },
+ "E19": {
+  "kind": "paper",
+  "title": "Shinkwin et al. 2021, Colorectal Dis (Cardiff). Colorectal cancer in 2020 vs 2018–19: emergency presentation 96/267 (36.0%) vs 154/539 (28.6%), P=0.03; large bowel obstruction 8.6% vs 4.3%; T4 34.5% vs 27.1%. Single centre, before/after.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/33793063/",
+  "accessed": "2026-11-17",
+  "note": "Published result, not a Finnish county observation."
+ },
+ "E20": {
+  "kind": "paper",
+  "title": "Bhat et al. 2021, Tumori (London). 121 resected early-stage lung cancers, median 2.6 months to surgery: 36% upstaged at surgery, but upstaging was not associated with waiting time. Counter-evidence.",
+  "url": "https://pubmed.ncbi.nlm.nih.gov/33021465/",
+  "accessed": "2026-11-17",
+  "note": "Published result, not a Finnish county observation."
  }
 }

@@ -51,12 +51,27 @@ last = months[-1]; scr = {}
 for sig in ["det_screen_breast", "det_screen_cervix", "det_screen_colorectal"]:
     x = rec[(rec.signal == sig) & (rec.t == last) & (rec.county != "FI")]
     scr[sig] = dict(n=int(len(x)), at_target=int((x.obs >= 0.8).sum()), min=rnd(x.obs.min()), max=rnd(x.obs.max()), min_county=x.loc[x.obs.idxmin(), "county"], data_through=x.data_through.max())
+# governance suggestions on the replay (scripts/run_governance.py; rules GOVERNANCE.md, texts twin/governance.json)
+gp = ROOT / "runs/governance/replay"; GV = None
+if (gp / "LATEST").exists():
+    gr = gp / L("runs/governance/replay"); gv = pd.read_csv(gr / "records.csv", dtype={"unit": str}).fillna(""); codes, eps = {}, {}
+    for (sig, u), g in gv.groupby(["signal", "unit"]):
+        g = g.sort_values("t"); c = ["-"] * len(months); e = []
+        for x in g.itertuples():
+            i = mi[x.t]; c[i] = x.code
+            if x.episode_start:
+                a, d = mi[x.episode_start], (mi[x.decision] if x.decision else -1)
+                if e and e[-1][0] == a: e[-1][1], e[-1][2] = d, i
+                else: e.append([a, d, i])
+        codes.setdefault(sig, {})[u] = "".join(c); eps.setdefault(sig, {})[u] = e
+    GV = dict(codes=codes, episodes=eps, metrics=json.load(open(gr / "metrics.json")), map=json.load(open(ROOT / "twin/governance.json")), run=str(gr.relative_to(ROOT)))
+else: print("warning: no governance run; the demo will have no governance layer (python scripts/run_governance.py)")
 # page 1 of the circuit document, shown in the About panel (typst compile --format svg --pages 1 ... circuit-p1.svg)
 cp = ROOT / "visuals/circuit/circuit-p1.svg"; circuit = cp.read_text() if cp.exists() else None
 if circuit is None: print("warning: visuals/circuit/circuit-p1.svg missing; About panel will have no circuit")
 D = dict(months=months, signals=SIG, actions=ACT, sources=SRC, counties=CT, R=R, F=F, S=S, baselines=base, alarms=alarms, q_selected=meta1["q_selected"],
-         card=card, slots=slots, briefings=B, briefing_meta=bmeta, paths=paths, ctx=ctx, screening=scr, circuit=circuit,
-         runs=dict(model1=str(r1.relative_to(ROOT)), model2=str(r2.relative_to(ROOT)), compare="runs/compare/policy/" + L("runs/compare/policy")))
+         card=card, slots=slots, briefings=B, briefing_meta=bmeta, paths=paths, ctx=ctx, screening=scr, circuit=circuit, gov=GV,
+         runs=dict(model1=str(r1.relative_to(ROOT)), model2=str(r2.relative_to(ROOT)), compare="runs/compare/policy/" + L("runs/compare/policy"), **({"governance": GV["run"]} if GV else {})))
 js = json.dumps(D, ensure_ascii=False, separators=(",", ":"))
 tpl = (ROOT / "demo/template.html").read_text()
 (ROOT / "demo/index.html").write_text(tpl.replace("/*__DATA__*/null", js))

@@ -6,7 +6,7 @@ Junction 2026, AstraZeneca challenge. A streaming, aggregate "twin" of the cance
 
 ## Open the demo
 
-**Live site: https://equal-care-across-finland.vercel.app/** The explanation is on the site: the opening popup starts a guided showcase of what the twin shows and why it matters, and **About** shows how the twin works on one page.
+**Live site: https://equal-care-across-finland.vercel.app/** The explanation is on the site: the opening popup starts a guided showcase of what the twin shows, who decides about each gap, and why it matters; the **Who decides** section under the county twin shows the decision ladder, the decision trail and how the rules did on the replay; and **About** shows how the twin works on one page.
 
 Offline: open `demo/index.html` in a browser. It is one self-contained file: no server, no network, no API call. Press **Play**, click a county, switch pathway step, switch EN/FI. Click any source chip to see the source.
 
@@ -22,6 +22,7 @@ Offline: open `demo/index.html` in a browser. It is one self-contained file: no 
 | Scorecard definition (committed before the first Model 3/4 run) | `SCORECARD.md` |
 | Sources, data manifest, effect registry | `SOURCES.md`, `DATA_MANIFEST.md`, `EFFECTS.md` |
 | Unexamined modelling decisions | `DECISIONS.md` |
+| Governance layer: who decides about each gap (rules written before the run; forums and sources; replay) | `GOVERNANCE.md`, `twin/governance.json`, `scripts/run_governance.py`, `runs/governance/replay/`; plan `plans/governance_suggestions_plan.pdf` |
 | Mentor questions | `MENTOR_QUESTIONS.md` |
 | Runs (records, forecasts, policy slots, scorecard, AI briefings) | `runs/<model>/<experiment>/<timestamp>/` with `meta.json` |
 
@@ -37,6 +38,7 @@ python scripts/build_signals.py      # data/tidy/signals.csv
 python scripts/run_replay.py         # Models 1 and 2, baselines, controls
 python scripts/run_policy.py         # Models 3, 3-fast and 4, scorecard
 python scripts/gen_briefings.py      # AI briefings on the replay (LLM calls; optional, stored result is used)
+python scripts/run_governance.py      # governance suggestions on the replay (rules: GOVERNANCE.md)
 python scripts/export_circuit.py     # visuals/circuit/data.json
 typst compile visuals/circuit/circuit.typ   # visuals/circuit/circuit.pdf
 typst compile --format svg --pages 1 visuals/circuit/circuit.typ visuals/circuit/circuit-p1.svg   # page 1, shown in the demo's About panel
@@ -53,6 +55,8 @@ Figures, demo and film read from `runs/`; they never recompute.
 2. **Pathway twin**: national levels and flows, with surprise alarms.
 3. **Strategy to 2028**: the roadmap's pathway lever (2.5.2 / 3.1.2) as three county pilot slots, re-decided once a year from annual figures two years old.
 4. **Challenger**: the same slots, re-decided monthly from Model 1's records.
+
+On top of the models, a governance layer suggests who decides about each gap (county unit, county management, collaborative area with its regional cancer centre, national), chosen by rules written before the run; forums named in the roadmap carry a source, the rest are labelled as our proposal.
 
 Models 3 and 4 on history are counterfactuals ("had this been in place over these years"), not forecasts.
 

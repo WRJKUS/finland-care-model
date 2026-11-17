@@ -17,6 +17,8 @@ Generated from `twin/sources.json` (the same registry the demo cites). Every cla
 | S09 | data | Statistics Finland: wellbeing services county boundaries 1:4 500 000 (tilastointialueet:hyvinvointialue4500k) | https://geo.stat.fi/geoserver/tilastointialueet/wfs | 2026-11-14 |
 | S10 | document | Kansallinen syöpästrategia 2026–2035 (STM, 2025). Figure 1 indicators p. 5; clinical notifications cover about 40% of cases p. 30 | https://files.hackjunction.app/resources/Kansallinen_syopastrategia_2026_2035_FINAL.pdf | 2026-11-14 |
 | S11 | document | Kansallisen syöpästrategian toimeenpanon tiekartta 2026–2031. Regional inequality pp. 12–13; measures 2.3–2.5 pp. 44–53; 3.1–3.2 pp. 55–63; cost table pp. 105–107 | https://files.hackjunction.app/resources/Kansallinen_syopastrategia_toimeenpanon_tiekartta_2026_2031.pdf | 2026-11-14 |
+| S12 | document | Valtioneuvoston asetus sosiaali- ja terveydenhuollon yhteistyöalueista 91/2022, §1: the five collaborative areas (YTA) and the wellbeing services counties, Helsinki and HUS in each | https://www.finlex.fi/api/media/statute/20090/mainPdf/main.pdf | 2026-11-15 |
+| S13 | document | Valtiovarainministeriö: Hyvinvointialueet ja yhteistyöalueet. The county in each collaborative area that maintains a university hospital (HUS in the south) | https://vm.fi/hyvinvointi-ja-yhteistyoalueet | 2026-11-15 |
 
 ## Peer-reviewed evidence (via Consensus, accessed 2026-11-14)
 
@@ -40,6 +42,15 @@ Published results, not observations from Finnish counties. The exact claim used 
 | E14 | Hanna et al. 2020, BMJ (meta-analysis). Each four-week delay of cancer surgery associated with mortality HR about 1.06–1.08. Association, not county-level causal effect. | https://consensus.app/papers/hanna-king-mortality-due-to-cancer-treatment-delay-systematic/w:88c9ff9c-492d-4c74-a3b9-3b23d250c5c9/ |
 | E15 | Tope et al. 2023, eLife (review of reviews). 33 distinct definitions of delay intervals; waiting-time paradox. | https://consensus.app/papers/tope-farah-the-impact-of-lag-time-to-cancer-diagnosis-and/w:8aa11e9a-f17c-491e-bb21-a82e71b7bc24/ |
 | E16 | Vedsted et al. 2022, BMJ Open. Breast cancer pathways in 10 jurisdictions: large variation in patient, primary care, diagnostic and treatment intervals. | https://consensus.app/papers/vedsted-weller-diagnostic-pathways-for-breast-cancer-in-10/w:e58ee793-fa11-462d-9332-19d573203db3/ |
+
+**Added 2026-11-17** (fetched from PubMed, not via Consensus), shown in the demo as "What a wait does to a tumour":
+
+| ID | Study, endpoint and exact claim used | Link |
+|---|---|---|
+| E17 | Jensen et al. 2007, Radiother Oncol (Denmark). Head and neck cancer, scans before and after the wait for radiotherapy (median 28 days, 61 patients): 12 (20%) new lymph-node metastases, 10 (16%) progressed in TNM classification; the faster-growing half doubled in volume in 30 days. | https://pubmed.ncbi.nlm.nih.gov/17493700/ |
+| E18 | O'Rourke, Edwards 2000, Clin Oncol (UK). 29 lung cancer patients awaiting curative radiotherapy: 6 (21%) became incurable on the waiting list; median 54 days between diagnostic and planning scans. | https://pubmed.ncbi.nlm.nih.gov/10942328/ |
+| E19 | Shinkwin et al. 2021, Colorectal Dis (Cardiff). Colorectal cancer in 2020 vs 2018–19: emergency presentation 96/267 (36.0%) vs 154/539 (28.6%), P=0.03; large bowel obstruction 8.6% vs 4.3%; T4 34.5% vs 27.1%. Single centre, before/after. | https://pubmed.ncbi.nlm.nih.gov/33793063/ |
+| E20 | Bhat et al. 2021, Tumori (London). 121 resected early-stage lung cancers, median 2.6 months to surgery: 36% upstaged at surgery, but upstaging was not associated with waiting time. Counter-evidence. | https://pubmed.ncbi.nlm.nih.gov/33021465/ |
 
 ## Mentor insights
 

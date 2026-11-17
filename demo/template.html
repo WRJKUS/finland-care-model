@@ -1,12 +1,15 @@
 <!doctype html>
-<html lang="fi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<html lang="fi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#1c2430" media="(max-width:1100px),(max-height:520px)">
 <title>Equal Care Across Finland – county pathway twin</title>
 <style>
-:root{--ink:#1c2430;--mut:#5d6878;--line:#dfe3e8;--bg:#f4f5f7;--pan:#fff;--gap:#c8372d;--watch:#e0a030;--ok:#4f9d7c;--unid:#aab1bb;--none:#e9ecef;--m3:#6b5fb5;--m4:#0e7c86;--nat:#7a8594;--hh:64px;--sw:540px}
+:root{--ink:#1c2430;--mut:#5d6878;--line:#dfe3e8;--bg:#f4f5f7;--pan:#fff;--gap:#c8372d;--watch:#e0a030;--ok:#4f9d7c;--unid:#aab1bb;--none:#e9ecef;--m3:#6b5fb5;--m4:#0e7c86;--nat:#7a8594;--hh:64px;--sw:540px;
+ --g1:#8fb4e6;--g2:#5a8fd6;--g3:#2a66b3;--g4:#12407a}   /* --g1..4: the four rungs of the decision ladder, one hue, darker = a higher forum */
 *{box-sizing:border-box}body{margin:0;font:14px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--ink);background:var(--bg)}
 header{background:var(--ink);color:#fff;padding:12px 20px;display:flex;gap:18px;align-items:center;flex-wrap:wrap;position:sticky;top:0;z-index:25}
 header h1{font-size:30px;margin:0;font-weight:800;letter-spacing:-.015em;line-height:1.05}header .sub{font-size:12px;opacity:.85;margin-top:3px}
 .ctl{display:flex;gap:10px;align-items:center;margin-left:auto;flex-wrap:wrap}
+.tp{display:contents}#subm{display:none}   /* .tp: play, slider and date; on phones they become the bar at the bottom of the screen (see the end of this sheet) */
 button{font:inherit;border:1px solid var(--line);background:#fff;border-radius:6px;padding:5px 11px;cursor:pointer;color:var(--ink)}
 button.on{background:var(--ink);color:#fff;border-color:var(--ink)}header button{border-color:#fff3}
 header .ghost{background:transparent;color:#fff;border-color:#ffffff55}header .ghost:hover,header .ghost.active{background:#fff;color:var(--ink)}
@@ -66,9 +69,25 @@ svg text{font-family:inherit}.legend{display:flex;gap:10px;flex-wrap:wrap;font-s
 @container (max-width:470px){.circuit{grid-template-columns:1fr}.stage .stepb::after{display:none}}
 .hb{border:1px solid var(--line);border-radius:10px;padding:9px 11px 10px;margin:0 0 8px;cursor:pointer;min-width:0;transition:background-color .5s,color .5s,box-shadow .15s}
 .hb:hover,.hb.active{box-shadow:0 0 0 2px #1c243066}
-.hb .hh{display:flex;justify-content:space-between;gap:8px;align-items:center}
+.hb .hh{display:flex;flex-wrap:wrap;justify-content:space-between;gap:2px 8px;align-items:flex-start}.hb .hval{white-space:nowrap}.hb .hh .st{flex:none;margin-top:4px}
 .hb .hval{font-size:21px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1.2}
 .hb .hn{display:block;font-size:13px;margin-top:1px}
+.wev{margin:16px 0 4px;padding-top:12px;border-top:1px solid var(--line)}
+.wevg{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:8px}
+.wevc{display:grid;grid-template-columns:74px minmax(0,1fr);gap:11px;align-items:start;border:1px solid var(--line);border-radius:10px;padding:10px 11px;background:#fff}
+.wevc .dots{width:74px;height:74px}.wevc .wbig{display:block;font-size:20px;line-height:1.15;font-variant-numeric:tabular-nums}.wevc p{margin:3px 0 4px;font-size:12.5px;line-height:1.45}
+.wevf{margin:8px 0 0;font-size:12px;line-height:1.5}
+@media (max-width:1100px){.wevg{grid-template-columns:1fr}}
+.hb .hval small{font-size:12px;font-weight:600;opacity:.75}
+.pbar{position:relative;height:9px;border-radius:5px;margin:8px 0 3px;background:color-mix(in srgb,currentColor 14%,transparent)}
+.pbar>i{display:block;height:100%;border-radius:5px;min-width:2px;transition:width .5s}
+.pbar .tk{position:absolute;top:-3px;width:2px;height:15px;margin-left:-1px;border-radius:1px;background:currentColor}
+.pbar .tk.fl{background:repeating-linear-gradient(currentColor 0 3px,transparent 3px 5px)}.pbar .tk.tg{background:var(--m4);width:3px}.hb.dk .pbar .tk.tg{background:#7fd6dc}
+.pbar.judge{background:repeating-linear-gradient(45deg,color-mix(in srgb,currentColor 10%,transparent) 0 4px,color-mix(in srgb,currentColor 20%,transparent) 4px 8px)}
+.pbar.judge>i{background:color-mix(in srgb,currentColor 55%,transparent)}
+.jrow{display:flex;align-items:center;gap:7px}.jrow .pbar{flex:1}.jrow .jn{font-size:11px;font-weight:700;opacity:.8;margin-top:5px}
+.hcap .kw{white-space:nowrap}.hb .hcap{font-size:11.5px;line-height:1.45;opacity:.85;font-variant-numeric:tabular-nums}
+.hcap .kk{display:inline-block;width:2px;height:10px;margin:0 4px -1px 0;background:currentColor}.hcap .kk.fl{background:repeating-linear-gradient(currentColor 0 2px,transparent 2px 4px)}.hcap .kk.tg{width:3px;background:var(--m4)}.hb.dk .hcap .kk.tg{background:#7fd6dc}
 .hb .hnat{font-size:11.5px;opacity:.78;font-variant-numeric:tabular-nums;margin-top:1px}
 .hb .hm{margin:3px 0 0;font-size:11.5px;line-height:1.5}.hb .hm>span{opacity:.72}
 .hb .chip{font-size:11px;padding:0 7px;margin:0 2px 0 0;vertical-align:1px}.hb.dk .chip{background:#ffffff26;color:#fff;border-color:#ffffff70}.hb .chip:hover{background:#fff;color:var(--ink);border-color:#fff}
@@ -158,13 +177,183 @@ body.film .row{display:block}body.film #lanes{display:grid;grid-template-columns
 body.film #capbar{display:block;position:fixed;left:0;right:0;bottom:0;background:var(--ink);color:#fff;font-size:34px;line-height:1.25;padding:20px 48px;min-height:128px;font-weight:550}
 body.film #filmhead{display:flex}#filmhead{display:none;justify-content:space-between;align-items:baseline;font-size:26px;font-weight:700;margin-bottom:6px}
 #filmhead small{font-size:20px;color:var(--mut);font-weight:500}
+/* governance: who decides (rules GOVERNANCE.md; replay runs/governance; texts twin/governance.json) */
+.hb .hgov{margin-top:8px;padding-top:7px;border-top:1px solid #1c243024;font-size:12.5px;line-height:1.45;cursor:pointer}
+.hb.dk .hgov{border-top-color:#ffffff38}.hb .hgov:hover,.hb .hgov.active{text-decoration:underline}.hb .hgov b{font-weight:650}
+.gl{display:inline-flex;gap:2px;margin-right:6px}.gl i{width:8px;height:8px;border-radius:2px;border:1.5px solid currentColor;opacity:.5}.gl i.on{background:currentColor;opacity:1}
+/* the "Who decides" section of the page: the ladder as a staircase, the side tracks, the decision trail and the replay results.
+   Its width changes with the side panel, so its layout follows the section's own width (container queries), not the window's. */
+#p-gov{scroll-margin-top:calc(var(--hh) + 8px)}#gov{container-type:inline-size}#r-gov[hidden]{display:none}
+#govbtn{display:none}@media(min-width:1380px) and (min-height:521px){#govbtn:not([hidden]){display:inline-block}}
+.teaser .gl{color:var(--g3);margin-right:0}
+.ptitle.gov{align-items:baseline;flex-wrap:wrap;gap:4px 10px;margin:0 0 6px}.ptitle.gov h2{font-size:27px;font-weight:800;letter-spacing:-.01em;line-height:1.1}.ptitle.gov h2 span{font-weight:500;color:var(--mut)}.ptitle.gov .info{align-self:center}
+.glead{margin:0 0 5px;font-size:15px;line-height:1.45;max-width:1080px}.gkey{margin:0;font-size:12.5px;line-height:1.9;color:var(--mut)}.gkey .gtag{margin-left:0}
+.gh4{display:flex;justify-content:space-between;align-items:baseline;gap:4px 14px;flex-wrap:wrap;margin:20px 0 8px}
+.gh4 b{font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--mut);font-weight:650}.gh4 span{font-size:12px;color:var(--mut)}
+.ladder{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.rung{display:flex;flex-direction:column;min-width:0;border:1px solid var(--line);border-top:4px solid var(--rc);border-radius:10px;padding:10px 12px 9px;background:#fff}
+.rung.r1{--rc:var(--g1);margin-top:36px}.rung.r2{--rc:var(--g2);margin-top:24px}.rung.r3{--rc:var(--g3);margin-top:12px}.rung.r4{--rc:var(--g4)}   /* each rung starts 12px higher: a staircase */
+.rung.on{background:#f1f6fd;border-color:var(--rc)}
+.rh{display:grid;grid-template-columns:24px minmax(0,1fr) 54px;column-gap:9px;align-items:start}
+.smap{display:block;width:54px;height:auto}.smap.xs{width:30px;flex:none}
+.rh .rs{display:block;font-size:12px;line-height:1.35;color:var(--ink);font-weight:600;margin-top:3px}
+.uhr{display:inline-block;width:9px;height:9px;border-radius:50%;box-shadow:inset 0 0 0 2.5px #c8372d;margin:0 4px -1px 0;background:#fff}
+.rfirst{margin-top:9px;font-size:12.5px;line-height:1.4}.rfirst .lbl{display:block;font-size:10px;letter-spacing:.09em;text-transform:uppercase;font-weight:700;color:var(--mut);margin-bottom:3px}
+.rfirst ol{margin:0;padding:0;list-style:none;counter-reset:f}.rfirst li{counter-increment:f;position:relative;padding-left:22px;margin:0 0 4px}
+.rfirst li::before{content:counter(f);position:absolute;left:0;top:1px;width:16px;height:16px;border-radius:50%;background:var(--rc);color:#fff;font-size:10.5px;font-weight:700;display:grid;place-items:center}.r1 .rfirst li::before{color:var(--ink)}
+.rthen{margin:6px 0 0;color:var(--mut)}.rthen b{color:var(--ink);font-weight:650}
+.gfirst{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:8px;counter-reset:gf}
+.gfirst li{counter-increment:gf;display:flex;gap:10px;align-items:flex-start;border:1px solid var(--line);border-radius:10px;padding:9px 11px 9px 34px;position:relative;cursor:pointer;background:#fff}
+.gfirst li::before{content:counter(gf);position:absolute;left:9px;top:9px;width:18px;height:18px;border-radius:50%;background:var(--ink);color:#fff;font-size:11px;font-weight:700;display:grid;place-items:center}
+.gfirst li:hover{border-color:var(--ink)}.gfirst li b{display:block;font-size:13.5px;line-height:1.3}.gfirst .fw{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--mut);margin-top:2px}
+.gfirst p{margin:4px 0 2px;font-size:12.5px;line-height:1.4}.gfirst .note{font-size:11.5px}.gfirst li.ask{background:#f4f6f8}.askic{flex:none;width:30px;height:30px;border-radius:8px;background:#e3e6ea;display:grid;place-items:center;font-weight:800;color:var(--mut)}
+.rn{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-size:12.5px;font-weight:700;background:var(--rc);color:#fff}.r1 .rn{color:var(--ink)}
+.yloc{display:grid;grid-template-columns:62px minmax(0,1fr);gap:10px;align-items:center;margin:9px 0 0;padding:8px;border-radius:8px;background:#f4f7fb}
+.locmap{display:block;width:100%;height:auto}.locmap.big{max-width:250px;margin:4px auto 6px}
+.yk{display:flex;align-items:baseline;gap:6px;font-size:12px;line-height:1.35;margin:2px 0}.yk i{flex:none;width:10px;height:10px;border-radius:2px}.yk i.ring{border-radius:50%;background:#fff;box-shadow:inset 0 0 0 2.5px #c8372d}
+.locfig{margin:8px 0 4px}.locfig figcaption{font-size:12.5px;color:var(--mut);line-height:1.45;text-align:center}
+.rh b{font-size:14.5px;line-height:1.3}.rh .ry{display:block;font-size:12px;line-height:1.35;color:var(--mut);margin-top:2px}.rh .rw{display:block;font-size:12.5px;line-height:1.35;margin-top:4px}
+.rung dl{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 9px;margin:9px 0 0;font-size:12.5px;line-height:1.4}
+.rung dt,.rnow .lbl{font-size:10px;letter-spacing:.09em;text-transform:uppercase;font-weight:700;color:var(--mut)}.rung dt{padding-top:2px}.rung dd{margin:0}
+.rnow{margin-top:auto;padding-top:10px}.rnow .lbl{display:block;margin-bottom:4px}.rnow .none{font-size:12.5px;color:var(--mut)}   /* at the foot of every rung, so the county's signals line up along the staircase */
+.rall{font-size:11.5px;color:var(--mut);margin-top:3px}
+.gchip{display:inline-flex;flex-wrap:wrap;align-items:baseline;gap:0 6px;max-width:100%;border:1.5px solid var(--ink);border-radius:8px;padding:3px 9px;margin:0 4px 4px 0;background:var(--ink);color:#fff;font-size:12.5px;line-height:1.4;cursor:pointer}
+.gchip b{font-weight:650}.gchip i{font-style:normal;font-size:12px;opacity:.85}.gchip.o{background:#fff;color:var(--ink);border-color:#aab1bb}
+.gchip:hover,.gchip.active,.gchip:focus-visible{box-shadow:0 0 0 2px #1c243055;outline:none}
+.gchip.moved{animation:gmove .5s ease-out}@keyframes gmove{0%{transform:translateY(9px);opacity:.25;box-shadow:0 0 0 0 #5a8fd6}100%{transform:none;opacity:1;box-shadow:0 0 0 9px #5a8fd600}}   /* a signal that has just changed rung */
+.tracks{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.trk{display:flex;flex-direction:column;min-width:0;border-radius:10px;background:#f4f6f8;padding:9px 12px 8px;font-size:12.5px;line-height:1.4;color:var(--mut)}
+.trk>b{font-size:13.5px;color:var(--ink)}.trk .rnow{padding-top:7px}.trk .rall{margin-top:0}
+/* decision trail: one row per signal, one bar per stretch of months; taller and darker = a higher forum */
+.trail{display:grid;grid-template-columns:max-content minmax(0,1fr);column-gap:12px;align-items:end}
+.trail .tl{font-size:12.5px;line-height:1.2;padding:0 0 3px;text-align:right;white-space:nowrap;cursor:pointer}.trail .tl:hover,.trail .tl.active,.trail .tl:focus-visible{text-decoration:underline;outline:none}
+.trail .tq{position:relative;height:28px;border-bottom:1px solid #c3ccd6;cursor:pointer}
+.trail .tq i,.tsw i{position:absolute;bottom:0;box-sizing:border-box;border-radius:2px 2px 0 0}.trail .tq i{border-right:1px solid #fff}
+.k1{height:6px;background:var(--g1)}.k2{height:11px;background:var(--g2)}.k3{height:16px;background:var(--g3)}.k4{height:21px;background:var(--g4)}
+.trail .tq i.kH,.tsw i.kH{height:11px;background:#fff;border:1.5px solid var(--g2);border-bottom:0}
+.kX{height:17px;background:linear-gradient(var(--ink),var(--ink)) center/2px 100% no-repeat}.kX::after{content:"";position:absolute;left:50%;top:-3px;width:6px;height:6px;margin-left:-3px;border-radius:50%;background:var(--ink)}
+.trail .tq i.kD,.trail .tq i.kS,.tsw i.kD,.tsw i.kS{height:4px;border-radius:0}.kD{background:repeating-linear-gradient(45deg,#aab1bb 0 3px,#d5d9df 3px 6px)}.kS{background:repeating-linear-gradient(90deg,#aab1bb 0 2px,transparent 2px 5px)}
+.trail .tyr{position:relative;height:18px}.trail .tyr span{position:absolute;top:3px;margin-left:3px;font-size:11px;color:var(--mut)}
+.tleg{display:flex;flex-wrap:wrap;gap:2px 16px;align-items:flex-end;font-size:12px;color:var(--mut);margin-top:6px}.tleg>span{display:inline-flex;align-items:flex-end;gap:6px;white-space:nowrap;line-height:1.2}
+.tsw{position:relative;display:inline-block;flex:none;width:14px;height:21px}.tsw i{left:0;width:100%}
+.sgrid.gk{grid-template-columns:repeat(auto-fit,minmax(190px,1fr))}.scard.gk{border-top:4px solid var(--g3)}
+#gov .links{margin-top:12px;display:flex;flex-wrap:wrap;gap:6px 0}#gov .links a{white-space:nowrap}#gov .gnote{margin:8px 0 0;max-width:1080px}
+@container (max-width:1000px){.ladder,.tracks{grid-template-columns:1fr 1fr}.rung.r1,.rung.r2,.rung.r3{margin-top:0}.trail .tyr .alt{display:none}}
+@container (max-width:560px){.ladder,.tracks{grid-template-columns:1fr;gap:8px}.rung:not(.on) dl{display:none}.rung:not(.on) .rnow{padding-top:6px}.rung:not(.on) .rnow .lbl,.rung:not(.on) .rnow .none{display:none}   /* a rung holding nothing now folds to its name and its trigger */
+ .trk:not(.on)>span{display:none}.trk:not(.on) .rnow{padding-top:2px}
+ .trail{grid-template-columns:minmax(0,1fr)}.trail .tl{text-align:left;white-space:normal;padding:8px 0 0}.trail .tq{height:25px}.trail>span:empty{display:none}}
+@media(prefers-reduced-motion:reduce){.gchip.moved{animation:none}}
+.gtag{display:inline-block;border-radius:4px;padding:0 6px;font-size:11px;font-weight:650;line-height:1.6;white-space:nowrap;vertical-align:1px;margin-left:3px}
+.gtag.s{background:#e1f0f1;color:#0b5c63}.gtag.p{background:#fcefd9;color:#7a4a00}.gtag.u{background:#eef0f3;color:var(--mut)}
+#side .gladder{list-style:none;margin:0;padding:0}
+#side .gladder li{display:grid;grid-template-columns:26px minmax(0,1fr);column-gap:10px;padding:9px 0;border-bottom:1px solid var(--line);margin:0}
+#side .gladder li:last-child{border-bottom:0}
+#side .gladder .n{width:24px;height:24px;border-radius:50%;border:2px solid #c3ccd6;display:grid;place-items:center;font-size:12px;font-weight:700;color:var(--mut);background:#fff}
+#side .gladder li.past .n{background:#c3ccd6;border-color:#c3ccd6;color:#fff}#side .gladder li.on .n{background:var(--ink);border-color:var(--ink);color:#fff}
+#side .gladder li.on>div>b{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:3px}
+#side .gladder p{margin:2px 0 0;font-size:13.5px;color:var(--mut);line-height:1.45}
+#side .medbox{background:#f5f7f9;border-radius:10px;padding:12px 14px 2px}#side .medbox h4{margin-top:0}
+#side .teaser{margin:6px 0}#side .teaser .tx{white-space:normal}
+.scard b small{font-size:12px;font-weight:600;color:var(--mut)}
+/* ---------- phones and tablets ----------
+   compact chrome, (max-width:1100px),(max-height:520px): a slim top bar, and the replay controls in a bar fixed to the bottom of the screen
+   (1100px is the one-column break above; the theme-color meta in the head uses the same query).
+   phone, (max-width:640px): compact content in one column, the side panel as a full-screen sheet, a county list beside the map.
+   short screen, (max-height:520px): a landscape phone; a lower map and replay bar, and the popup in two columns.
+   The script reads two of these widths (NARQ = 640px: county picker and list; FITQ = 1100px: charts drawn at the width they are shown,
+   with a key under the series): keep them in step. Above 1100px wide and 520px high nothing below changes the page. */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+.cpick{display:inline-flex;align-items:center;gap:8px;max-width:100%;border-radius:999px;padding:6px 13px 6px 14px;font-size:16px;font-weight:650;line-height:1.25;text-align:left}
+.cpick i{font-style:normal;font-size:11px;color:var(--mut)}.cpick.active{border-color:var(--ink);box-shadow:0 0 0 2px #1c243022}
+.crow{display:flex;justify-content:space-between;align-items:center;gap:10px;width:100%;margin:0 0 6px;padding:11px 12px 11px 14px;border-radius:10px;font-size:15px;text-align:left}
+.crow.on{border-color:var(--ink);font-weight:700;box-shadow:0 0 0 2px #1c243022}
+.crow>span:first-child{min-width:0}.crow small{display:block;font-size:12.5px;font-weight:400;line-height:1.35;color:var(--mut);margin-top:2px}.crow.on small,.crow.on .go{color:#ffffffc2}
+#side .sec>h4 .st{letter-spacing:0;text-transform:none;font-size:12px;margin-right:4px}
+.lnk.full{flex-basis:100%;margin:5px 0 0;font-size:12.5px}
+.sleg{display:flex;flex-wrap:wrap;gap:3px 14px;align-items:center;font-size:12px;color:var(--mut);margin:4px 0 2px}.sleg span{white-space:nowrap}
+.lg{display:inline-block;width:14px;height:3px;border-radius:2px;vertical-align:middle;margin:-2px 5px 0 0}.lg.dot{height:0;border-top:2px dotted var(--gap);border-radius:0;background:none}.lg.ring{width:9px;height:9px;border:2px solid var(--m4);border-radius:50%;background:#fff}
+@media(pointer:coarse){
+ html{touch-action:manipulation}   /* repeated taps (Next, Play) never zoom the page; pinch zoom stays */
+ .info,#tourX,.ctl>button{position:relative}.info::after,#tourX::after{content:"";position:absolute;inset:-11px}.ctl>button::after{content:"";position:absolute;inset:-7px -2px}   /* finger-sized targets, same look */
+ .chip{position:relative;padding:3px 10px}.chip::after{content:"";position:absolute;inset:-5px -1px}.hb .chip{padding:1px 8px}
+ #tourF:hover{background:var(--ink);border-color:var(--ink)}#side .tools button:hover{background:#fff;color:var(--ink);border-color:var(--line)}   /* a tap leaves no hover colour behind */
+}
+@media(max-width:1100px),(max-height:520px){
+ :root{--tb:60px}
+ header{padding:max(7px,env(safe-area-inset-top,0px)) max(12px,env(safe-area-inset-right,0px)) 7px max(12px,env(safe-area-inset-left,0px));gap:8px;flex-wrap:nowrap}
+ header .brand{flex:1;min-width:0}header h1{font-size:19px;line-height:34px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}header .sub{display:none}
+ .ctl{gap:6px;flex:none;flex-wrap:nowrap}.ctl>button{font-size:13px;padding:6px 10px;white-space:nowrap}
+ #copy{font-size:0;padding:6px 8px}#copy::before{content:"🔗";font-size:14px;line-height:19px}#copy.ok::before{content:"✓";display:inline-block;min-width:19px}
+ .tp{display:flex;align-items:center;gap:12px;position:fixed;left:0;right:0;bottom:0;height:calc(var(--tb) + env(safe-area-inset-bottom,0px));
+  padding:0 max(14px,env(safe-area-inset-right,0px)) env(safe-area-inset-bottom,0px) max(14px,env(safe-area-inset-left,0px));background:var(--ink);color:#fff;box-shadow:0 -1px 0 #ffffff24,0 -10px 26px rgba(28,36,48,.2)}
+ #play{flex:none;display:grid;place-items:center;width:44px;height:44px;min-width:0;padding:0;border:0;border-radius:50%;font-size:0}
+ #play::before{content:"";width:15px;height:17px;margin-left:4px;background:var(--ink);clip-path:polygon(0 0,100% 50%,0 100%)}
+ #play.playing::before{width:14px;height:16px;margin:0;clip-path:none;background:linear-gradient(90deg,var(--ink) 0 35%,transparent 35% 65%,var(--ink) 65%)}
+ #slider{flex:1;min-width:0;width:auto;height:44px;margin:0;color-scheme:dark;accent-color:#fff}
+ #date{min-width:86px;font-size:15px;text-align:right}
+ main{padding:10px max(12px,env(safe-area-inset-right,0px)) calc(26px + var(--tb) + env(safe-area-inset-bottom,0px)) max(12px,env(safe-area-inset-left,0px));gap:12px}.row{gap:12px}
+ #subm{display:block;margin:0 2px -4px}
+ #side{bottom:calc(var(--tb) + env(safe-area-inset-bottom,0px));padding-right:env(safe-area-inset-right,0px)}
+ #tourcard{bottom:calc(12px + env(safe-area-inset-bottom,0px))}
+ /* a filter on the header would pin the bottom bar to the header box, so behind the popup the header's parts are blurred one by one */
+ body.intro-open header{filter:none}.brand,.ctl>button,.tp{transition:filter .35s}body.intro-open .brand,body.intro-open .ctl>button,body.intro-open .tp{filter:blur(7px)}
+}
+@media(max-width:374px){header h1{font-size:17px}.ctl{gap:5px}.ctl>button{padding:6px 8px}#copy{padding:6px 7px}.tp{gap:9px}#date{min-width:80px;font-size:14px}}
+@media(max-width:345px){#srcbtn{display:none}}
+@media(max-width:640px){
+ .pan{padding:12px 13px;border-radius:12px}.tabs button{padding:7px 11px}
+ #map{max-height:max(380px,calc(100vh - 300px))!important;max-height:max(380px,calc(100dvh - 300px))!important}
+ /* county twin: the county name is a button that opens the county list */
+ #p-card{scroll-margin-top:calc(var(--hh) + 8px)}
+ .ptitle.twin{display:block;position:relative;margin-bottom:10px}.ptitle.twin h2{display:flex;flex-direction:column;align-items:flex-start;gap:7px;font-size:23px}
+ .ptitle.twin .note{position:absolute;top:7px;right:32px;white-space:nowrap}.ptitle.twin .info{position:absolute;top:3px;right:0;margin:0}   /* date and i beside the title: the county button gets the whole width */
+ .teaser{flex-wrap:wrap;row-gap:1px}.teaser .lab{flex:1;min-width:0}.teaser .go{order:2}
+ .teaser .tx{order:3;flex:0 0 100%;white-space:normal;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;line-clamp:2}
+ .howkey{font-size:12.5px;margin-top:6px}
+ .ptitle.gov h2{font-size:23px}.glead{font-size:14.5px}.gh4{margin-top:18px}
+ .scard.gk{border-top:1px solid var(--line);border-left:4px solid var(--g3)}.scard.gk .v{grid-column:1/-1;text-align:left;margin-top:2px}
+ /* two simulations: one figure per line; scoreboard and controls: one card per line */
+ .kpis{display:block;margin:2px 0 8px}.kpis>div{display:flex;align-items:baseline;gap:8px;padding:3px 0;border-bottom:1px solid var(--line)}.kpis>div>span:first-child{flex:1;min-width:0}.big{font-size:19px;white-space:nowrap}
+ .sgrid{grid-template-columns:1fr;gap:8px}.scard{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:12px;align-items:baseline;padding:9px 12px}
+ .scard .k{grid-column:1/-1}.scard b{font-size:21px;margin:1px 0 0;white-space:nowrap}.scard .v{text-align:right}#score .scard .v{grid-column:1/-1;text-align:left;margin-top:2px}
+ .scard.win,.scard.tie,.scard.loss{border-top:1px solid var(--line);border-left-width:4px}.scard.win{border-left-color:var(--m4)}.scard.tie{border-left-color:var(--unid)}.scard.loss{border-left-color:var(--m3)}.scard.active{border-top-color:var(--ink)}
+ /* side panel: a sheet over the whole page, between the top bar and the replay bar; the page behind does not scroll */
+ body.side-open{overflow:hidden}
+ #side{width:100vw;border-left:0;box-shadow:none}#side .sh{padding:12px 12px 11px 16px;gap:8px}#side h2{font-size:18px}
+ #side .tools button{width:40px;height:40px;font-size:15px}
+ #side .sb{padding:14px 16px 30px;font-size:15px;overscroll-behavior:contain}#side .lead{font-size:16px}
+ #side .facts{gap:8px}#side .fact{padding:9px 10px}#side .fact b{font-size:19px}#side .fact .st{font-size:12px;padding:2px 7px;line-height:1.35;white-space:normal}
+ #side .kv{display:block;font-size:15px}#side .kv dt{font-size:12.5px;margin:11px 0 1px}#side .kv dt:first-child{margin-top:0}
+ /* popup and showcase */
+ .intro{padding:12px}.introcard{padding:20px 18px 16px;border-radius:20px;max-height:calc(100vh - 24px);max-height:calc(100dvh - 24px)}
+ .brandbig{font-size:40px}.introcard .tag{margin-bottom:14px}.bigplay{width:92px;height:92px}.bigplay svg{width:42px;height:42px}
+ .introcard h2{font-size:25px;margin-top:10px}.howto{margin:14px 0 12px;padding:12px 13px 11px}.introlang button{padding:8px 18px;font-size:14px}
+ #tourcard{padding:13px 15px 12px;border-radius:16px}#tourcard h3{font-size:19px}#tourcard p{font-size:14px;margin-bottom:11px}#tourcard .tb button{padding:9px 15px}
+ #lightbox .x{width:44px;height:44px;top:max(12px,env(safe-area-inset-top,0px))}
+}
+@media(max-width:374px){.ptitle.twin h2{font-size:21px}}
+@media(max-height:520px){
+ :root{--tb:50px}
+ #map{max-height:max(240px,calc(100vh - 150px))!important;max-height:max(240px,calc(100dvh - 150px))!important}
+}
+@media(max-height:520px) and (min-width:560px){   /* landscape phone: the popup in two columns, so it fits without scrolling */
+ .intro{padding:12px}.introcard{width:min(740px,100%);max-height:calc(100vh - 24px);max-height:calc(100dvh - 24px);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);column-gap:24px;align-items:center;padding:16px 22px 14px;border-radius:20px}
+ .introcard>*{grid-column:1}.introcard>.howto{grid-column:2;grid-row:1/span 5;margin:0}.introcard>.introlang{grid-column:1/-1;justify-self:center;margin-top:10px}
+ .brandbig{font-size:36px}.introcard .tag{font-size:13px;margin-bottom:10px}.bigplay{width:76px;height:76px;justify-self:center}.bigplay svg{width:36px;height:36px}.introcard h2{font-size:20px;margin-top:8px}
+ .howto{padding:12px 13px 11px}.howto li{font-size:13px;margin-bottom:6px}.tourbtn{padding:8px 12px}
+ /* showcase card: a low strip, text on the left and the buttons on the right, so the spotlight keeps most of the screen */
+ #tourcard{width:min(780px,calc(100vw - 24px));display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:18px;align-items:center;padding:10px 16px 11px;border-radius:16px}
+ #tourcard .tk{grid-column:1/-1}#tourcard h3{grid-column:1;font-size:18px;margin:2px 0 3px}#tourcard p{grid-column:1;font-size:13.5px;line-height:1.45;margin:0}
+ #tourcard .tb{grid-column:2;grid-row:2/span 2;align-self:end;gap:8px}#tourcard .tb button{padding:7px 14px}#tourcard .dots{display:none}   /* the kicker still says 1 / 6 */
+}
 </style></head><body>
 <script>document.body.classList.add('noanim')</script>
-<header><div><h1 id="title">County Twin</h1>
+<header><div class="brand"><h1 id="title">County Twin</h1>
 <div class="sub" id="subt"></div></div>
-<div class="ctl"><button id="play">▶ Play</button><input type="range" id="slider" min="0" value="0" aria-label="Replay date"><span id="date"></span>
-<button id="copy" class="ghost" title="Copy a link to exactly this view">Copy link</button><button id="srcbtn" class="ghost" data-open="sources">Sources</button><button id="about" class="ghost" data-open="about">About</button><button id="lang">FI</button></div></header>
+<div class="ctl"><div class="tp" id="tp"><button id="play">▶ Play</button><input type="range" id="slider" min="0" value="0" aria-label="Replay date"><span id="date"></span></div>
+<button id="copy" class="ghost" title="Copy a link to exactly this view">Copy link</button><button id="govbtn" class="ghost" data-goto="p-gov">Who decides</button><button id="srcbtn" class="ghost" data-open="sources">Sources</button><button id="about" class="ghost" data-open="about">About</button><button id="lang">FI</button></div></header>
 <main>
+<p class="note" id="subm"></p>
 <div id="filmhead"><span id="fh1"></span><small id="fh2"></small></div>
 <div class="row r1">
  <section class="pan" id="p-map"><h2 id="mapT"></h2><div class="cap" id="mapC"></div>
@@ -172,6 +361,7 @@ body.film #filmhead{display:flex}#filmhead{display:none;justify-content:space-be
   <div class="legend" id="legend"></div></section>
  <section class="pan" id="p-card"><div id="card"></div></section>
 </div>
+<div class="row" id="r-gov"><section class="pan" id="p-gov"><div id="gov"></div></section></div>
 <div class="row"><section class="pan" id="p-pol"><h2 id="polT"></h2><div class="cap" id="polC"></div><div class="tabs" id="polTabs"></div>
  <div class="row r2" id="lanes"></div><div id="series"></div></section></div>
 <div class="row">
@@ -203,6 +393,10 @@ const D=/*__DATA__*/null;
 const CIRCUIT_URL=D.circuit?URL.createObjectURL(new Blob([D.circuit],{type:'image/svg+xml'})):null;   // page 1 of the circuit document, for the About panel
 const Q=new URLSearchParams(location.search);
 const FILM=!!Q.get('film');
+// layout modes of the style sheet's last section: phone (county picker and list) and one column (charts drawn at the width they are shown)
+const NARQ=matchMedia('(max-width:640px)'),FITQ=matchMedia('(max-width:1100px)');
+const NARROW=()=>!FILM&&NARQ.matches,FIT=()=>!FILM&&FITQ.matches;
+const RM=()=>matchMedia('(prefers-reduced-motion: reduce)').matches;
 const STEPS=['detection','referral','diagnosis','treatment'];
 const STEPSIG={detection:['det_screen_breast','det_screen_cervix','det_screen_colorectal'],referral:['ref_assess_over90','ref_over21'],diagnosis:['dx_endo_over90'],treatment:['treat_onc_wait','treat_onc_over90','treat_surg_over90']};
 const JUDGED=[].concat(...STEPS.map(s=>STEPSIG[s]));
@@ -221,20 +415,22 @@ const TX={en:{detection:'Detection',referral:'Referral',diagnosis:'Diagnosis',tr
  brief:'AI briefing',rec:'Recommended action',noGap:'No identifiable gap on this date.',ne:'not estimated',
  owner:'Who',roadmap:'Roadmap',budget:'Cost',evidence:'Evidence',expected:'Expected change',monitor:'Check',failure:'Could fail if',sure:'How sure',
  polT:'Finland Cancer Plan Simulation against Simulation Using County Twins: same lever, same budget',scT:'Scoreboard: every success factor',m2T:'Model 2: the pathway for the whole country',
- polTs:'Same pilots, same budget: Finland Cancer Plan Simulation against Simulation Using County Twins',sub:'Equal Care Across Finland · public aggregate data only',twin:'County Twin',srcL:'Sources',tourK:'How-to showcase',tourS:'A guided tour in 6 steps: what the twin shows, and why it matters',back:'Back',next:'Next',close:'Close',tag:'One twin for every county’s cancer pathway: where the gap is, why, and what is needed.',actions:'Recommended actions',signals:'Signals',notest:'What public data cannot show',
+ polTs:'Same pilots, same budget: Finland Cancer Plan Simulation against Simulation Using County Twins',sub:'Equal Care Across Finland · public aggregate data only',twin:'County Twin',srcL:'Sources',tourK:'How-to showcase',tourS:'A guided tour in {n} steps: what the twin shows, and why it matters',tourSG:'A guided tour in {n} steps: what the twin shows, who decides, and why it matters',back:'Back',next:'Next',close:'Close',tag:'One twin for every county’s cancer pathway: where the gap is, why, and what is needed.',tagG:'One twin for every county’s cancer pathway: where the gap is, why, what is needed, and who decides.',actions:'Recommended actions',signals:'Signals',notest:'What public data cannot show',
  copy:'Copy link',copied:'Link copied ✓',aboutL:'About',ctrlT:'Controls, baselines and limits',lensT:'Model 1: the six equality lenses',srcT:'Sources',measures:'What it measures',overtime:'Over time',
- howread:'How to read',introT:'Play the demo!',howT:'How to use',how1:'Press <b>play</b>: the months replay. A block turns dark when a gap opens.',how2:'Click a <b>county</b> on the map to see its twin.',how3:'Click a <b>block</b> for the reason, and what is needed.',how4:'How it works: the whole twin on one page, in <button type="button" class="lnk" id="introAbout">About ›</button>',laneA:'annual, data two years old',laneM:'monthly, 6-week lag',kpi1:'gap-months reached so far',kpi2:'slot-months used so far',kpi3:'full period: coverage · precision',pred:'predicted next',pts:'pts',vs:'County twins vs cancer plan',allsrc:'All sources with links',cardInfo:'Reading the county card',sourceK:'Source',accessed:'Accessed',thr:'Gap threshold',noAct:'No recommended action for this signal on this date.',nobrief:'No stored briefing for this date'},
+ howread:'How to read',introT:'Play the demo!',howT:'How to use',how1:'Press <b>play</b>: the months replay. A block turns dark when a gap opens.',how2:'Click a <b>county</b> on the map to see its twin.',how3:'Click a <b>block</b> for the reason, and what is needed.',howG:'See <b>who decides</b>: each gap is handed to a forum, and climbs a ladder if nothing changes. <button type="button" class="lnk" id="introGov">Who decides ›</button>',how4:'How it works: the whole twin on one page, in <button type="button" class="lnk" id="introAbout">About ›</button>',laneA:'annual, data two years old',laneM:'monthly, 6-week lag',kpi1:'gap-months reached so far',kpi2:'slot-months used so far',kpi3:'full period: coverage · precision',k1:'County-months behind with a pilot running: so far',k2:'Pilot-months used so far',k3:'Whole replay 2021–2026',pred:'predicted next',pts:'pts',vs:'County twins vs cancer plan',allsrc:'All sources with links',cardInfo:'Reading the county card',sourceK:'Source',accessed:'Accessed',thr:'Gap threshold',noAct:'No recommended action for this signal on this date.',nobrief:'No stored briefing for this date'},
  fi:{detection:'Havaitseminen',referral:'Lähete',diagnosis:'Diagnoosi',treatment:'Hoidon aloitus',all:'Mikä tahansa vaihe',control:'Kontrolli',g:'ero',w:'seurattava',o:'eroa ei havaita',u:'ei voida arvioida',s:'ei tuoretta tietoa',n:'ei arvioida',x:'ei tietoa','-':'ei tietoa',
  play:'▶ Toista',pause:'❚❚ Tauko',mapT:'Missä ero on?',mapC:'Alueen väri kertoo heikoimman signaalin valitussa hoitopolun vaiheessa toistopäivän tiedoilla. Viivoitettu = liian vähän potilaita arvioitavaksi; ei tarkoita "kunnossa".',
  national:'koko maa',level:'Taso',interval:'80 %:n väli',status:'Tila',through:'Tiedot asti',source:'Lähde',signal:'Signaali',step:'Vaihe',
  brief:'Tekoälyn tilannekatsaus',rec:'Suositeltu toimenpide',noGap:'Ei tunnistettavaa eroa tänä päivänä.',ne:'ei arvioitu',
  owner:'Vastuutaho',roadmap:'Tiekartta',budget:'Kustannus',evidence:'Näyttö',expected:'Odotettu muutos',monitor:'Seuranta',failure:'Voi epäonnistua, jos',sure:'Varmuus',
  polT:'Finland Cancer Plan Simulation vastaan Simulation Using County Twins: sama keino, sama budjetti',scT:'Tulostaulu: kaikki menestystekijät',m2T:'Malli 2: koko maan hoitopolku',
- polTs:'Samat pilotit, sama budjetti: Finland Cancer Plan Simulation vastaan Simulation Using County Twins',sub:'Aluekaksonen · Equal Care Across Finland · vain julkista aggregaattitietoa',twin:'Aluekaksonen',srcL:'Lähteet',tourK:'Esittelykierros',tourS:'Opastettu kierros 6 askeleessa: mitä kaksonen näyttää ja miksi sillä on merkitystä',back:'Takaisin',next:'Seuraava',close:'Sulje',tag:'Kaksonen jokaisen alueen syövän hoitopolulle: missä ero on, miksi ja mitä tarvitaan.',actions:'Suositellut toimenpiteet',signals:'Signaalit',notest:'Mitä julkinen data ei näytä',
+ polTs:'Samat pilotit, sama budjetti: Finland Cancer Plan Simulation vastaan Simulation Using County Twins',sub:'Aluekaksonen · Equal Care Across Finland · vain julkista aggregaattitietoa',twin:'Aluekaksonen',srcL:'Lähteet',tourK:'Esittelykierros',tourS:'Opastettu kierros {n} askeleessa: mitä kaksonen näyttää ja miksi sillä on merkitystä',tourSG:'Opastettu kierros {n} askeleessa: mitä kaksonen näyttää, kuka päättää ja miksi sillä on merkitystä',back:'Takaisin',next:'Seuraava',close:'Sulje',tag:'Kaksonen jokaisen alueen syövän hoitopolulle: missä ero on, miksi ja mitä tarvitaan.',tagG:'Kaksonen jokaisen alueen syövän hoitopolulle: missä ero on, miksi, mitä tarvitaan ja kuka päättää.',actions:'Suositellut toimenpiteet',signals:'Signaalit',notest:'Mitä julkinen data ei näytä',
  copy:'Kopioi linkki',copied:'Linkki kopioitu ✓',aboutL:'Tietoa',ctrlT:'Kontrollit, vertailutasot ja rajoitteet',lensT:'Malli 1: kuusi yhdenvertaisuuden näkökulmaa',srcT:'Lähteet',measures:'Mitä se mittaa',overtime:'Ajan myötä',
- howread:'Näin luet',introT:'Toista demo!',howT:'Näin käytät',how1:'Paina <b>toista</b>: kuukaudet käydään läpi. Lohko tummuu, kun ero avautuu.',how2:'Valitse <b>alue</b> kartalta, niin näet sen kaksosen.',how3:'Napsauta <b>lohkoa</b>: näet syyn ja sen, mitä tarvitaan.',how4:'Näin se toimii: koko kaksonen yhdellä sivulla, kohdassa <button type="button" class="lnk" id="introAbout">Tietoa ›</button>',laneA:'vuosittain, kaksi vuotta vanhat tiedot',laneM:'kuukausittain, 6 viikon viive',kpi1:'tavoitetut erokuukaudet tähän asti',kpi2:'käytetyt pilottikuukaudet tähän asti',kpi3:'koko jakso: kattavuus · tarkkuus',pred:'ennuste seuraavalle',pts:'%-yks.',vs:'Aluekaksoset vs syöpäohjelma',allsrc:'Kaikki lähteet linkkeineen',cardInfo:'Aluekortin lukeminen',sourceK:'Lähde',accessed:'Haettu',thr:'Erokynnys',noAct:'Tälle signaalille ei ole suositusta tänä päivänä.',nobrief:'Ei tallennettua katsausta tältä päivältä'}};
-const SHORT={en:{det_screen_breast:'Breast screening',det_screen_cervix:'Cervical screening',det_screen_colorectal:'Colorectal screening',ref_assess_over90:'Assessment wait > 90 d',ref_over21:'Referral handled > 21 d',dx_endo_over90:'Endoscopy wait > 90 d',treat_onc_wait:'Oncology queue (days)',treat_onc_over90:'Oncology wait > 90 d',treat_surg_over90:'Surgery + urology > 90 d',ref_volume_yoy:'Referral volume',ctrl_population_yoy:'Population (control)'},
- fi:{det_screen_breast:'Rintasyövän seulonta',det_screen_cervix:'Kohdunkaulasyövän seulonta',det_screen_colorectal:'Suolistosyövän seulonta',ref_assess_over90:'Arvion odotus > 90 vrk',ref_over21:'Lähetteet > 21 vrk',dx_endo_over90:'Tähystys > 90 vrk',treat_onc_wait:'Syöpätautien jono (vrk)',treat_onc_over90:'Syöpätaudit > 90 vrk',treat_surg_over90:'Kirurgia + urologia > 90 vrk',ref_volume_yoy:'Lähetemäärä',ctrl_population_yoy:'Väestö (kontrolli)'}};
+ howread:'Näin luet',introT:'Toista demo!',howT:'Näin käytät',how1:'Paina <b>toista</b>: kuukaudet käydään läpi. Lohko tummuu, kun ero avautuu.',how2:'Valitse <b>alue</b> kartalta, niin näet sen kaksosen.',how3:'Napsauta <b>lohkoa</b>: näet syyn ja sen, mitä tarvitaan.',howG:'Katso, <b>kuka päättää</b>: jokainen ero osoitetaan foorumille, ja se nousee portaita ylemmäs, jos mikään ei muutu. <button type="button" class="lnk" id="introGov">Kuka päättää ›</button>',how4:'Näin se toimii: koko kaksonen yhdellä sivulla, kohdassa <button type="button" class="lnk" id="introAbout">Tietoa ›</button>',laneA:'vuosittain, kaksi vuotta vanhat tiedot',laneM:'kuukausittain, 6 viikon viive',kpi1:'tavoitetut erokuukaudet tähän asti',kpi2:'käytetyt pilottikuukaudet tähän asti',kpi3:'koko jakso: kattavuus · tarkkuus',k1:'Jäljessäolokuukaudet, joina pilotti oli käynnissä: tähän asti',k2:'Käytetyt pilottikuukaudet tähän asti',k3:'Koko jakso 2021–2026',pred:'ennuste seuraavalle',pts:'%-yks.',vs:'Aluekaksoset vs syöpäohjelma',allsrc:'Kaikki lähteet linkkeineen',cardInfo:'Aluekortin lukeminen',sourceK:'Lähde',accessed:'Haettu',thr:'Erokynnys',noAct:'Tälle signaalille ei ole suositusta tänä päivänä.',nobrief:'Ei tallennettua katsausta tältä päivältä'}};
+const SHORT={en:{det_screen_breast:'Breast screening',det_screen_cervix:'Cervical screening',det_screen_colorectal:'Bowel screening',ref_assess_over90:'Specialist visit: 3+ month waits',ref_over21:'Referrals unread for 3+ weeks',dx_endo_over90:'Endoscopy: 3+ month waits',treat_onc_wait:'Cancer clinic backlog',treat_onc_over90:'Cancer clinic: 3+ month waits',treat_surg_over90:'Surgery: 3+ month waits',ref_volume_yoy:'Referrals vs a year ago',ctrl_population_yoy:'Population (control)'},
+ fi:{det_screen_breast:'Rintasyövän seulonta',det_screen_cervix:'Kohdunkaulasyövän seulonta',det_screen_colorectal:'Suolistosyövän seulonta',ref_assess_over90:'Erikoislääkärille: yli 3 kk odotus',ref_over21:'Lähete käsittelemättä yli 3 vk',dx_endo_over90:'Tähystys: yli 3 kk odotus',treat_onc_wait:'Syöpäklinikan jono',treat_onc_over90:'Syöpäklinikka: yli 3 kk odotus',treat_surg_over90:'Leikkaus: yli 3 kk odotus',ref_volume_yoy:'Lähetteet vs. vuosi sitten',ctrl_population_yoy:'Väestö (kontrolli)'}};
+const NAME={en:{ref_assess_over90:'Waiting over 3 months to see a specialist',ref_over21:'Referrals left unread for over 3 weeks',dx_endo_over90:'Waiting over 3 months for an endoscopy',treat_onc_over90:'Waiting over 3 months at the cancer clinic',treat_surg_over90:'Waiting over 3 months for surgery'},
+ fi:{ref_assess_over90:'Yli 3 kk erikoislääkärin arviota odottaneet',ref_over21:'Yli 3 viikkoa käsittelemättä olleet lähetteet',dx_endo_over90:'Yli 3 kk tähystystä odottaneet',treat_onc_over90:'Yli 3 kk syöpäklinikalla odottaneet',treat_surg_over90:'Yli 3 kk leikkausta odottaneet'}};   /* block titles; SHORT is the compact form */
 const T=k=>(TX[S.lang][k]??TX.en[k]??k);
 const $=id=>document.getElementById(id);
 const el=(h)=>{const d=document.createElement('div');d.innerHTML=h;return d.firstElementChild};
@@ -251,7 +447,7 @@ function stepStatus(step,c,t){let best='x',cs=false,csok=false;for(const s of ST
  return best}
 function anyStatus(c,t){let best='x';for(const s of STEPS){const st=stepStatus(s,c,t);if(RANK[st]>RANK[best])best=st}return best}
 const COL={g:'var(--gap)',w:'var(--watch)',o:'var(--ok)',u:'url(#hatch)',s:'var(--none)',n:'var(--none)',x:'var(--none)'};
-const SRCS={S01:'THL',S02:'THL',S03:'Sotkanet',S04:'Sotkanet',S05:'Sotkanet',S06:'Sotkanet',S07:'Sotkanet',S08:'Sotkanet',S09:['Statistics Finland','Tilastokeskus'],S10:['Cancer strategy','Syöpästrategia'],S11:['Roadmap','Tiekartta']};
+const SRCS={S01:'THL',S02:'THL',S03:'Sotkanet',S04:'Sotkanet',S05:'Sotkanet',S06:'Sotkanet',S07:'Sotkanet',S08:'Sotkanet',S09:['Statistics Finland','Tilastokeskus'],S10:['Cancer strategy','Syöpästrategia'],S11:['Roadmap','Tiekartta'],S12:['Decree 91/2022','Asetus 91/2022'],S13:['Ministry of Finance','VM'],E18:"O'Rourke 2000"};
 function srcName(i){const v=D.sources[i];if(!v)return '';if(SRCS[i])return Array.isArray(SRCS[i])?SRCS[i][EN()?0:1]:SRCS[i];const m=/^(\S+) et al\. (\d{4})/.exec(v.title);return m?`${m[1]} ${m[2]}`:''}
 function cite(ids,compact){return (ids||[]).map(i=>{const n=FILM||compact?'':srcName(i),v=D.sources[i];return `<span class="chip" data-src="${i}"${v&&!FILM?` title="${esc(v.title)}"`:''}>${n?n+' · ':''}${i}</span>`}).join('')}
 function srcOfSignal(sig){const s=D.signals[sig].source;if(s.includes('jonoryhma'))return 'S02';if(s.includes('eshjono'))return 'S01';if(s.includes('3621'))return 'S03';if(s.includes('3620'))return 'S04';if(s.includes('6103'))return 'S05';return 'S01'}
@@ -265,15 +461,17 @@ function drawMap(){
  const tabs=$('stepTabs');tabs.innerHTML='';
  for(const s of ['all',...STEPS]){const b=el(`<button class="${S.step===s?'on':''}">${T(s)}</button>`);b.onclick=()=>{S.step=s;render()};tabs.appendChild(b)}
  let h='<defs><pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#c9ced5"/><rect width="3" height="6" fill="#aab1bb"/></pattern></defs>';
- const lab=[];
+ const lab=[],nar=NARROW();   /* phone: a larger name label, kept inside the map */
  for(const c in D.paths){const p=D.paths[c];const st=c==='91'?'x':(S.step==='all'?anyStatus(c,S.t):stepStatus(S.step,c,S.t));
   const sel=c===S.county||(S.county==='HUS'&&HUSM.includes(c));
   h+=`<path d="${p.d}" fill="${COL[st]}" stroke="${sel?'#1c2430':'#fff'}" stroke-width="${sel?2.2:0.8}" data-c="${c}" style="cursor:pointer"><title>${cname(c)}: ${T(st)}</title></path>`;
-  if(c===S.county)lab.push(`<text x="${p.cx}" y="${p.cy+3}" font-size="9.5" text-anchor="middle" fill="#1c2430" stroke="#fff" stroke-width="2.5" paint-order="stroke" font-weight="700" pointer-events="none">${cname(c)}</text>`)}
+  if(c===S.county&&!nar)lab.push(`<text x="${p.cx}" y="${p.cy+3}" font-size="9.5" text-anchor="middle" fill="#1c2430" stroke="#fff" stroke-width="2.5" paint-order="stroke" font-weight="700" pointer-events="none">${cname(c)}</text>`);
+  if(c===S.county&&nar){const hw=cname(c).length*3.6+4;lab.push(`<text x="${Math.min(356-hw,Math.max(hw,p.cx))}" y="${p.cy+4}" font-size="12.5" text-anchor="middle" fill="#1c2430" stroke="#fff" stroke-width="3" paint-order="stroke" font-weight="700" pointer-events="none">${cname(c)}</text>`)}}
  const selp=D.paths[S.county];if(selp)h+=`<path d="${selp.d}" fill="none" stroke="#1c2430" stroke-width="2.2" pointer-events="none"/>`;
  $('map').innerHTML=h+lab.join('');
  $('map').querySelectorAll('path[data-c]').forEach(p=>p.onclick=()=>{S.county=p.dataset.c;render()});
- $('legend').innerHTML=['g','w','o','u','x'].map(k=>`<span><span class="sw" style="background:${k==='u'?'repeating-linear-gradient(45deg,#aab1bb 0 3px,#c9ced5 3px 6px)':COL[k]}"></span>${T(k)}</span>`).join('')+(FILM?`<span class="note">threshold origin: model (not an official target), except screening 80% (strategy)</span>`:'');
+ $('legend').innerHTML=['g','w','o','u','x'].map(k=>`<span><span class="sw" style="background:${k==='u'?'repeating-linear-gradient(45deg,#aab1bb 0 3px,#c9ced5 3px 6px)':COL[k]}"></span>${T(k)}</span>`).join('')+(FILM?`<span class="note">threshold origin: model (not an official target), except screening 80% (strategy)</span>`:'')
+  +(nar?`<a class="lnk full" data-open="counties">${EN()?'Pick a county from a list':'Valitse alue listasta'} ›</a>`:'');   /* small counties are hard to tap */
 }
 
 // ---------- county: briefing, actions, signals ----------
@@ -291,10 +489,10 @@ function actionsFor(c,t){const out=[],unid=[];
  return out}
 function actionBody(it,c,t){const L=S.lang,a=it.a;let h='';
  if(it.sig){const r=recOf(it.sig,c).r;
-  h+=`<div class="facts"><div class="fact"><b>${fmt(it.sig,r.lv[t])}</b><span>${esc(cname(c))}</span></div><div class="fact"><b>${fmt(it.sig,r.rf[t])}</b><span>${T('national')}</span></div><div class="fact"><b>${r.p[t]!=null?r.p[t].toFixed(2):'–'}</b><span>P(gap)</span></div></div>`;
+  h+=`<div class="facts"><div class="fact"><b>${fmt(it.sig,r.lv[t])}</b><span>${esc(cname(c))}</span></div><div class="fact"><b>${fmt(it.sig,r.rf[t])}</b><span>${T('national')}</span></div><div class="fact"><b>${r.p[t]!=null?sure(r.p[t]):'–'}</b><span>${EN()?'sure it is a gap':'varmuus erosta'}</span></div></div>`;
   h+=whyHTML(it.sig,c,t)}
  else h+=`<div class="sec" style="margin-top:0"><h4>${EN()?'Why it cannot be judged':'Miksi ei voida arvioida'}</h4><ul class="why">${it.unid.map(u=>`<li><b>${SHORT[L][u]}</b>: ${whyNot(u,c,t)}</li>`).join('')}</ul></div>`;
- h+=`<div class="sec"><h4>${EN()?'Need: recommended action':'Tarve: suositeltu toimenpide'}</h4><p class="lead">${a['action_'+L]}</p></div>`;
+ h+=`<div class="sec need"><h4>${EN()?'Need: recommended action':'Tarve: suositeltu toimenpide'}</h4><p class="lead">${a['action_'+L]}</p>${it.sig?govTeaser(it.sig,c,t):''}</div>`;
  const kv=[[T('owner'),a['owner_'+L]],[T('roadmap'),a.roadmap_en?`${a.roadmap_en} ${cite(a.sources)}`:''],[T('budget'),a['budget_'+L]],[T('evidence'),cite(a.evidence)]];
  if(it.sig)kv.push([T('expected'),a['expected_'+L]],[T('monitor'),a['monitor_'+L]],[T('failure'),a['failure_'+L]]);
  return h+`<div class="sec"><dl class="kv">${kv.filter(x=>x[1]).map(([k,v])=>`<dt>${k}</dt><dd>${v}</dd>`).join('')}</dl></div>`}
@@ -305,32 +503,41 @@ function notEstHTML(c){const cx=D.ctx,cc=HUSM.includes(c)||c==='HUS'?null:c;
 function drawCard(){
  if(FILM)return drawCardFull();
  const c=S.county,t=S.t,L=S.lang,E=EN(),card=$('card');
- let h=`<div class="ptitle twin"><h2>${T('twin')} <span>· ${cname(c)}</span></h2><span class="note">${D.months[t]}</span>${infoBtn('info:card')}</div>`;
+ const who=NARROW()?`<button type="button" class="cpick" data-open="counties" aria-label="${esc(cname(c))}: ${E?'change county':'vaihda aluetta'}">${esc(cname(c))}<i aria-hidden="true">▼</i></button>`:`<span>· ${cname(c)}</span>`;   /* phone: the name opens the county list */
+ let h=`<div class="ptitle twin"><h2>${T('twin')} ${who}</h2><span class="note">${D.months[t]}</span>${infoBtn('info:card')}</div>`;
  const br=briefingAt(c,t),first=br&&br.b[L]&&br.b[L][0]?br.b[L][0].text:T('nobrief');
- h+=`<div class="teaser" data-open="brief"><span class="ic">✦</span><span class="lab">${T('brief')}</span><span class="tx">${esc(first)}</span><span class="go">›</span></div>`;
+ h+=`<div class="teaser" data-open="brief"><span class="ic">✦</span><span class="lab">${T('brief')}</span><span class="tx">${esc(first)}</span><span class="go">›</span></div>`+govTease(c,t);
  const hasDataNeed=actionsFor(c,t).some(a=>a.key==='act:data_gap'),lbl=x=>`<span class="lbl">${x}</span>`;let flagged=false,dataNeed=false;
  const stages=CIRC.map(([step,sigs])=>{const sst=stepStatus(step,c,t);
   const blocks=sigs.map(sig=>{const x=recOf(sig,c),cfg=D.signals[sig],st=stAt(sig,c,t),has=!!x&&x.r.lv[t]!=null,r=has?x.r:null,fl=st==='g'||st==='w';
    let rel=REL[st]??0;if(S.step===step&&rel>0)rel=Math.min(1,rel+.12);if(fl)flagged=true;
-   const nat=has&&r.rf[t]!=null?`${E?'Finland':'Koko maa'} ${fmt(sig,r.rf[t])}${fl&&r.th[t]!=null?` · ${E?'flag line':'kynnys'} ${fmt(sig,r.th[t])}`:''}`:'';
    let extra='';
    if(fl){const a=D.actions[sig.startsWith('det_screen')?'det_screen':sig];   /* a flag always says why, and what is needed */
     extra+=`<div class="hwhy">${lbl(st==='g'?(E?'Why a gap':'Miksi ero'):(E?'Why watch':'Miksi seurattava'))}${whyShort(sig,c,t)}</div>`;
     extra+=a?`<div class="hneed" data-open="act:${sig}">${lbl(E?'Need':'Tarve')}${needTxt(a)} <span class="go">›</span>${a.evidence&&a.evidence.length?`<div class="hev">${E?'Evidence':'Näyttö'}: ${cite(a.evidence,true)}</div>`:''}</div>`
             :`<div class="hneed off">${lbl(E?'Need':'Tarve')}${E?'No evidence-backed action is tied to this signal. Read it as context for this step.':'Tähän signaaliin ei ole liitetty näyttöön perustuvaa toimenpidettä. Taustatietoa tälle vaiheelle.'}</div>`}
-   else if(st==='u'||st==='s'||(st==='x'&&cfg.cancer_specific&&step==='treatment'))extra+=`<div class="hwhy">${lbl(E?'Why not judged':'Miksi ei arvioida')}${whyNot(sig,c,t)}</div>`;
+   else if((st==='u'&&!smallQ(sig,r,t))||st==='s'||(st==='x'&&cfg.cancer_specific&&step==='treatment'))extra+=`<div class="hwhy">${lbl(E?'Why not judged':'Miksi ei arvioida')}${whyNot(sig,c,t)}</div>`;
    if(hasDataNeed&&!dataNeed&&step==='treatment'&&cfg.cancer_specific&&(!has||st==='u')){dataNeed=true;
     extra+=`<div class="hneed" data-open="act:data_gap">${lbl(E?'Need':'Tarve')}${needTxt(D.actions.data_gap)} <span class="go">›</span></div>`}
-   return `<div class="hb ${rel>.5?'dk':''}" data-sig="${sig}" data-open="sig:${sig}" title="${esc(slabel(sig))}" style="background-color:${mix('#ffffff','#1c2430',rel*.92)}"><div class="hh"><span class="hval">${has?fmtB(sig,r.lv[t]):'–'}</span><span class="st ${st}">${T(st)}</span></div><b class="hn">${SHORT[L][sig]}</b>${nat?`<div class="hnat">${nat}</div>`:''}<p class="hm"><span>${E?MEAS[sig]:slabel(sig)}</span> ${cite([srcOfSignal(sig)])}</p>${extra}</div>`}).join('');
+   const gv=govAt(sig,c,t);if(gv&&('1234HXS'.includes(gv.k)||gv.k==='D'&&cfg.cancer_specific))extra+=govLine(gv,sig,t);   /* who decides, by the governance rules */
+   return `<div class="hb ${rel>.5?'dk':''}" data-sig="${sig}" data-open="sig:${sig}" title="${esc(slabel(sig))}" style="background-color:${mix('#ffffff','#1c2430',rel*.92)}">${peopleHead(sig,st,has,r,t,fl,x&&x.via)}<p class="hm"><span>${E?MEAS[sig]:slabel(sig)}</span> ${cite([srcOfSignal(sig)])}</p>${extra}</div>`}).join('');
   return `<div class="stage"><div class="stepb ${sst} ${S.step===step?'sel':''}" data-step="${step}"><b>${T(step)}</b><span>${T(sst)}</span></div>${blocks}</div>`}).join('');
  if(!flagged)h+=`<p style="margin:10px 0 0"><span class="st o">${T('noGap')}</span></p>`;
- h+=`<div class="circuit">${stages}</div><div class="howkey">${E?'Darker block = more relevant on':'Tummempi lohko = merkityksellisempi'} ${D.months[t]} · ${E?'click a block for its numbers, history and reasoning':'napsauta lohkoa: luvut, historia ja perustelut'}</div><div class="links"><a data-open="notest">${T('notest')} ›</a></div>`;
+ h+=`<div class="circuit">${stages}</div>${waitEvidence()}<div class="howkey">${E?'Darker block = more relevant on':'Tummempi lohko = merkityksellisempi'} ${D.months[t]} · ${E?'click a block for its numbers, history and reasoning':'napsauta lohkoa: luvut, historia ja perustelut'}</div><div class="links"><a data-open="notest">${T('notest')} ›</a></div>`;
  const prev={};card.querySelectorAll('.hb').forEach(b=>{const cs=getComputedStyle(b);prev[b.dataset.sig]=[cs.backgroundColor,cs.color]});
  card.innerHTML=h;
  card.querySelectorAll('.hb').forEach(b=>{const o=prev[b.dataset.sig];if(!o)return;const cs=getComputedStyle(b),nb=cs.backgroundColor,nc=cs.color;if(o[0]===nb&&o[1]===nc)return;   /* fade from the colour the block had */
   b.style.transition='none';b.style.backgroundColor=o[0];b.style.color=o[1];b.offsetWidth;b.style.transition='';b.style.backgroundColor=nb;b.style.color=nc});
  card.querySelectorAll('.stepb').forEach(b=>b.onclick=()=>{S.step=b.dataset.step;render()});
 }
+function dots(n,extra){let h='';for(let i=0;i<100;i++){const x=(i%10)*9+4.5,y=Math.floor(i/10)*9+4.5,f=i<n?'#1c2430':i<n+(extra||0)?'#c8372d':'#d5dae0';h+=`<circle cx="${x}" cy="${y}" r="3.4" fill="${f}"/>`}return `<svg class="dots" viewBox="0 0 90 90" aria-hidden="true">${h}</svg>`}
+function waitEvidence(){   /* why a wait matters: three published studies, as counts out of 100 patients; not Finnish observations */
+ const E=EN(),C=[
+  [dots(16),E?'16 of 100':'16 / 100',E?'head and neck cancers moved to a later stage during about 4 weeks of waiting for radiotherapy; 20 of 100 grew new lymph-node metastases.':'pään ja kaulan alueen syövistä eteni myöhempään levinneisyysluokkaan noin 4 viikon sädehoidon odotuksen aikana; 20 / 100:lle tuli uusia imusolmukeetäpesäkkeitä.',E?'Denmark, 61 patients':'Tanska, 61 potilasta','E17'],
+  [dots(21),E?'21 of 100':'21 / 100',E?'lung cancers judged curable became incurable while on the waiting list for curative radiotherapy (median 54 days between scans).':'parannettavaksi arvioiduista keuhkosyövistä muuttui parantumattomiksi parantavan sädehoidon jonossa (kuvausten väli mediaani 54 vrk).',E?'UK, 29 patients':'Iso-Britannia, 29 potilasta','E18'],
+  [dots(29,7),E?'36 of 100':'36 / 100',E?'bowel cancers arrived as emergencies in 2020, when referrals and colonoscopies slowed, against 29 of 100 in 2018–19 (the red dots). Bowel obstruction doubled.':'suolistosyövistä tuli päivystyksenä vuonna 2020, kun lähetteet ja tähystykset hidastuivat; 2018–19 luku oli 29 / 100 (punaiset pisteet). Suolitukokset kaksinkertaistuivat.',E?'Cardiff, 806 patients':'Cardiff, 806 potilasta','E19']];
+ return `<div class="wev"><div class="gh4"><b>${E?'What a wait does to a tumour':'Mitä odotus tekee kasvaimelle'}</b><span>${E?'published studies, counted out of 100 patients':'julkaistut tutkimukset, sataa potilasta kohti'}</span></div><div class="wevg">${C.map(([d,big,tx,where,src])=>`<div class="wevc">${d}<div><b class="wbig">${big}</b><p>${tx}</p><span class="note">${where} ${cite([src])}</span></div></div>`).join('')}</div>
+  <p class="note wevf">${E?'<b>Every day counts:</b> the faster-growing half of those head and neck tumours doubled in volume every 30 days, about 2% more tumour for each day of waiting. Small single-centre studies: published results, not Finnish observations. Not every study finds the link; a London lung-surgery series (121 patients, median 2.6 months) did not.':'<b>Jokainen päivä merkitsee:</b> nopeammin kasvavien pään ja kaulan kasvainten tilavuus kaksinkertaistui 30 päivässä, noin 2 % lisää kasvainta jokaista odotuspäivää kohti. Pieniä yhden keskuksen tutkimuksia: julkaistuja tuloksia, ei suomalaisia havaintoja. Kaikki tutkimukset eivät löydä yhteyttä; lontoolaisessa keuhkosyöpäleikkaussarjassa (121 potilasta, mediaani 2,6 kk) sitä ei löytynyt.'} ${cite(['E17','E20'])}</p></div>`}
 function drawCardFull(){   /* film mode keeps the original full-text card */
  const c=S.county,t=S.t;let h=`<h2>${cname(c)} <span class="note">· ${D.months[t]}</span></h2><div class="cap">${EN()?'What the county twin knew on this date: where the gap is, how sure we are, and what to do.':'Mitä aluekaksonen tiesi tänä päivänä: missä ero on, kuinka varmaa se on ja mitä tehdä.'}</div>`;
  h+='<div class="path">'+STEPS.map(s=>{const st=stepStatus(s,c,t);return `<div class="stepb ${st} ${S.step===s?'sel':''}" data-step="${s}"><b>${T(s)}</b><span>${T(st)}</span></div>`}).join('')+'</div>';
@@ -366,16 +573,19 @@ function drawCardFull(){   /* film mode keeps the original full-text card */
 // ---------- Model 3 against Model 4 ----------
 const POLC=()=>EN()?`Counterfactual on history: had ${D.card.budget.K} county pilot slots of the roadmap's pathway lever (2.5.2 / 3.1.2) been available from 2021. The ${P3} re-decides once a year from annual figures two years old; the ${P4} re-decides monthly from the twins' records. Pink cells = months the county truly had a gap (judged in hindsight, shown only up to the playhead). Bars = months with an active pilot slot.`
  :`Kontrafaktuaali historiasta: entä jos tiekartan hoitopolkutoimen (2.5.2 / 3.1.2) ${D.card.budget.K} alueellista pilottipaikkaa olisi ollut käytössä vuodesta 2021. ${P3} päättää kohteet kerran vuodessa kaksi vuotta vanhoista vuosiluvuista; ${P4} päättää ne kuukausittain kaksosten tiedoista. Vaaleanpunaiset ruudut = kuukaudet, jolloin alueella todella oli ero (arvioitu jälkikäteen, näytetään vain toistokohtaan asti). Palkit = kuukaudet, jolloin pilottipaikka oli käytössä.`;
-function polDiffText(sig){const cs=D.card.signals[sig],d3=cs.model4_minus_model3_coverage,df=cs.model4_minus_model3fast_coverage,n=v=>(100*v).toFixed(0);
- return EN()?`Coverage difference, ${P4} minus ${P3}: <b>${n(d3.point)} points</b> (80% bootstrap interval ${n(d3.lo80)} to ${n(d3.hi80)}); against a ${P3} with data only one year old: ${n(df.point)} (${n(df.lo80)} to ${n(df.hi80)}). ${d3.lo80>0?'':'<b>Not distinguishable from a tie on this signal.</b>'}`
-  :`Kattavuusero, ${P4} miinus ${P3}: <b>${n(d3.point)} prosenttiyksikköä</b> (80 %:n bootstrap-väli ${n(d3.lo80)}–${n(d3.hi80)}); verrattuna simulaatioon, jonka tiedot ovat vain vuoden vanhoja: ${n(df.point)} (${n(df.lo80)}–${n(df.hi80)}). ${d3.lo80>0?'':'<b>Ei erotettavissa tasapelistä tällä signaalilla.</b>'}`}
+function polDiffText(sig){const cs=D.card.signals[sig],d3=cs.model4_minus_model3_coverage,df=cs.model4_minus_model3fast_coverage,n=v=>(100*v).toFixed(0),gm=cs.model3.true_gap_months;
+ const lead=FILM?'':EN()?`In plain counts. A county-month behind is one county behind the national level by more than the threshold for one month, judged in hindsight; added up over all counties there were ${gm} of them in 2021–2026. A pilot was running in ${cs.model4.covered} of them with the ${P4}, in ${cs.model3.covered} with the ${P3}, and in ${cs.model3fast.covered} with a ${P3} whose data is only one year old. `
+  :`Lukuina. Jäljessäolokuukausi on yksi alue yhden kuukauden ajan kynnystä enemmän koko maan tason jäljessä, jälkikäteen arvioituna; kaikki alueet yhteen laskien niitä oli vuosina 2021–2026 ${gm}. Pilotti oli käynnissä ${cs.model4.covered} niistä (${P4}), ${cs.model3.covered} (${P3}) ja ${cs.model3fast.covered}, kun ${P3}n tiedot ovat vain vuoden vanhoja. `;
+ return lead+(EN()?`Coverage difference, ${P4} minus ${P3}: <b>${n(d3.point)} points</b> (80% bootstrap interval ${n(d3.lo80)} to ${n(d3.hi80)}); against a ${P3} with data only one year old: ${n(df.point)} (${n(df.lo80)} to ${n(df.hi80)}). ${d3.lo80>0?'':'<b>Not distinguishable from a tie on this signal.</b>'}`
+  :`Kattavuusero, ${P4} miinus ${P3}: <b>${n(d3.point)} prosenttiyksikköä</b> (80 %:n bootstrap-väli ${n(d3.lo80)}–${n(d3.hi80)}); verrattuna simulaatioon, jonka tiedot ovat vain vuoden vanhoja: ${n(df.point)} (${n(df.lo80)}–${n(df.hi80)}). ${d3.lo80>0?'':'<b>Ei erotettavissa tasapelistä tällä signaalilla.</b>'}`)}
 function drawPolicy(){
  $('polT').innerHTML=FILM?T('polT'):`${T('polTs')}${infoBtn('info:pol')}`;
  const sig=S.sig,cs=D.card.signals[sig],n=D.card.months.length,pt=Math.max(-1,Math.min(n-1,S.t-PM0));
  $('polC').innerHTML=FILM?POLC():'';
  const tabs=$('polTabs');tabs.innerHTML='';for(const s of Object.keys(D.card.signals)){const b=el(`<button class="${s===sig?'on':''}">${T(D.signals[s].step)}: ${FILM?slabel(s):SHORT[S.lang][s]||slabel(s)}</button>`);b.onclick=()=>{S.sig=s;render()};tabs.appendChild(b)}
  const cnt=Object.keys(cs.truth).map(c=>[c,cs.truth[c].gap.reduce((a,b)=>a+b,0)+(cs.active.model3[c]?1:0)+(cs.active.model4[c]?1:0)]).filter(x=>x[1]>0).sort((a,b)=>b[1]-a[1]).map(x=>x[0]);
- const W=860,LH=17,L0=148,H=cnt.length*LH+44,cw=(W-L0-8)/n;const lanes=$('lanes');lanes.innerHTML='';if(Q.get('lane'))lanes.style.cssText='display:grid;grid-template-columns:1fr';
+ const lanes=$('lanes'),fit=FIT();   /* one column: each lane drawn at its own width, the name column as wide as the longest name */
+ const W=fit?Math.max(280,lanes.clientWidth):860,LH=17,L0=fit?Math.min(148,Math.max(40,...cnt.map(c=>12+6.4*D.counties[c][S.lang].split(' (')[0].length))):148,H=cnt.length*LH+44,cw=(W-L0-8)/n;lanes.innerHTML='';if(Q.get('lane'))lanes.style.cssText='display:grid;grid-template-columns:1fr';
  for(const [m,name,col] of [['model3',`${P3} · ${T('laneA')}`,'var(--m3)'],['model4',`${P4} · ${T('laneM')}`,'var(--m4)']].filter(x=>!Q.get('lane')||x[0]===Q.get('lane'))){
   let g=0,cv=0,used=0,svg='';
   cnt.forEach((c,i)=>{const y=22+i*LH;const tr=cs.truth[c].gap,ac=cs.active[m][c]||[];
@@ -385,11 +595,12 @@ function drawPolicy(){
   for(let y=2021;y<=2026;y++){const x=L0+(y-2021)*12*cw;svg+=`<line x1="${x}" x2="${x}" y1="14" y2="${H-18}" stroke="#dfe3e8"/><text x="${x+3}" y="${H-5}" font-size="11" fill="#5d6878">${y}</text>`}
   if(pt>=0)svg+=`<line x1="${L0+(pt+1)*cw}" x2="${L0+(pt+1)*cw}" y1="8" y2="${H-18}" stroke="#1c2430" stroke-width="1.5"/>`;
   const fin=cs[m];
-  lanes.appendChild(el(`<div><h3 style="color:${col};margin-top:4px">${name}</h3><div class="kpis"><div><span>${T('kpi1')}</span><b class="big" style="color:${col}">${g?Math.round(100*cv/g):0}%</b> <span style="display:inline">${cv} ${EN()?'of':'/'} ${g}</span></div><div><span>${T('kpi2')}</span><b class="big">${used}</b></div><div><span>${T('kpi3')}</span><b class="big">${Math.round(100*fin.coverage)}% · ${Math.round(100*fin.precision)}%</b></div></div><svg viewBox="0 0 ${W} ${H}" style="width:100%">${svg}</svg></div>`))}
+  lanes.appendChild(el(`<div><h3 style="color:${col};margin-top:4px">${name}</h3><div class="kpis">${FILM?`<div><span>${T('kpi1')}</span><b class="big" style="color:${col}">${g?Math.round(100*cv/g):0}%</b> <span style="display:inline">${cv} ${EN()?'of':'/'} ${g}</span></div><div><span>${T('kpi2')}</span><b class="big">${used}</b></div><div><span>${T('kpi3')}</span><b class="big">${Math.round(100*fin.coverage)}% · ${Math.round(100*fin.precision)}%</b></div>`
+   :`<div><span>${T('k1')}</span><b class="big" style="color:${col}">${cv}</b> <span style="display:inline">${EN()?'of':'/'} ${g}</span></div><div><span>${T('k2')}</span><b class="big">${used}</b> <span style="display:inline">${EN()?`${cv} where a county was behind`:`${cv} alueella, jolla oli ero`}</span></div><div><span>${T('k3')}</span><b class="big">${fin.covered}</b> <span style="display:inline">${EN()?`of ${fin.true_gap_months} county-months behind`:`/ ${fin.true_gap_months} jäljessäolokuukautta`}</span></div>`}</div><svg viewBox="0 0 ${W} ${H}" style="width:100%">${svg}</svg></div>`))}
  lanes.querySelectorAll('text[data-c]').forEach(p=>p.onclick=()=>{S.county=p.dataset.c;render()});
  const d3=cs.model4_minus_model3_coverage;
  if(FILM)lanes.appendChild(el(`<div style="grid-column:1/-1" class="note"><span class="sw" style="background:#f3c1bb"></span>true gap-month (hindsight) <span class="sw" style="background:var(--m3);margin-left:10px"></span>Finland Cancer Plan Simulation slot <span class="sw" style="background:var(--m4);margin-left:10px"></span>Simulation Using County Twins slot · ${polDiffText(sig)}</div>`));
- else lanes.appendChild(el(`<div style="grid-column:1/-1" class="dline"><span><span class="sw" style="background:#f3c1bb"></span>${EN()?'true gap-month':'todellinen erokuukausi'}</span><span><span class="sw" style="background:var(--m3)"></span>Finland Cancer Plan Simulation</span><span><span class="sw" style="background:var(--m4)"></span>Simulation Using County Twins</span><span class="dchip ${d3.lo80>0?'win':''}" data-open="info:pol">${T('vs')}: <b>${d3.point>=0?'+':''}${(100*d3.point).toFixed(0)} ${T('pts')}</b> · ${EN()?'80%':'80 %'}: ${(100*d3.lo80).toFixed(0)}${EN()?' to ':'–'}${(100*d3.hi80).toFixed(0)}${d3.lo80>0?'':' · '+(EN()?'tie':'tasapeli')}</span></div>`));
+ else lanes.appendChild(el(`<div style="grid-column:1/-1" class="dline"><span><span class="sw" style="background:#f3c1bb"></span>${EN()?'true gap-month':'todellinen erokuukausi'}</span><span><span class="sw" style="background:var(--m3)"></span>Finland Cancer Plan Simulation</span><span><span class="sw" style="background:var(--m4)"></span>Simulation Using County Twins</span><span class="dchip ${d3.lo80>0?'win':''}" data-open="info:pol">${EN()?'County-months behind with a pilot':'Jäljessäolokuukaudet pilotin kanssa'}: <b style="color:var(--m4)">${cs.model4.covered}</b> ${EN()?'county twins':'aluekaksoset'} · <b style="color:var(--m3)">${cs.model3.covered}</b> ${EN()?'cancer plan':'syöpäohjelma'} ${EN()?'of':'/'} ${cs.model3.true_gap_months} · ${d3.lo80>0?(EN()?'twins ahead':'kaksoset edellä'):(EN()?'a tie: could be chance':'tasapeli: voi olla sattumaa')}</span></div>`));
  drawSeries();
 }
 const SERIES_CAPS={en:"Solid line and band: the twin's level and 80% interval, as it stood on each replay date (fitted). Dashed with open circle: its prediction for the next period it had not seen. ✓ / ✗ along the top: whether each past prediction's 80% interval held the value later published (last two years). Dots: published values. Grey line: national level; red dotted: gap threshold (origin: model).",
@@ -409,6 +620,7 @@ const defOf=sig=>EN()?D.signals[sig].definition:(DEF_FI[sig]||D.signals[sig].def
 const ENONLY=()=>EN()?'':'<p class="note">Yksityiskohdat ovat englanniksi.</p>';
 function seriesSVG(sig,c,t,W,H,k){const x=recOf(sig,c);if(!x)return null;
  const L=58*k,R=20,Tp=16*k,B=26*k,f=v=>(v*k).toFixed(1);
+ const nar=k===1&&W<1000,halo=nar?' stroke="#fff" stroke-width="3" paint-order="stroke"':'';   // a chart drawn at its shown width on a small screen: labels placed by their length, with a halo
  const key=x.via||c,r=x.r,ser=(D.S[sig]||{})[key],fc=(D.F[sig]||{})[key]||{period:[],pred:[],hit:[]};
  const t0=new Date(D.months[0]).getTime(),t1=new Date(D.months[D.months.length-1]).getTime()+60*864e5;
  const X=d=>L+(new Date(d).getTime()-t0)/(t1-t0)*(W-L-R);
@@ -425,14 +637,19 @@ function seriesSVG(sig,c,t,W,H,k){const x=recOf(sig,c);if(!x)return null;
  if(ser)ser.period.forEach((p,i)=>{if(p>=D.months[0]&&dtNow&&p<=dtNow)s+=`<circle cx="${X(p)}" cy="${Y(ser.obs[i])}" r="${f(2.4)}" fill="#1c2430" opacity=".45"/>`});
  if(line)s+=`<path d="${line}" fill="none" stroke="var(--m4)" stroke-width="2.4"/>`;
  let nf=-1;fc.period.forEach((p,i)=>{if(dtNow&&p<=dtNow&&p>=D.months[0]){if(new Date(dtNow)-new Date(p)<760*864e5)s+=`<text x="${X(p)}" y="${Tp+8}" font-size="${f(10)}" text-anchor="middle" fill="${fc.hit[i]?'#4f9d7c':'#c8372d'}">${fc.hit[i]?'✓':'✗'}</text>`}else if(nf<0&&dtNow&&p>dtNow)nf=i});
- if(nf>=0&&r.lv[t]!=null){const xa=X(dtNow),xb=X(fc.period[nf]),end=xb>W-170*k;s+=`<path d="M${xa},${Y(r.hi[t])}L${xb},${Y(Math.min(mx,r.hi[t]*1.0))}L${xb},${Y(r.lo[t])}L${xa},${Y(r.lo[t])}Z" fill="#0e7c8614"/><line x1="${xa}" x2="${xb}" y1="${Y(r.lv[t])}" y2="${Y(fc.pred[nf])}" stroke="var(--m4)" stroke-width="2.4" stroke-dasharray="6 5"/><circle cx="${xb}" cy="${Y(fc.pred[nf])}" r="4" fill="#fff" stroke="var(--m4)" stroke-width="2"/><text x="${end?xb-8:xb+8}" y="${end?(Y(r.lv[t])-8-15*k>12*k?Y(r.lv[t])-8-15*k:Y(fc.pred[nf])+22*k):Y(fc.pred[nf])+4}" font-size="${f(11.5)}" text-anchor="${end?'end':'start'}" fill="var(--m4)">${T('pred')}: ${fmt(sig,fc.pred[nf])}</text>`}
+ if(nf>=0&&r.lv[t]!=null){const xa=X(dtNow),xb=X(fc.period[nf]),pl=`${T('pred')}: ${fmt(sig,fc.pred[nf])}`,end=nar?xb+8+6.3*pl.length>W-R:xb>W-170*k;
+  const yb=Y(Math.min(r.lo[t],fc.pred[nf]))+16,yp=!end?Y(fc.pred[nf])+4:nar?(yb<H-B-4?yb:Math.max(Tp+26,Y(r.lv[t])-23)):(Y(r.lv[t])-8-15*k>12*k?Y(r.lv[t])-8-15*k:Y(fc.pred[nf])+22*k);   /* small screen, no room on the right: under the band */
+  s+=`<path d="M${xa},${Y(r.hi[t])}L${xb},${Y(Math.min(mx,r.hi[t]*1.0))}L${xb},${Y(r.lo[t])}L${xa},${Y(r.lo[t])}Z" fill="#0e7c8614"/><line x1="${xa}" x2="${xb}" y1="${Y(r.lv[t])}" y2="${Y(fc.pred[nf])}" stroke="var(--m4)" stroke-width="2.4" stroke-dasharray="6 5"/><circle cx="${xb}" cy="${Y(fc.pred[nf])}" r="4" fill="#fff" stroke="var(--m4)" stroke-width="2"/><text x="${end?xb-8:xb+8}" y="${yp}" font-size="${f(11.5)}" text-anchor="${end?'end':'start'}" fill="var(--m4)"${halo}>${pl}</text>`}
  const li=(()=>{for(let i=t;i>=0;i--)if(r.lv[i]!=null)return i;return -1})();
- if(li>=0){s+=`<text x="${X(D.months[li])-6}" y="${Y(r.lv[li])-8}" font-size="${f(12)}" text-anchor="end" font-weight="700" fill="var(--m4)">${cname(key).split(' (')[0]} ${fmt(sig,r.lv[li])}</text>`;if(r.rf[li]!=null)s+=`<text x="${X(D.months[li])-6}" y="${Y(r.rf[li])+14*k}" font-size="${f(11.5)}" text-anchor="end" fill="var(--nat)">${T('national')} ${fmt(sig,r.rf[li])}</text>`}
+ if(li>=0){s+=`<text x="${X(D.months[li])-6}" y="${Y(r.lv[li])-8}" font-size="${f(12)}" text-anchor="end" font-weight="700" fill="var(--m4)"${halo}>${cname(key).split(' (')[0]} ${fmt(sig,r.lv[li])}</text>`;if(r.rf[li]!=null)s+=`<text x="${X(D.months[li])-6}" y="${Y(r.rf[li])+14*k}" font-size="${f(11.5)}" text-anchor="end" fill="var(--nat)"${halo}>${T('national')} ${fmt(sig,r.rf[li])}</text>`}
  s+=`<line x1="${X(D.months[t])}" x2="${X(D.months[t])}" y1="${Tp}" y2="${H-B}" stroke="#1c2430" stroke-width="1.2"/>`;
  return {key,svg:`<svg viewBox="0 0 ${W} ${H}" style="width:100%">${s}</svg>`}}
-function drawSeries(){const sig=S.sig,c=S.county,o=seriesSVG(sig,c,S.t,1760,250,1);
+const fitH=w=>Math.round(Math.min(250,Math.max(200,w*.62)));   // chart height for a chart drawn at its shown width w
+function drawSeries(){const sig=S.sig,c=S.county,fit=FIT(),W=fit?Math.max(280,$('series').clientWidth):1760,o=seriesSVG(sig,c,S.t,W,fit?fitH(W):250,1);
  if(!o){$('series').innerHTML=`<p class="ne">${cname(c)}: ${slabel(sig)} — ${T('ne')}</p>`;return}
- $('series').innerHTML=`<h3>${cname(o.key)} · ${slabel(sig)}${FILM?'':infoBtn('info:series')}</h3>${o.svg}`+(FILM?`<div class="cap">${SERIES_CAPS[S.lang]} ${D.signals[sig].definition} ${cite([srcOfSignal(sig)])}</div>`:'')}
+ $('series').innerHTML=`<h3>${cname(o.key)} · ${slabel(sig)}${FILM?'':infoBtn('info:series')}</h3>${o.svg}`+(FILM?`<div class="cap">${SERIES_CAPS[S.lang]} ${D.signals[sig].definition} ${cite([srcOfSignal(sig)])}</div>`:'')+(fit?seriesKey():'')}
+function seriesKey(){const E=EN(),k=(sw,x)=>`<span><i class="lg${sw[0]==='.'?' '+sw.slice(1):''}"${sw[0]==='.'?'':` style="${sw}"`}></i>${x}</span>`;   /* one column: a key under the chart; the full caption stays behind the i */
+ return `<div class="sleg">${k('height:9px;background:linear-gradient(transparent 3px,var(--m4) 3px 6px,transparent 6px),#0e7c8630',E?'twin level and 80% interval':'kaksosen taso ja 80 %:n väli')}${k('background:var(--nat)',T('national'))}${k('.dot',E?'gap threshold':'erokynnys')}${k('.ring',T('pred'))}${k('width:6px;height:6px;border-radius:50%;background:#1c243073',E?'published value':'julkaistu arvo')}</div>`}
 
 // ---------- scoreboard ----------
 const SC_CAPS={en:`The ${P3} and the ${P4} compared on what public data can score. An empty cell is never "on target": where nothing can be estimated, the cell says so. Losses and ties are listed beside the wins.`,
@@ -440,7 +657,9 @@ const SC_CAPS={en:`The ${P3} and the ${P4} compared on what public data can scor
 function scoreRows(){
  const c=D.card.signals,pc=(v)=>Math.round(100*v)+'%',sc=D.screening;
  const row=(sig)=>{const s=c[sig],d=s.model4_minus_model3_coverage;const verdict=d.lo80>0?'Simulation Using County Twins ahead':d.hi80<0?'Finland Cancer Plan Simulation ahead':'tie (interval includes 0)';
-  return [`${pc(s.model3.coverage)} of ${s.model3.true_gap_months} gap-months reached; precision ${pc(s.model3.precision)}`,`${pc(s.model4.coverage)} reached; precision ${pc(s.model4.precision)}`,verdict]};
+  if(FILM)return [`${pc(s.model3.coverage)} of ${s.model3.true_gap_months} gap-months reached; precision ${pc(s.model3.precision)}`,`${pc(s.model4.coverage)} reached; precision ${pc(s.model4.precision)}`,verdict];
+  const on=m=>`a pilot was running in ${s[m].covered} of the ${s[m].true_gap_months} county-months behind; ${s[m].covered} of its ${s[m].slot_months_used} pilot-months went to a county that was behind`;
+  return [on('model3'),on('model4'),d.lo80>0?'Simulation Using County Twins ahead (80% interval of the difference above zero)':d.hi80<0?'Finland Cancer Plan Simulation ahead':'a tie: the difference could be chance (80% interval includes zero)']};
  const ne=`<span class="ne">not estimated</span>`;const a=row('treat_onc_wait'),b=row('ref_assess_over90'),e=row('dx_endo_over90');
  const sce=c.treat_onc_wait;const hi=Object.keys(sce.model3.scenario_excess_queue_days_removed)[2];
  return [
@@ -463,9 +682,11 @@ function drawScore(){
  $('scT').innerHTML=`${T('scT')}${infoBtn('score')}`;$('scC').textContent='';
  const c=D.card.signals;
  let h='<div class="sgrid">'+[['ref_assess_over90','referral'],['dx_endo_over90','diagnosis'],['treat_onc_wait','treatment']].map(([sig,st])=>{const s=c[sig],d=s.model4_minus_model3_coverage,v=d.lo80>0?'win':d.hi80<0?'loss':'tie';
-  return `<div class="scard ${v}" data-open="score"><span class="k">${T(st)} · ${SHORT[S.lang][sig]}</span><b>${Math.round(100*s.model3.coverage)}% → ${Math.round(100*s.model4.coverage)}%</b><span class="v">${v==='win'?(EN()?'County twins ahead':'aluekaksoset edellä'):v==='loss'?(EN()?'Cancer plan ahead':'syöpäohjelma edellä'):(EN()?'tie':'tasapeli')} · ${d.point>=0?'+':''}${Math.round(100*d.point)} ${T('pts')}</span></div>`}).join('')+'</div>';
+  return `<div class="scard ${v}" data-open="score"><span class="k">${T(st)} · ${SHORT[S.lang][sig]}</span><b><span style="color:var(--m3)">${s.model3.covered}</span><small> ${EN()?'plan':'ohjelma'}</small> → <span style="color:var(--m4)">${s.model4.covered}</span><small> ${EN()?'twins':'kaksoset'}</small></b><span class="v">${EN()?`of ${s.model3.true_gap_months} county-months behind had a pilot`:`/ ${s.model3.true_gap_months} jäljessäolokuukaudesta pilotin kanssa`} · ${v==='win'?(EN()?'twins ahead':'kaksoset edellä'):v==='loss'?(EN()?'plan ahead':'ohjelma edellä'):(EN()?'a tie: could be chance':'tasapeli: voi olla sattumaa')}</span></div>`}).join('')+'</div>';
  const nne=rows.filter(r=>/not estimated|not simulated/.test(r[3])&&/not estimated|not simulated/.test(r[4])).length;
  h+=`<div class="teaser" data-open="score"><span class="lab">${rows.length} ${EN()?'success factors':'menestystekijää'}</span><span class="tx">${nne} ${EN()?'cannot be estimated from public data, and say so':'ei voida arvioida julkisesta datasta, ja se kerrotaan'}</span><span class="go">›</span></div>`;
+ if(GV){const P=Object.keys(D.card.signals).map(k=>GV.metrics[k]).filter(Boolean),sum=f=>P.reduce((a,m)=>a+m[f],0);
+  h+=`<div class="teaser" data-goto="p-gov" role="button" tabindex="0"><span class="lab">${EN()?'Who decides':'Kuka päättää'}</span><span class="tx">${EN()?`On the replay, ${sum('episodes_decided')} of the ${sum('episodes')} times a county fell behind got a county decision while it lasted; ${sum('yta_escalations')} went on to a collaborative area`:`Toistossa ${sum('episodes')} jäljessäolosta ${sum('episodes_decided')} sai aluetason päätöksen eron aikana; ${sum('yta_escalations')} eteni yhteistyöalueelle`}</span><span class="go">↑</span></div>`}
  $('score').innerHTML=h}
 function scoreSide(){return `<p class="note">${SC_CAPS[S.lang]}</p>${ENONLY()}`+scoreRows().map(r=>`<div class="item"><div class="ihead"><span class="gb">${r[0]==='='?(EN()?'Equality':'Yhdenvertaisuus'):(EN()?'Goal ':'Tavoite ')+r[0]}</span><b>${r[1]}</b></div><dl class="kv"><dt>${EN()?'Target':'Tavoite'}</dt><dd>${r[2]}</dd><dt style="color:var(--m3)">Finland Cancer Plan Simulation</dt><dd>${r[3]}</dd><dt style="color:var(--m4)">Simulation Using County Twins</dt><dd>${r[4]}</dd><dt>${EN()?'Verdict':'Arvio'}</dt><dd>${r[5]}</dd></dl></div>`).join('')}
 
@@ -500,12 +721,12 @@ function sourcesSide(){return `<p class="note">${EN()?'Every claim on this page 
 // ---------- the county twin as a circuit: stages, blocks, and the reason behind every flag ----------
 const CIRC=[['detection',['det_screen_breast','det_screen_cervix','det_screen_colorectal']],['referral',['ref_assess_over90','ref_over21','ref_volume_yoy']],
  ['diagnosis',['dx_endo_over90','ctrl_population_yoy']],['treatment',['treat_onc_wait','treat_onc_over90','treat_surg_over90']]];
-const MEAS={det_screen_breast:'Share of invited women who attend mammography screening',det_screen_cervix:'Share of those invited who attend cervical screening',
- det_screen_colorectal:'Share of those invited who take part in colorectal screening',ref_assess_over90:'Waiting for a first specialist assessment: share over 90 days',
- ref_over21:'Referrals processed in more than 21 days (legal limit: 3 weeks)',ref_volume_yoy:'Referrals against the same period a year earlier (flow, no gap rule)',
- dx_endo_over90:'Waiting for endoscopy: share over 90 days',ctrl_population_yoy:'Negative control: population against a year earlier; it should not move',
- treat_onc_wait:'Oncology treatment queue, in days of referral inflow (Goal 3 proxy)',treat_onc_over90:'Oncology treatment queue: share over 90 days',
- treat_surg_over90:'GI surgery and urology queue: share over 90 days; not cancer-specific'};
+const MEAS={det_screen_breast:'Of the women invited to mammography screening, how many took part',det_screen_cervix:'Of those invited to cervical screening, how many took part',
+ det_screen_colorectal:'Of those invited to bowel screening, how many took part',ref_assess_over90:'People waiting for a first specialist assessment, and how many have waited over 90 days',
+ ref_over21:'Referrals received, and how many took over 21 days to be handled (the legal limit is 3 weeks)',ref_volume_yoy:'Referrals received, against the same period a year earlier (flow, no gap rule)',
+ dx_endo_over90:'People waiting for an endoscopy, and how many have waited over 90 days',ctrl_population_yoy:'Negative control: residents against a year earlier; it should not move',
+ treat_onc_wait:'People waiting for treatment in oncology, counted in days of new referrals (Goal 3 proxy, not a measured wait)',treat_onc_over90:'People waiting for treatment in oncology, and how many have waited over 90 days',
+ treat_surg_over90:'GI surgery and urology queues, and how many have waited over 90 days; not cancer-specific'};
 const NEED={en:{'A-R1':'A symptom-based fast track from primary care, with standard referral criteria','A-D1':'Pre-booked endoscopy slots for suspected cancer, and triage of the queue',
   'A-T1':'Protected first-treatment slots in oncology and a weekly review of the queue','A-S1':'A targeted reminder to invited people who have not taken part',
   'A-Q1':'Cancer-specific waiting times reported to the national register, so this county can be seen'},
@@ -548,6 +769,41 @@ function whyShort(sig,c,t){const g=gapWhy(sig,c,t);if(!g)return '';const E=EN(),
   :k==='county'?(E?`${g.sgn>0?'up':'down'} from ${fmt(sig,drv.lv0)} a year ago`:`vuosi sitten ${fmt(sig,drv.lv0)}`)
   :(E?`mostly the national level moving (${fmt(sig,drv.rf0)} → ${fmt(sig,r.rf[t])} in a year)`:`taustalla lähinnä koko maan tason muutos (${fmt(sig,drv.rf0)} → ${fmt(sig,r.rf[t])} vuodessa)`);
  const tail=[a,b].filter(Boolean).join('; ');return (s+(tail?cap(tail)+'.':'')).trim()}
+/* The head of a block: people, not percentages. Counts are the latest reported figures; the bar shows the share,
+   with Finland (and the flag line, when flagged) as ticks. A queue too small to judge shows how far it is from being judged. */
+function smallQ(sig,r,t){const cfg=D.signals[sig];return !!r&&((cfg.min_den&&r.den[t]!=null&&r.den[t]<cfg.min_den)||(cfg.min_num&&r.num[t]!=null&&r.num[t]<cfg.min_num))}
+function inN(v,base){const x=v*base;return (x>=10||x===0?String(Math.round(x)):x.toFixed(1)).replace('.',EN()?'.':',')}   // a share as so many in 100 (or in 1,000 when small)
+function peopleHead(sig,st,has,r,t,fl,via){
+ const E=EN(),L=S.lang,cfg=D.signals[sig],name=(NAME[L]||{})[sig]||SHORT[L][sig],fin=E?'Finland':'Koko maa';
+ const col={g:'var(--gap)',w:'var(--watch)',o:'var(--ok)'}[st]||'currentColor';
+ const pc=v=>Math.max(0,Math.min(100,v*100)).toFixed(1)+'%';
+ const tick=(v,cls,tt)=>v==null?'':`<b class="tk ${cls}" style="left:${pc(v)}" title="${tt}"></b>`;
+ const bar=(f,ticks)=>`<div class="pbar"><i style="width:${pc(f)};background:${col}"></i>${ticks||''}</div>`;
+ const head=(big,small)=>`<div class="hh"><span class="hval">${big}${small?` <small>${small}</small>`:''}</span><span class="st ${st}">${T(st)}</span></div><b class="hn">${name}</b>`;
+ const cap=x=>`<div class="hcap">${x}${via?` · ${E?'HUS as a whole':'koko HUS'}`:''}</div>`;
+ const key=(cls,txt)=>`<span class="kw"><span class="kk ${cls}"></span>${txt}</span>`;
+ if(!has||r.num[t]==null)return head(has?fmtB(sig,r.lv[t]):'–')+(has&&r.rf[t]!=null?cap(`${fin} ${fmt(sig,r.rf[t])}`):'');
+ const n=r.num[t],d=r.den[t],rf=r.rf[t],th=fl?r.th[t]:null;
+ const judge=(have,need,txt)=>`<div class="jrow"><div class="pbar judge" title="${E?`the twin judges from ${need}`:`arvio tehdään, kun lukuja on vähintään ${need}`}"><i style="width:${pc(have/need)}"></i></div><span class="jn">${need}</span></div>`+cap(txt);
+ if(cfg.kind==='share'){
+  const of=()=>`${E?'of':'/'} ${cnt(d)}`;
+  if(cfg.min_den&&d<cfg.min_den)return head(cnt(n),of())+judge(d,cfg.min_den,E?`${cnt(d)} in the queue: too few to judge. The twin judges from ${cfg.min_den}.`:`Jonossa ${cnt(d)}: liian vähän arvioitavaksi. Arvio tehdään, kun jonossa on vähintään ${cfg.min_den}.`);
+  const v=d>0?n/d:0,base=Math.max(v,rf||0,th||0)<.02?1000:100;
+  const ref=sig==='ref_over21',per=E?`in every ${base===1000?'1,000':'100'} ${ref?'referrals':'waiting'}`:`${base===1000?'tuhannesta':'sadasta'} ${ref?'lähetteestä':'odottajasta'}`;
+  return head(cnt(n),of())
+   +bar(v,tick(rf,'fi',fin)+tick(th,'fl',E?'flag line':'kynnys'))
+   +cap(`<b>${inN(v,base)}</b> ${per}${rf!=null?` · ${key('fi',`${fin} ${inN(rf,base)}`)}`:''}${th!=null?` · ${key('fl',`${E?'flag line':'kynnys'} ${inN(th,base)}`)}`:''}`)}
+ if(cfg.kind==='pct'){const v=n/100;
+  return head(`${Math.round(n)} <small>${E?'in 100':'/ 100'}</small>`,'')+bar(v,tick(cfg.target,'tg',E?'target':'tavoite')+tick(rf,'fi',fin))
+   +cap(`${E?'invited took part':'kutsutuista osallistui'} · ${key('tg',`${E?'target':'tavoite'} ${Math.round(100*cfg.target)}`)}${rf!=null?` · ${key('fi',`${fin} ${Math.round(100*rf)}`)}`:''}`)}
+ if(sig==='treat_onc_wait'){
+  if(cfg.min_num&&n<cfg.min_num)return head(`${cnt(n)}`,E?'waiting':'odottaa')+judge(n,cfg.min_num,E?`${cnt(n)} waiting: too few to judge. The twin judges from ${cfg.min_num}.`:`Odottajia ${cnt(n)}: liian vähän arvioitavaksi. Arvio tehdään, kun odottajia on vähintään ${cfg.min_num}.`);
+  const dd=d>0?n/d:0,top=Math.max(dd,rf||0,th||0)*1.25||1,tf=v=>v==null?null:v/top;
+  return head(`${cnt(n)}`,E?'waiting':'odottaa')+bar(dd/top,tick(tf(rf),'fi',fin)+tick(tf(th),'fl',E?'flag line':'kynnys'))
+   +cap(`${E?`${Math.round(dd)} days of new referrals`:`${Math.round(dd)} päivän lähetteet`}${rf!=null?` · ${key('fi',`${fin} ${Math.round(rf)}`)}`:''}${th!=null?` · ${key('fl',`${E?'flag line':'kynnys'} ${Math.round(th)}`)}`:''}`)}
+ if(sig==='ref_volume_yoy'){
+  return head(cnt(n),E?'referrals':'lähetettä')+cap(`${key('fi',`${E?'a year earlier':'vuotta aiemmin'} ${cnt(d)}`)} · ${fmtB(sig,n/d)}`)}
+ return head(cnt(n),sig==='ctrl_population_yoy'?(E?'residents':'asukasta'):'')+cap(`${E?'a year earlier':'vuotta aiemmin'} ${cnt(d)}`)}
 function whyNot(sig,c,t){   /* why a signal cannot be judged: never read as "fine" */
  const x=recOf(sig,c),cfg=D.signals[sig],E=EN();
  if(!x||x.r.lv[t]==null)return E?'No public figure yet.':'Ei vielä julkista lukua.';
@@ -583,20 +839,202 @@ function whyHTML(sig,c,t){   /* the full reasoning, for the side panel */
   li.push(E?'“Cannot be judged” is never read as “fine”.':'”Ei voida arvioida” ei tarkoita ”kunnossa”.');if(x.via)li.push(E?'Reported for HUS as a whole.':'Raportoitu koko HUSista.');
   return `<div class="sec"><h4>${E?'Why it cannot be judged':'Miksi ei voida arvioida'}</h4><ul class="why">${li.map(v=>`<li>${v}</li>`).join('')}</ul></div>`}
  return ''}
+// ---------- governance: who decides (codes: scripts/run_governance.py; rules: GOVERNANCE.md; texts: twin/governance.json) ----------
+const GV=D.gov,GM=GV&&GV.map;
+const govUnit=(sig,c)=>{const r=D.R[sig]||{};return r[c]?c:HUSM.includes(c)&&r.HUS?'HUS':null};   // HUS reports the queue figures for its members
+function govAt(sig,c,t){if(!GV)return null;const u=govUnit(sig,c),s=u&&(GV.codes[sig]||{})[u];if(!s)return null;
+ const E=(GV.episodes[sig]||{})[u]||[],ep=E.find(e=>e[0]<=t&&t<=e[2])||(s[t]==='X'?E.find(e=>e[2]===t-1):null);   // a stop month closes the episode that ended the month before
+ return {u,k:s[t],s,start:ep?ep[0]:null,dec:ep&&ep[1]>=0?ep[1]:null}}
+const YC={south:'#9fbde6',east:'#a9d6b2',inner:'#f0cf93',west:'#e2b4cf',north:'#c3c8ec'};   // one tint per collaborative area
+const UHC={south:[165.6,563.3,'Helsinki'],east:[241.2,409.9,'Kuopio'],inner:[136.1,486.9,'Tampere'],west:[91.4,543.5,'Turku'],north:[186.9,289.5,'Oulu']};   // university hospital cities, ETRS-TM35FIN on the map's grid
+const YN={south:['Southern','Etelä'],east:['Eastern','Itä'],inner:['Inner','Sisä'],west:['Western','Länsi'],north:['Northern','Pohjois']};
+const ytaKey=u=>{if(!GM)return null;for(const k in GM.yta)if(GM.yta[k].members.includes(u))return k;return null};
+function locMap(c,big){   /* where a county's collaborative area is: the county dark, its area tinted, the university hospital as a ring; the large map tints all five areas */
+ const k=ytaKey(c==='HUS'?'HUS':c),mine=c==='HUS'?HUSM:[c],E=EN();let h='',lab='';const ctr={};
+ for(const x in D.paths){const a=ytaKey(x),p=D.paths[x];
+  const f=mine.includes(x)?'#1c2430':big?(a?YC[a]+(a===k?'':'88'):'#e3e6ea'):(a&&a===k?'#7fa3d6':'#e3e6ea');
+  h+=`<path d="${p.d}" fill="${f}" stroke="#fff" stroke-width="${big?1.2:2}"><title>${cname(x)}${a?' · '+GM.yta[a][S.lang]:''}</title></path>`;
+  if(a){(ctr[a]=ctr[a]||[]).push([p.cx,p.cy])}}
+ for(const a in UHC){if(!big&&a!==k)continue;const [x,y,n]=UHC[a];
+  h+=`<circle cx="${x}" cy="${y}" r="${big?7:17}" fill="#fff" stroke="${big?'#c8372d':'#c8372d'}" stroke-width="${big?3.5:8}"/>`;
+  if(big)lab+=`<text x="${x+11}" y="${y+4}" font-size="12" font-weight="700" fill="#1c2430" stroke="#fff" stroke-width="3" paint-order="stroke">${n}</text>`}
+ if(big)for(const a in ctr){const m=ctr[a],cx=m.reduce((s,v)=>s+v[0],0)/m.length,cy=m.reduce((s,v)=>s+v[1],0)/m.length-(a==='south'?30:a==='west'?40:a==='inner'?6:0);
+  lab+=`<text x="${cx}" y="${cy}" font-size="${a===k?15:13}" font-weight="${a===k?800:600}" text-anchor="middle" fill="#1c2430" stroke="#fff" stroke-width="3.5" paint-order="stroke">${YN[a][E?0:1]}</text>`}
+ return `<svg class="locmap${big?' big':''}" viewBox="0 -8 360 620" role="img" aria-label="${k?GM.yta[k][S.lang]:''}">${h}${lab}</svg>`}
+function pathBox(d){const n=d.match(/-?\d+(?:\.\d+)?/g).map(Number);let b=[1e9,1e9,-1e9,-1e9];for(let i=0;i+1<n.length;i+=2){b=[Math.min(b[0],n[i]),Math.min(b[1],n[i+1]),Math.max(b[2],n[i]),Math.max(b[3],n[i+1])]}return b}
+const RC=['','#8fb4e6','#5a8fd6','#2a66b3','#12407a'];   // the ladder's colours (--g1..4)
+function scopeMap(k,c,cls){   /* the part of Finland a forum decides for: 1 one unit inside the county (zoomed, schematic), 2 the county, 3 its collaborative area with the university hospital ringed, 4 all of Finland */
+ const mine=c==='HUS'?HUSM:[c],ak=ytaKey(c==='HUS'?'HUS':c),col=RC[k];let h='',vb='0 -8 360 620',sw=1.2,ring='';
+ if(k===1){let b=[1e9,1e9,-1e9,-1e9];for(const x of mine){const p=D.paths[x];if(!p)continue;const q=pathBox(p.d);b=[Math.min(b[0],q[0]),Math.min(b[1],q[1]),Math.max(b[2],q[2]),Math.max(b[3],q[3])]}
+  const H=Math.max(b[3]-b[1],(b[2]-b[0])/0.58)*1.25,W=H*0.58,cx=(b[0]+b[2])/2,cy=(b[1]+b[3])/2;vb=`${(cx-W/2).toFixed(1)} ${(cy-H/2).toFixed(1)} ${W.toFixed(1)} ${H.toFixed(1)}`;sw=H/300;
+  const u=H*0.07,p0=D.paths[mine[0]]||{cx,cy};ring=`<rect x="${(p0.cx-u/2).toFixed(1)}" y="${(p0.cy-u/2).toFixed(1)}" width="${u.toFixed(1)}" height="${u.toFixed(1)}" rx="${(u/5).toFixed(1)}" fill="#fff" stroke="#1c2430" stroke-width="${(u/4).toFixed(1)}"/>`}
+ for(const x in D.paths){const p=D.paths[x],a=ytaKey(x),me=mine.includes(x);
+  const f=k===4?col:k===3?(a&&a===ak?col:'#e3e6ea'):me?col:k===1?'#eef0f3':'#e3e6ea';
+  h+=`<path d="${p.d}" fill="${f}" stroke="${me&&k>2?(k===4?'#fff':'#1c2430'):'#fff'}" stroke-width="${me&&k>2?6:k===1?sw*2:sw}"/>`}
+ if(k===3&&UHC[ak]){const [x,y]=UHC[ak];ring=`<circle cx="${x}" cy="${y}" r="20" fill="#fff" stroke="#c8372d" stroke-width="9"/>`}
+ return `<svg class="smap ${cls||''}" viewBox="${vb}" aria-hidden="true">${h}${ring}</svg>`}
+function scopeTxt(k,c){const E=EN(),L=S.lang,who=esc(cname(c).split(' (')[0]),ak=ytaKey(c==='HUS'?'HUS':c),y=ak&&GM.yta[ak];
+ if(k===1)return E?`One unit in ${who}: the one that holds the queue`:`Jonosta vastaava yksikkö: ${who}`;
+ if(k===2)return E?`${who}, the whole county`:`${who}, koko hyvinvointialue`;
+ if(k===3){if(!y)return E?'Not in any collaborative area':'Ei yhteistyöaluetta';const m=y.members.filter(x=>x!=='HUS'&&x!=='90'),hk=y.members.includes('90');
+  return `${y[L]}: ${m.length} ${E?'counties':'hyvinvointialuetta'}${hk?(E?', Helsinki and HUS':', Helsinki ja HUS'):''} · <span class="uhr"></span>${y['uh_'+L]}`}
+ return E?'All of Finland: 21 counties, Helsinki and HUS':'Koko Suomi: 21 hyvinvointialuetta, Helsinki ja HUS'}
+function govFirst(c,t){   /* what to decide first in this county now: an ordered list (rule in twin/governance.json, first_order) */
+ const E=EN(),L=S.lang,N=GM.rules,now=govNow(c,t),STO={treatment:0,diagnosis:1,referral:2,detection:3},it=[];
+ for(const k of [4,3,2,1])for(const [sig,g] of now.by[k])it.push({k,sig,g});
+ it.sort((a,b)=>b.k-a.k||STO[D.signals[a.sig].step]-STO[D.signals[b.sig].step]||(a.g.start??t)-(b.g.start??t));
+ const rows=it.map(({k,sig,g})=>{const r=GM.rungs[k],q=govBrief(g,sig,t),m=g.start!=null?t-g.start+1:null,f=(r.first||[])[0];
+  return `<li data-open="gov:${sig}" role="button" tabindex="0">${scopeMap(k,c,'xs')}<div><b>${(NAME[L]||{})[sig]||SHORT[L][sig]}</b><span class="fw">${glad(k)}${k===3&&q?q.b:gt(r,'forum')}</span>
+   <p>${f?f[L]:gt(r,'decision')}</p><span class="note">${T(D.signals[sig].step)}${m?` · ${E?`in gap ${m} months`:`erossa ${m} kk`}`:''}${q&&q.x?' · '+q.x:''}</span></div></li>`});
+ for(const [sig] of now.tr.H)rows.push(`<li data-open="gov:${sig}" role="button" tabindex="0">${scopeMap(2,c,'xs')}<div><b>${(NAME[L]||{})[sig]||SHORT[L][sig]}</b><span class="fw">${gt(GM.rungs[2],'forum')}</span><p>${gt(GM.tracks.H,'decision')}</p></div></li>`);
+ const dr=[...now.tr.D,...now.tr.S].map(x=>x[0]);
+ if(dr.length)rows.push(`<li class="ask" data-open="gov:${dr[0]}" role="button" tabindex="0"><span class="askic">?</span><div><b>${E?'Ask for the missing data':'Pyydetään puuttuva tieto'}</b><span class="fw">${gt(GM.tracks.D,'owner')}</span><p>${dr.map(x=>SHORT[L][x]).join(', ')}</p></div></li>`);
+ return `<div class="gh4"><b>${E?'Decide first':'Päätä ensin'} · ${esc(cname(c).split(' (')[0])} · ${ym(t)}</b><span>${GM.first_order?GM.first_order[L]+' '+gtag(GM.first_order.label):''}</span></div>`
+  +(rows.length?`<ol class="gfirst">${rows.join('')}</ol>`:`<p class="note">${E?'No decision is asked on this date.':'Tänä päivänä ei pyydetä päätöstä.'}</p>`)}
+const ytaOf=u=>{if(!GM)return null;for(const k in GM.yta)if(GM.yta[k].members.includes(u))return GM.yta[k];return null};
+const gt=(o,f)=>o[f+'_'+S.lang]??o[f+'_en'];
+const ym=(t,n=0)=>{const d=new Date(D.months[t]);d.setUTCDate(1);d.setUTCMonth(d.getUTCMonth()+n);return d.toISOString().slice(0,7)};
+const ngapAt=(sig,t)=>{let n=0;for(const u in D.R[sig]||{})if(u!=='FI'&&D.R[sig][u].st[t]==='g')n++;return n};
+const gtag=l=>l==='sourced'?`<span class="gtag s">${EN()?'sourced':'lähteestä'}</span>`:l==='unchecked'?`<span class="gtag u">${EN()?'unchecked':'tarkistamaton'}</span>`:`<span class="gtag p">${EN()?'our proposal':'oma ehdotus'}</span>`;
+const glad=r=>`<span class="gl" aria-hidden="true">${[1,2,3,4].map(k=>`<i class="${k<=r?'on':''}"></i>`).join('')}</span>`;
+const hRun=(g,t)=>{let n=0;for(let i=t;i>=0&&g.s[i]==='H';i--)n++;return n};
+function govForum(r,u){const y=ytaOf(u);return r===3&&y?`${y[S.lang]} · ${y['uh_'+S.lang]}`:gt(GM.rungs[r],'forum')}
+function govBrief(g,sig,t){   /* {r: rung or 0, b: forum or track, x: what and when}, or null */
+ if(!g||!GM)return null;const E=EN(),k=g.k,R=GM.rungs,N=GM.rules;
+ if(k==='1')return {r:1,b:gt(R[1],'forum'),x:E?'monthly review':'kuukausikatsaus'};
+ if(k==='2')return {r:2,b:gt(R[2],'forum'),x:g.dec!=null?(E?`decided ${ym(g.dec)}, review ${ym(g.dec,N.min_action_months)}`:`päätös ${ym(g.dec)}, tarkastelu ${ym(g.dec,N.min_action_months)}`):''};
+ if(k==='3'){const y=ytaOf(g.u);return {r:3,b:y?y[S.lang]:gt(R[3],'forum'),x:g.dec!=null?(E?`since ${ym(g.dec,N.min_action_months)}`:`${ym(g.dec,N.min_action_months)} alkaen`):''}}
+ if(k==='4'){const n=ngapAt(sig,t);return {r:4,b:gt(R[4],'forum'),x:n>=N.national_counties?(E?`${n} counties in gap on this signal`:`${n} aluetta erossa tällä signaalilla`):(E?'national alarm on this signal':'kansallinen hälytys tällä signaalilla')}}
+ if(k==='H')return {r:2,b:gt(R[2],'forum'),x:E?`hold: gap closed ${hRun(g,t)} of ${N.closed_months} months`:`odotus: ero sulkeutunut ${hRun(g,t)}/${N.closed_months} kk`};
+ if(k==='X')return {r:0,b:GM.tracks.X[S.lang],x:E?'release the pilot slot, record the outcome':'pilottipaikka vapautetaan, tulos kirjataan'};
+ if(k==='D')return {r:0,b:GM.tracks.D[S.lang],x:E?'never escalated':'ei eskaloida'};
+ if(k==='S')return {r:0,b:GM.tracks.S[S.lang],x:E?'flag to the data owner':'ilmoitus tiedon omistajalle'};
+ return null}
+function govLine(g,sig,t){const q=govBrief(g,sig,t);if(!q)return '';   /* the line in a block of the county card */
+ return `<div class="hgov" data-open="gov:${sig}"><span class="lbl">${EN()?'Who decides':'Kuka päättää'}</span>${q.r?glad(q.r):''}<b>${q.b}</b>${q.x?' · '+q.x:''} <span class="go">›</span></div>`}
+function govTeaser(sig,c,t){const q=govBrief(govAt(sig,c,t),sig,t);if(!q)return '';
+ return `<div class="teaser" data-open="gov:${sig}"><span class="lab">${EN()?'Who decides':'Kuka päättää'}</span><span class="tx">${q.b}${q.x?' · '+q.x:''}</span><span class="go">›</span></div>`}
+const attr=s=>esc(s).replace(/"/g,'&quot;');
+const RY=`${D.card.months[0].slice(0,4)}–${D.card.months[D.card.months.length-1].slice(0,4)}`;   // the scored years of the replay
+const GTK=['H','X','D','S'];   // side tracks, in the order a gap leaves the ladder: hold, stop; then the two that cannot be judged
+function govNow(c,t){const by={1:[],2:[],3:[],4:[]},tr={H:[],X:[],D:[],S:[]};   /* the county's signals on each rung and each side track on this date */
+ if(GV)for(const sig of JUDGED){const g=govAt(sig,c,t);if(!g)continue;if(by[g.k])by[g.k].push([sig,g]);else if(tr[g.k])tr[g.k].push([sig,g])}
+ return {by,tr}}
+function govCount(t){const n={};if(GV)for(const sig of JUDGED){const m=GV.codes[sig]||{};for(const u in m){const k=m[u][t];n[k]=(n[k]||0)+1}}return n}   // every county at once; HUS counts once for the figures it reports as a whole
+function govWhen(k){const N=GM.rules,E=EN();   /* what puts a gap on rung k (GOVERNANCE.md, "The ladder") */
+ return k===1?(E?'From the first month in gap.':'Ensimmäisestä erokuukaudesta alkaen.'):k===2?(E?`In gap ${N.persist_months} months in a row.`:`Ero ${N.persist_months} kuukautta peräkkäin.`)
+  :k===3?(E?`Still in gap ${N.min_action_months} months after the county’s decision.`:`Ero jatkuu vielä ${N.min_action_months} kuukautta alueen päätöksen jälkeen.`)
+  :(E?`${N.national_counties} or more counties in gap on the same signal, or a national alarm: straight here, from any rung.`:`Vähintään ${N.national_counties} aluetta erossa samalla signaalilla tai kansallinen hälytys: suoraan tänne, miltä tahansa portaalta.`)}
+function govTease(c,t){if(!GM)return '';const E=EN(),L=S.lang,{by,tr}=govNow(c,t),y=ytaOf(c==='HUS'?'HUS':c),parts=[];let top=0;   /* one line in the county card: who holds what now; a click goes down to the section */
+ for(const k of [4,3,2,1])if(by[k].length){top=top||k;parts.push(`${k===3&&y?y[L]:gt(GM.rungs[k],'forum')}: ${by[k].map(x=>SHORT[L][x[0]]).join(', ')}`)}
+ for(const k of GTK)if(tr[k].length)parts.push(`${GM.tracks[k][L]}: ${tr[k].map(x=>SHORT[L][x[0]]).join(', ')}`);
+ return `<div class="teaser" data-goto="p-gov" role="button" tabindex="0">${glad(top)}<span class="lab">${E?'Who decides':'Kuka päättää'}</span><span class="tx">${parts.length?parts.join(' · '):(E?'No decision is asked on this date':'Tänä päivänä ei pyydetä päätöstä')}</span><span class="go">↓</span></div>`}
+function trailHTML(c,t){const E=EN(),L=S.lang,n=D.months.length,pc=v=>(100*v/n).toFixed(3)+'%',rows=[],yrs=[];   /* which forum each signal sat with, month by month, up to the replay date */
+ D.months.forEach((m,i)=>{if(m.slice(5,7)==='01')yrs.push([i,m.slice(0,4)])});
+ const bg=[`linear-gradient(var(--ink),var(--ink)) ${pc(t+1)} 0/1.5px 100% no-repeat`,...yrs.map(([i])=>`linear-gradient(#e6e9ed,#e6e9ed) ${pc(i)} 0/1px 100% no-repeat`)].join(',');   // the playhead, over one hairline per year
+ for(const sig of JUDGED){const g=govAt(sig,c,t);if(!g||!/[1-4HXDS]/.test(g.s))continue;const s=g.s;let a=0,runs='';   /* a row for every signal that ever gets a suggestion here, so rows do not jump during the replay */
+  for(let i=1;i<=t+1;i++)if(i>t||s[i]!==s[a]){const q=s[a];
+   if('1234HXDS'.includes(q))runs+=`<i class="k${q}" style="left:${pc(a)};width:${pc(i-a)}" title="${ym(a)}${i-1>a?'–'+ym(i-1):''} · ${attr(GM.rungs[q]?`${q} · ${govForum(+q,g.u)}`:GM.tracks[q][L])}"></i>`;a=i}
+  rows.push(`<span class="tl" data-open="gov:${sig}" role="button" tabindex="0">${SHORT[L][sig]}</span><div class="tq" data-open="gov:${sig}" style="background:${bg}">${runs}</div>`)}
+ if(!rows.length)return `<p class="note">${E?'No suggestion on any signal for this county in the replay.':'Tälle alueelle ei ole toistossa ehdotuksia yhdelläkään signaalilla.'}</p>`;
+ const sw=(q,x)=>`<span><span class="tsw"><i class="k${q}"></i></span>${x}</span>`;
+ return `<div class="trail">${rows.join('')}<span></span><div class="tyr">${yrs.map(([i,y],j)=>`<span${j%2?' class="alt"':''} style="left:${pc(i)}">${y}</span>`).join('')}</div></div>
+  <div class="tleg">${[1,2,3,4].map(q=>sw(q,`${q} · ${gt(GM.rungs[q],'short')}`)).join('')}${GTK.map(q=>sw(q,GM.tracks[q][L])).join('')}<span>${E?'taller and darker = a higher forum':'korkeampi ja tummempi = ylempi foorumi'}</span></div>`}
+function govKpis(){const E=EN(),L=S.lang,P=Object.keys(D.card.signals).map(k=>GV.metrics[k]).filter(Boolean),sum=f=>P.reduce((a,m)=>a+(m[f]||0),0),Ld=GV.metrics._load,y=GM.yta;   /* the replay's counts, with their denominators, flattering or not */
+ const ep=sum('episodes'),de=sum('episodes_decided'),e3=sum('yta_escalations'),e3n=sum('yta_escalations_not_confirmed'),ne=sum('national_episodes'),nen=sum('national_episodes_not_confirmed'),gm=sum('true_gap_months'),gmn=sum('true_gap_months_no_suggestion');
+ const md=P.map(m=>m.median_months_to_decision).filter(v=>v!=null),num=v=>E?String(v):String(v).replace('.',','),whole=v=>num(Number.isInteger(v)?v:v.toFixed(1)),lo=Math.min(...md),hi=Math.max(...md);
+ const ar=Object.entries(Ld.yta_escalations_by_area).filter(([k])=>y[k]).sort((a,b)=>b[1]-a[1]),tot=ar.reduce((a,x)=>a+x[1],0),per=tot/Object.keys(y).length/Ld.years,short=k=>y[k][L].replace(/ (yhteistyöalue|collaborative area)$/,'');
+ const card=(k,b,v)=>`<div class="scard gk" data-open="gov"><span class="k">${k}</span><b>${b}</b><span class="v">${v}</span></div>`,of=E?'of':'/';
+ return `<div class="sgrid gk">`+[
+  card(E?'Reached a deciding forum in time':'Eteni päättävälle foorumille ajoissa',`${de} <small>${of} ${ep}</small>`,E?`times a county fell behind for 3 months or more: county management or higher while the gap lasted${md.length?`, a median of ${lo===hi?whole(lo):whole(lo)+'–'+whole(hi)} months in`:''}`:`kerrasta, jolloin alue oli jäljessä vähintään 3 kuukautta: hyvinvointialueen johto tai ylempi eron aikana${md.length?`, mediaanina ${lo===hi?whole(lo):whole(lo)+'–'+whole(hi)} kuukauden kuluttua`:''}`),
+  card(E?'Went on to a collaborative area':'Eteni yhteistyöalueelle',e3,E?`escalations; hindsight confirms ${e3-e3n} of them as real gaps`:`eskalaatiota; jälkikäteen niistä ${e3-e3n} vahvistuu todelliseksi eroksi`),
+  card(E?'Raised to the national level':'Nousi kansalliselle tasolle',ne,E?`separate stretches of months; hindsight confirms ${ne-nen} of them`:`erillistä jaksoa; jälkikäteen niistä ${ne-nen} vahvistuu`),
+  card(E?'Behind, with no suggestion':'Jäljessä ilman ehdotusta',`${gmn} <small>${of} ${gm}</small>`,E?'county-months behind: the twin did not see a gap at the time':'jäljessäolokuukaudesta: kaksonen ei nähnyt eroa silloin'),
+  card(E?'Load on each collaborative area':'Kuorma yhteistyöaluetta kohti',`${num(per.toFixed(1))} <small>${E?'a year':'vuodessa'}</small>`,`${tot} ${E?'escalations in':'eskalaatiota'} ${num(Ld.years)} ${E?'years, every signal':'vuodessa, kaikki signaalit'}: ${ar.map(([k,v])=>`${short(k)} ${v}`).join(' · ')}`)].join('')+`</div>`}
+let GPREV={c:'',k:{}};   // the rung or track each signal of the county shown was on at the last draw: a signal that has moved gets a short highlight
+function drawGov(){$('r-gov').hidden=!GM;if(!GM)return;
+ const c=S.county,t=S.t,E=EN(),L=S.lang,N=GM.rules,now=govNow(c,t),all=govCount(t),y=ytaOf(c==='HUS'?'HUS':c),who=esc(cname(c).split(' (')[0]),same=GPREV.c===c,seen={};
+ const chip=([sig,g],off)=>{const q=govBrief(g,sig,t),x=GM.rungs[g.k]?(q&&q.x):g.k==='H'?`${hRun(g,t)}/${N.closed_months} ${E?'months closed':'kk suljettuna'}`:'';seen[sig]=g.k;
+  return `<span class="gchip${off?' o':''}${same&&GPREV.k[sig]!==g.k?' moved':''}" data-open="gov:${sig}" role="button" tabindex="0"><b>${SHORT[L][sig]}</b>${x?`<i>${x}</i>`:''}</span>`};
+ const here=k=>`<div class="rall">${E?'All of Finland':'Koko Suomi'}: ${all[k]||0}</div>`,lbl=`<span class="lbl">${who} · ${ym(t)}</span>`;
+ const rung=k=>{const r=GM.rungs[k],its=now.by[k],fs=r.first||[];
+  return `<div class="rung r${k}${its.length?' on':''}"><div class="rh"><span class="rn">${k}</span><div><b>${gt(r,'forum')}</b>${gtag(r.label)}<span class="rs">${scopeTxt(k,c)}</span><span class="rw">${govWhen(k)}</span></div>${scopeMap(k,c)}</div>
+   <dl><dt>${E?'Who':'Kuka'}</dt><dd>${gt(r,'owner')}</dd></dl>
+   <div class="rfirst"><span class="lbl">${E?'Decides, in this order':'Päättää tässä järjestyksessä'}</span><ol>${fs.map(x=>`<li>${x[L]}${x.label!==r.label?' '+gtag(x.label):''}</li>`).join('')}</ol>${k<4?`<p class="rthen"><b>${E?'Then':'Sitten'}</b> ${gt(r,'escalate')}</p>`:''}</div>
+   <div class="rnow">${lbl}${its.length?its.map(x=>chip(x)).join(''):`<span class="none">${E?'nothing on this rung':'ei mitään tällä portaalla'}</span>`}${here(k)}</div></div>`};
+ const trk=k=>{const x=GM.tracks[k],its=now.tr[k];return `<div class="trk${its.length?' on':''}"><b>${x[L]}</b><span>${gt(x,'decision')}</span><div class="rnow">${its.map(v=>chip(v,1)).join('')}${here(k)}</div></div>`};
+ let h=`<div class="ptitle gov"><h2>${E?'Who decides':'Kuka päättää'} <span>· ${who}</span></h2><span class="note">${D.months[t]}</span>${FILM?'':infoBtn('gov')}</div>`;
+ h+=`<p class="glead">${E?'The county twin says what to do about a gap. Fixed rules, written before the run, hand each gap to a forum: who decides, what is asked of it, and what moves the decision up. The platform suggests; a person decides.':'Aluekaksonen kertoo, mitä erolle tehdään. Ennen ajoa kirjatut kiinteät säännöt osoittavat jokaisen eron foorumille: kuka päättää, mitä siltä pyydetään ja mikä siirtää päätöksen ylemmäs. Alusta ehdottaa, ihminen päättää.'}</p>`;
+ h+=`<p class="gkey">${gtag('sourced')} ${E?'a page in the roadmap, the strategy or a decree':'sivu tiekartassa, strategiassa tai asetuksessa'} · ${gtag('proposal')} ${E?'the sources are silent':'lähteet eivät kerro'} · ${gtag('unchecked')} ${E?'no person has confirmed any of it yet':'kukaan ei ole vielä vahvistanut mitään tästä'}</p>`;
+ h+=govFirst(c,t);
+ h+=`<div class="gh4"><b>${E?'The decision ladder: who a gap is delegated to, and when it moves up':'Päätösportaat: kenelle ero osoitetaan ja milloin se nousee ylemmäs'}</b><span>${E?'each map: the part of Finland that forum decides for; ':'kartta: alue, josta foorumi päättää; '}<span class="uhr"></span>${E?'university hospital · click a signal for its trigger, owner, review date and stop rule':'yliopistosairaala · napsauta signaalia: laukaisija, omistaja, tarkastelu ja lopetussääntö'}</span></div><div class="ladder" id="govLadder">${[1,2,3,4].map(rung).join('')}</div>`;
+ h+=`<div class="gh4"><b>${E?'Off the ladder: hold, stop, ask for data. Never escalated':'Portaiden ulkopuolella: odotus, lopetus, tietopyyntö. Ei eskaloida'}</b></div><div class="tracks" id="govTracks">${GTK.map(trk).join('')}</div>`;
+ h+=`<div id="govTrail"><div class="gh4"><b>${E?'Decision trail':'Päätöspolku'} · ${who}</b><span>${E?`the forum each signal sat with, month by month, as known on ${ym(t)}`:`foorumi, jossa kukin signaali oli kuukausittain, ${ym(t)} tiedoilla`}</span></div>${trailHTML(c,t)}</div>`;
+ h+=`<div id="govReplay"><div class="gh4"><b>${E?'The same rules on the replay':'Samat säännöt toistossa'}, ${RY}</b><span>${E?'the scored signals, judged against hindsight; all counties':'pisteytetyt signaalit, verrattuna jälkikäteiseen tietoon; kaikki alueet'}</span></div>${govKpis()}</div>`;
+ h+=`<p class="note gnote">${E?'What the replay cannot score: whether a county would have acted on a suggestion, whether the named forum has the authority we give it, and any effect on waiting times, survival or mortality.':'Mitä toisto ei pysty arvioimaan: olisiko alue toiminut ehdotuksen mukaan, onko nimetyllä foorumilla sille annettu valta, eikä vaikutusta odotusaikoihin, elossaoloon tai kuolleisuuteen.'}</p>`;
+ h+=`<div class="links"><a data-open="gov">${E?'Where each forum comes from, and the full rules':'Mistä foorumit tulevat ja säännöt kokonaan'} ›</a><a data-open="govmed">${gt(GM.medicines,'title')} ›</a></div>`;
+ $('gov').innerHTML=h;GPREV={c,k:seen}}
+function ladderHTML(cur,u){const R=GM.rungs;return `<ol class="gladder">${[1,2,3,4].map(k=>`<li class="${k===cur?'on':k<cur?'past':''}"><span class="n">${k}</span><div><b>${govForum(k,u)}</b>${gtag(R[k].label)}<p>${gt(R[k],'decision')}</p></div></li>`).join('')}</ol>`}
+function medBox(){const m=GM.medicines,E=EN();return `<div class="sec medbox"><h4>${gt(m,'title')}</h4><ul>${gt(m,'points').map(x=>`<li>${x}</li>`).join('')}</ul><p>${gt(m,'twin')} <span class="ne">${T('ne')}</span>. ${cite(m.src)}</p></div>`}
+function govScore(sig){const m=GV.metrics[sig],E=EN();if(!m)return '';
+ return E?`<p><b>${SHORT.en[sig]}.</b> A county fell behind for 3 months or more ${m.episodes} times (judged in hindsight). ${m.episodes_decided} of those got a county management decision while they lasted, a median of ${m.median_months_to_decision} months after they began. ${m.yta_escalations} went on to a collaborative area, and hindsight confirms ${m.yta_escalations-m.yta_escalations_not_confirmed} of them as real gaps. The national condition held in ${m.national_episodes} separate stretches of months; hindsight confirms ${m.national_episodes-m.national_episodes_not_confirmed}. ${m.true_gap_months_no_suggestion} of the ${m.true_gap_months} county-months behind had no suggestion, because the twin did not see a gap at the time.</p>`
+  :`<p><b>${SHORT.fi[sig]}.</b> Alue oli jäljessä vähintään 3 kuukautta ${m.episodes} kertaa (jälkikäteen arvioituna). Näistä ${m.episodes_decided} sai aluetason päätöksen eron aikana, mediaanina ${m.median_months_to_decision} kuukautta eron alusta. ${m.yta_escalations} eteni yhteistyöalueelle, ja jälkikäteen ${m.yta_escalations-m.yta_escalations_not_confirmed} niistä vahvistuu todelliseksi eroksi. Kansallinen ehto täyttyi ${m.national_episodes} erillisenä jaksona; jälkikäteen ${m.national_episodes-m.national_episodes_not_confirmed} vahvistuu. ${m.true_gap_months} jäljessäolokuukaudesta ${m.true_gap_months_no_suggestion} jäi ilman ehdotusta, koska kaksonen ei nähnyt eroa silloin.</p>`}
+function govLoad(){const L=GV.metrics._load,E=EN(),y=GM.yta;return `<p>${E?`Load on the regional level: escalations to each collaborative area over the ${String(L.years).replace('.',E?'.':',')} years of the replay, every signal`:`Kuorma alueellisella tasolla: eskalaatiot kullekin yhteistyöalueelle toiston ${String(L.years).replace('.',',')} vuoden aikana, kaikki signaalit`}: ${Object.entries(L.yta_escalations_by_area).filter(([k])=>y[k]).sort((a,b)=>b[1]-a[1]).map(([k,n])=>`${y[k][S.lang].replace(/ (yhteistyöalue|collaborative area)$/,'')} ${n}`).join(' · ')}.</p>`}
+function govSide(sig,c,t){const E=EN(),g=govAt(sig,c,t),R=GM.rungs,N=GM.rules,k=g?g.k:'-',r='1234'.includes(k)?+k:(k==='H'?2:0),u=g?g.u:c,x=recOf(sig,c),a=D.actions[sig.startsWith('det_screen')?'det_screen':sig],tr=GM.tracks[k];
+ let trig;
+ if('1234'.includes(k)){trig=`${E?'In gap since':'Erossa'} ${ym(g.start??t)}${E?'':' alkaen'}; ${E?`the twin is ${sure(x.r.p[t])} sure the county is past the flag line`:`kaksosen varmuus erosta ${sure(x.r.p[t])}`}.`;
+  if(k==='4'){const n=ngapAt(sig,t);trig+=' '+(n>=N.national_counties?(E?`${n} counties are in gap on this signal: more than the ${D.card.budget.K} pilot slots can cover.`:`${n} aluetta on erossa tällä signaalilla: enemmän kuin ${D.card.budget.K} pilottipaikkaa kattaa.`):(E?'The national pathway twin (Model 2) raised an alarm on this signal.':'Koko maan hoitopolun kaksonen (malli 2) hälytti tällä signaalilla.'))}}
+ else if(k==='H')trig=E?`The gap closed ${hRun(g,t)} month(s) ago, after a county decision in ${ym(g.dec)}.`:`Ero sulkeutui ${hRun(g,t)} kk sitten; aluetason päätös tehtiin ${ym(g.dec)}.`;
+ else if(k==='X')trig=E?`Out of gap ${N.closed_months} months in a row after the decision in ${ym(g.dec)}.`:`Ei eroa ${N.closed_months} kuukauteen peräkkäin; päätös tehtiin ${ym(g.dec)}.`;
+ else if(k==='D'||k==='S')trig=whyNot(sig,c,t);
+ else if(k==='w')trig=E?'On watch: not yet a gap, so no decision is asked.':'Seurattava: ei vielä ero, joten päätöstä ei pyydetä.';
+ else trig=E?'No gap on this date, so no suggestion.':'Ei eroa tänä päivänä, joten ei ehdotusta.';
+ const rv=r===1?ym(t,1):k==='H'?ym(t,N.closed_months-hRun(g,t)):r===2&&g.dec!=null?ym(g.dec,N.min_action_months):r===3&&g.dec!=null?ym(g.dec,N.min_action_months+N.yta_review_months):r===4?(E?'the next annual national peer review':'seuraava vuosittainen kansallinen vertaisarviointi')+` ${gtag('sourced')}`:'–';
+ const kv=[[E?'Trigger':'Laukaisija',`${trig} ${x?cite([srcOfSignal(sig)]):''}`],
+  [E?'Forum and level':'Foorumi ja taso',k==='H'?`2/4 · ${gt(R[2],'forum')} ${gtag('proposal')}`:r?`${r}/4 · ${govForum(r,u)} ${gtag(R[r].label)}`:tr?`${tr[S.lang]} ${gtag('proposal')}`:'–'],
+  [E?'Decision asked':'Pyydetty päätös',k==='H'?gt(tr,'decision'):r?gt(R[r],'decision'):tr?gt(tr,'decision'):'–'],
+  [E?'Decision owner':'Päätöksen omistaja',(r===2&&k!=='H'&&a?`${a['owner_'+S.lang]} (${E?'owner of the recommended action':'suositellun toimenpiteen vastuutaho'}) ${gtag('proposal')}`:r&&k!=='H'?`${gt(R[r],'owner')} ${gtag(R[r].label)}`:tr?gt(tr,'owner'):'–')],
+  [E?'Review':'Tarkastelu',rv],
+  [E?'Escalation rule':'Eskalointisääntö',r&&k!=='H'?gt(R[r],'escalate'):k==='D'||k==='S'?(E?'Never escalated: a county that cannot be judged gets a data request, not an escalation.':'Ei eskaloida: alue, jota ei voida arvioida, saa tietopyynnön, ei eskalaatiota.'):'–'],
+  [E?'Stop rule':'Lopetussääntö',gt(GM.tracks.X,'decision')],[E?'Record':'Kirjaus',gt(GM,'record')]];
+ let b=`<p class="note" style="margin-top:-6px">${slabel(sig)}</p><p>${gtag('unchecked')} ${E?'Every field below is a suggestion that no person has confirmed yet.':'Jokainen alla oleva kohta on ehdotus, jota kukaan ei ole vielä vahvistanut.'}</p>`;
+ if(g&&g.u==='HUS'&&c!=='HUS')b+=`<p class="note">${E?'This figure is reported for HUS as a whole: the suggestion is for HUS, decided together with the county.':'Luku raportoidaan koko HUSista: ehdotus koskee HUSia, ja siitä päätetään yhdessä alueen kanssa.'} ${gtag('proposal')}</p>`;
+ b+=`<div class="sec"><dl class="kv">${kv.map(([d,v])=>`<dt>${d}</dt><dd>${v}</dd>`).join('')}</dl></div>`;
+ b+=`<div class="sec"><h4>${E?'The ladder':'Portaat'}</h4>${ladderHTML(r,u)}</div>`;
+ if(r)b+=`<div class="sec"><h4>${E?'Why this forum':'Miksi tämä foorumi'}</h4><p>${gt(R[r],'basis')} ${cite(R[r].src)}</p></div>`;
+ if(D.signals[sig].step==='treatment')b+=medBox();
+ if(GV.metrics[sig])b+=`<div class="sec"><h4>${E?'These rules on the replay, 2021–2026':'Säännöt toistossa 2021–2026'}</h4>${govScore(sig)}</div>`;
+ return {kick:`${k==='-'?'':`<span class="st ${stAt(sig,c,t)}">${T(stAt(sig,c,t))}</span> · `}${T(D.signals[sig].step)} · ${cname(c)} · ${D.months[t]}`,title:`${E?'Who decides':'Kuka päättää'}: ${k==='H'?gt(R[2],'forum'):r?(r===3?(ytaOf(u)||{})[S.lang]||gt(R[3],'forum'):gt(R[r],'forum')):tr?tr[S.lang]:(E?'no suggestion':'ei ehdotusta')}`,body:b}}
+function govOverview(c,t){const E=EN(),R=GM.rungs,y=ytaOf(c==='HUS'?'HUS':c);
+ let b=`<p class="lead">${E?'The card says what to do about a gap. This says who decides, in which forum, by when, and what happens if nothing changes.':'Kortti kertoo, mitä erolle tehdään. Tämä kertoo, kuka päättää, missä, mihin mennessä ja mitä tapahtuu, jos mikään ei muutu.'}</p>`;
+ b+=`<p>${E?'Fixed rules, written before the run, pick the suggestion from the twin\'s own records; a person decides.':'Ennen ajoa kirjatut kiinteät säännöt valitsevat ehdotuksen kaksosen omista tiedoista; ihminen päättää.'} ${gtag('sourced')} ${E?'a page in the roadmap, the strategy or a decree':'sivu tiekartassa, strategiassa tai asetuksessa'} · ${gtag('proposal')} ${E?'the sources are silent':'lähteet eivät kerro'} · ${gtag('unchecked')} ${E?'no person has confirmed any of it yet':'kukaan ei ole vielä vahvistanut'}.</p>`;
+ b+=y?`<figure class="locfig">${locMap(c,true)}<figcaption>${E?'The five collaborative areas and their university hospitals (red rings).':'Viisi yhteistyöaluetta ja niiden yliopistosairaalat (punaiset renkaat).'} <b>${esc(cname(c))}</b> ${E?'(dark) is in the':'(tumma) kuuluu alueeseen'} <b>${y[S.lang]}</b>${E?'; its university hospital is':'; yliopistosairaala'} ${y['uh_'+S.lang]}. ${cite(['S12','S13','S09'])}</figcaption></figure>`:`<p class="ne">${esc(cname(c))}: ${E?'not in any collaborative area.':'ei kuulu yhteistyöalueeseen.'}</p>`;
+ const now=STEPS.map(st=>{const rows=STEPSIG[st].map(sig=>[sig,govBrief(govAt(sig,c,t),sig,t)]).filter(x=>x[1]);
+  return rows.length?`<p style="margin:10px 0 4px"><b>${T(st)}</b></p>`+rows.map(([sig,q])=>`<div class="teaser" data-open="gov:${sig}"><span class="lab">${SHORT[S.lang][sig]}</span><span class="tx">${q.r?glad(q.r):''}${q.b}${q.x?' · '+q.x:''}</span><span class="go">›</span></div>`).join(''):''}).join('');
+ b+=`<div class="sec"><h4>${E?'Now':'Nyt'} · ${D.months[t]}</h4>${now||`<p class="note">${E?'No suggestion on this date.':'Ei ehdotuksia tänä päivänä.'}</p>`}</div>`;
+ b+=`<div class="sec"><h4>${E?'The ladder':'Portaat'}</h4>${ladderHTML(0,c==='HUS'?'HUS':c)}<p class="note" style="margin-top:8px">${[1,2,3,4].map(k=>`${k}: ${gt(R[k],'escalate')}`).join(' ')}</p></div>`;
+ b+=`<div class="sec"><h4>${E?'Where each forum comes from':'Mistä foorumit tulevat'}</h4>${[1,2,3,4].map(k=>`<p><b>${k} · ${gt(R[k],'short')}</b> ${gtag(R[k].label)} ${gt(R[k],'basis')} ${cite(R[k].src)}</p>`).join('')}</div>`;
+ b+=`<div class="sec"><h4>${E?'Side tracks: never escalated':'Sivupolut: ei eskaloida'}</h4><ul>${['D','S','H','X'].map(k=>`<li><b>${GM.tracks[k][S.lang]}</b>: ${gt(GM.tracks[k],'decision')}</li>`).join('')}</ul></div>`;
+ b+=`<div class="sec"><h4>${E?'These rules on the replay, 2021–2026':'Säännöt toistossa 2021–2026'}</h4>${Object.keys(D.card.signals).filter(s=>GV.metrics[s]).map(govScore).join('')}${govLoad()}</div>`;
+ b+=medBox();
+ b+=`<div class="sec"><h4>${E?'What the replay cannot score':'Mitä toisto ei pysty arvioimaan'}</h4><ul><li>${E?'Whether a county would have acted on the suggestion (mentor question 8: would a county act on a monthly signal at all?).':'Olisiko alue toiminut ehdotuksen mukaan (mentorikysymys 8: toimisiko alue kuukausittaisen signaalin perusteella?).'}</li><li>${E?'Whether the named forum has the authority we give it.':'Onko nimetyllä foorumilla sille annettu valta.'}</li><li>${E?'Any effect on waiting times, survival or mortality.':'Vaikutus odotusaikoihin, elossaoloon tai kuolleisuuteen.'}</li></ul></div>`;
+ b+=`<p class="note">${E?'Rules':'Säännöt'}: GOVERNANCE.md · ${E?'run':'ajo'}: ${GV.run}</p>`;
+ return {kick:`${E?'Governance':'Hallinta'} · ${cname(c)} · ${D.months[t]}`,title:E?'Who decides':'Kuka päättää',body:b}}
 // ---------- side panel ----------
 function sideSpec(key){const c=S.county,t=S.t;
  if(key==='brief')return {kick:briefMeta(c,t),title:cname(c),body:`<div class="bp">${briefHTML(c,t)}</div><p class="note">${EN()?`Written by ${D.briefing_meta.llm||'an LLM'} from the twin's records only. Each sentence cites a record or a source; sentences citing an unknown id or a number not in the records were rejected (scripts/gen_briefings.py).`:`Kirjoitettu (${D.briefing_meta.llm||'LLM'}) vain kaksosen tiedoista. Jokainen lause viittaa tietueeseen tai lähteeseen.`}</p>`};
  if(key.startsWith('act:')){const it=actionsFor(c,t).find(x=>x.key===key);
   if(!it)return {kick:`${T('rec')} · ${D.months[t]}`,title:cname(c),body:`<p class="ne">${T('noAct')}</p>`};
   return {kick:`<span class="st ${it.st}">${T(it.st)}</span> · ${T(it.step)} · ${cname(c)} · ${D.months[t]}`,title:it.sig?SHORT[S.lang][it.sig]:T('u'),body:(it.sig?`<p class="note" style="margin-top:-6px">${slabel(it.sig)}</p>`:'')+actionBody(it,c,t)}}
+ if(key.startsWith('gov:')){const sig=key.slice(4);return GM&&D.signals[sig]&&JUDGED.includes(sig)?govSide(sig,c,t):null}
  if(key.startsWith('sig:')){const sig=key.slice(4);if(!D.signals[sig])return null;const cfg=D.signals[sig],x=recOf(sig,c);
   let body;
   if(!x||x.r.lv[t]==null)body=`<p class="ne">${T('ne')}: ${EN()?'no public data for this county on this date':'ei julkista tietoa tältä alueelta tänä päivänä'}</p>`;
   else{const r=x.r,st=stAt(sig,c,t),why=whyHTML(sig,c,t),a=(st==='g'||st==='w')?D.actions[sig.startsWith('det_screen')?'det_screen':sig]:null;
    body=`<div class="facts"><div class="fact"><b>${fmtB(sig,r.lv[t])}</b><span>${T('level')}</span></div><div class="fact"><b>${fmt(sig,r.rf[t])}</b><span>${T('national')}</span></div><div class="fact"><b><span class="st ${st}">${T(st)}</span></b><span>${T('status')}</span></div></div>`
-    +(why||`<div class="sec"><dl class="kv"><dt>${T('interval')}</dt><dd>${fmtB(sig,r.lo[t])} – ${fmtB(sig,r.hi[t])}</dd>${r.th[t]!=null?`<dt>${T('thr')}</dt><dd>${fmt(sig,r.th[t])} <span class="note">(${cfg.delta_origin})</span></dd><dt>P(gap)</dt><dd>${r.p[t]??'–'}</dd>`:''}<dt>${T('through')}</dt><dd>${r.dt[t]||'–'}</dd>${x.via?`<dt></dt><dd class="note">${EN()?'reported for HUS as a whole':'raportoitu koko HUSista'}</dd>`:''}</dl></div>`)
+    +(why||`<div class="sec"><dl class="kv"><dt>${T('interval')}</dt><dd>${fmtB(sig,r.lo[t])} – ${fmtB(sig,r.hi[t])}</dd>${r.th[t]!=null?`<dt>${T('thr')}</dt><dd>${fmt(sig,r.th[t])} <span class="note">(${cfg.delta_origin})</span></dd><dt>${EN()?'How sure it is a gap':'Varmuus erosta'}</dt><dd>${r.p[t]!=null?sure(r.p[t]):'–'}</dd>`:''}<dt>${T('through')}</dt><dd>${r.dt[t]||'–'}</dd>${x.via?`<dt></dt><dd class="note">${EN()?'reported for HUS as a whole':'raportoitu koko HUSista'}</dd>`:''}</dl></div>`)
     +(a?`<div class="teaser" data-open="act:${sig}"><span class="lab">${EN()?'Need':'Tarve'}</span><span class="tx">${needTxt(a)}</span><span class="go">›</span></div>`:'');
-   const o=seriesSVG(sig,c,t,640,270,1.35);if(o)body+=`<div class="sec"><h4>${T('overtime')}</h4>${o.svg}<p class="note">${SERIES_CAPS[S.lang]}</p></div>`}
+   const sw=Math.max(280,$('sbody').clientWidth-32),o=NARROW()?seriesSVG(sig,c,t,sw,fitH(sw),1):seriesSVG(sig,c,t,640,270,1.35);if(o)body+=`<div class="sec"><h4>${T('overtime')}</h4>${o.svg}<p class="note">${SERIES_CAPS[S.lang]}</p></div>`}
   body+=`<div class="sec"><h4>${T('measures')}</h4><p>${defOf(sig)} ${cite([srcOfSignal(sig)])}</p></div>`;
   return {kick:`${T(cfg.step)} · ${cname(c)} · ${D.months[t]}`,title:SHORT[S.lang][sig]||slabel(sig),body:`<p class="note" style="margin-top:-6px">${slabel(sig)}</p>`+body}}
  if(key.startsWith('src:')){const id=key.slice(4),v=D.sources[id];
@@ -608,8 +1046,9 @@ function sideSpec(key){const c=S.county,t=S.t;
  switch(key){
   case 'about':return {kick:'Equal Care Across Finland',title:EN()?'About this demo':'Tietoa demosta',body:`<p class="lead">${EN()?'A twin is one wellbeing services county, never a patient.':'Kaksonen on yksi hyvinvointialue, ei koskaan potilas.'}</p><p>${EN()?'Public aggregate data only. The replay shows only what had been published by each date.':'Vain julkista aggregaattitietoa. Toisto näyttää vain sen, mitä kunakin päivänä oli julkaistu.'}</p><p>${EN()?'Counterfactuals (the Finland Cancer Plan Simulation and the Simulation Using County Twins) read “had this been in place over these years”; they are not forecasts of 2028 or 2035.':'Finland Cancer Plan Simulation ja Simulation Using County Twins ovat kontrafaktuaaleja eivätkä ennusteita.'}</p>
    ${CIRCUIT_URL?`<div class="sec"><h4>${EN()?'How the twin works':'Näin kaksonen toimii'}</h4><figure class="circ"><button type="button" id="circOpen" aria-label="${EN()?'Open the circuit full screen':'Avaa kaavio koko näytölle'}"><img src="${CIRCUIT_URL}" alt="${EN()?'The county twin as a circuit. Inputs (THL specialist-care queues, THL procedure queues, Sotkanet screening) pass a publication gate into the signals, a per-county estimator, a comparison with the national level and a status, stored as records. The records feed the display, the AI briefing, the two monitoring policies (Models 3 and 4) and the scoring against hindsight truth.':'Aluekaksonen piirikaaviona. Syötteet (THL:n erikoissairaanhoidon jonot, THL:n toimenpidejonot, Sotkanetin seulonnat) kulkevat julkaisuportin kautta signaaleiksi, aluekohtaiseen estimaattoriin, vertailuun koko maahan ja tilaksi, ja ne tallennetaan tietueiksi. Tietueita lukevat näkymä, tekoälykatsaus, kaksi seurantamallia (mallit 3 ja 4) ja pisteytys jälkikäteistä totuutta vasten.'}"></button><figcaption>${EN()?'Top row: the twin itself, one per county. It turns each published number into a status for every signal, every month. Bottom row: what reads those records: this demo, the AI briefing, the two monitoring policies and the scoring. Click to enlarge.':'Ylärivi: itse kaksonen, yksi kullekin alueelle. Se muuttaa jokaisen julkaistun luvun tilaksi jokaiselle signaalille joka kuukausi. Alarivi: mikä näitä tietueita lukee: tämä demo, tekoälykatsaus, kaksi seurantamallia ja pisteytys. Suurenna napsauttamalla. Kaavio on englanniksi.'}</figcaption></figure></div>`:''}
-   <div class="teaser" data-tour="1"><span class="lab">${T('tourK')}</span><span class="tx">${T('tourS')}</span><span class="go">›</span></div>
+   <div class="teaser" data-tour="1"><span class="lab">${T('tourK')}</span><span class="tx">${tourSub()}</span><span class="go">›</span></div>
    <div class="sec"><h4>${EN()?'How to use':'Käyttö'}</h4><ul><li>${EN()?'Click a county on the map, or press Play to replay 2016–2026.':'Valitse alue kartalta tai paina Toista.'}</li><li>${EN()?'Click the briefing, a block, a need or any <b>i</b> to read the details here.':'Avaa yksityiskohdat tähän napsauttamalla katsausta, lohkoa, tarvetta tai <b>i</b>-painiketta.'}</li><li>${EN()?'The address bar always holds a persistent link to this exact view: county, date, step and the open panel. “Copy link” shares it.':'Osoiterivillä on aina pysyvä linkki juuri tähän näkymään. ”Kopioi linkki” jakaa sen.'}</li></ul></div>
+   <div class="sec"><h4>${EN()?'Governance of the twin itself':'Kaksosen oma hallinta'}</h4><ul><li>${EN()?'Every modelling choice the AI agent made is logged in DECISIONS.md and marked unexamined: no team member has checked one yet.':'Jokainen tekoälyagentin tekemä mallinnusvalinta on kirjattu DECISIONS.md-tiedostoon ja merkitty tarkistamattomaksi: yksikään tiimin jäsen ei ole vielä tarkistanut niitä.'}</li><li>${EN()?'Rules are written before a run (SCORECARD.md, GOVERNANCE.md); a later change is an amendment with a reason, and the replay is run again.':'Säännöt kirjataan ennen ajoa (SCORECARD.md, GOVERNANCE.md); myöhempi muutos kirjataan perusteluineen, ja toisto ajetaan uudelleen.'}</li><li>${EN()?'AI text: each sentence of a briefing cites a record or a source; sentences that cite an unknown id or a number not in the records are rejected.':'Tekoälyteksti: katsauksen jokainen lause viittaa tietueeseen tai lähteeseen; lauseet, joissa on tuntematon tunniste tai tiedoista puuttuva luku, hylätään.'}</li><li>${EN()?'Public aggregate data only. A twin is a county, never a patient.':'Vain julkista aggregaattitietoa. Kaksonen on alue, ei koskaan potilas.'}</li>${GM?`<li>${EN()?'Who decides about the counties, rather than about the twin:':'Kuka päättää alueiden asioista, eikä kaksosesta:'} <a class="lnk" data-open="gov">${EN()?'Who decides':'Kuka päättää'} ›</a></li>`:''}</ul></div>
    <div class="sec"><h4>Runs</h4><p class="note">${Object.values(D.runs).join('<br>')}</p></div>`};
   case 'info:map':return {kick:T('howread'),title:T('mapT'),body:`<p>${T('mapC')}</p><div class="sec"><h4>${T('status')}</h4>${legend()}</div><p class="note" style="margin-top:14px">${EN()?'Threshold origin: model (not an official target), except screening 80% (strategy).':'Kynnyksen alkuperä: malli (ei virallinen tavoite), paitsi seulonnan 80 % (strategia).'}</p>`};
   case 'info:how':
@@ -619,6 +1058,9 @@ function sideSpec(key){const c=S.county,t=S.t;
    <p>${EN()?'Each step box shows the worst status among its signals. A step is never shown green on non-cancer-specific signals alone. Click a step to colour the map by it.':'Vaihe näyttää signaaliensa heikoimman tilan. Vaihe ei ole koskaan vihreä pelkkien ei-syöpäkohtaisten signaalien perusteella. Napsauta vaihetta värittääksesi kartan sen mukaan.'}</p>
    <div class="sec"><h4>${T('status')}</h4>${legend()}</div>`};
   case 'notest':return {kick:cname(c),title:T('notest'),body:notEstHTML(c)};
+  case 'gov':return GM?govOverview(c,t):null;
+  case 'govmed':return GM?{kick:EN()?'Who decides':'Kuka päättää',title:gt(GM.medicines,'title'),body:`<ul>${gt(GM.medicines,'points').map(x=>`<li>${x}</li>`).join('')}</ul><p>${gt(GM.medicines,'twin')} <span class="ne">${T('ne')}</span>. ${cite(GM.medicines.src)}</p>`}:null;
+  case 'counties':return {kick:`${T(S.step)} · ${D.months[t]}`,title:EN()?'Choose a county':'Valitse alue',body:countiesSide()};
   case 'info:pol':return {kick:T('howread'),title:T('polT'),body:`<p>${POLC()}</p><p>${polDiffText(S.sig)}</p><p class="note">${EN()?'Lane labels: click a county name to open it.':'Napsauta alueen nimeä avataksesi sen.'}</p>`};
   case 'info:series':return {kick:T('howread'),title:`${cname(S.county)} · ${slabel(S.sig)}`,body:`<p>${SERIES_CAPS[S.lang]}</p><div class="sec"><h4>${T('measures')}</h4><p>${defOf(S.sig)} ${cite([srcOfSignal(S.sig)])}</p></div>`};
   case 'score':return {kick:T('scT'),title:EN()?'Every success factor':'Kaikki menestystekijät',body:scoreSide()};
@@ -627,6 +1069,14 @@ function sideSpec(key){const c=S.county,t=S.t;
   case 'sources':return {kick:`${Object.keys(D.sources).length} ${EN()?'sources':'lähdettä'}`,title:T('srcT'),body:sourcesSide()};
  }
  return null}
+function countiesSide(){   /* every county on the map, grouped as the map colours them; flagged ones name their signals */
+ const t=S.t,E=EN(),step=S.step,sigs=step==='all'?JUDGED:STEPSIG[step],by={};
+ for(const c in D.paths){const st=c==='91'?'x':(step==='all'?anyStatus(c,t):stepStatus(step,c,t));(by[st]=by[st]||[]).push(c)}
+ const row=(c,st)=>{const f=st==='g'||st==='w'?sigs.filter(s=>stAt(s,c,t)===st).map(s=>SHORT[S.lang][s]):[],on=c===S.county||(S.county==='HUS'&&HUSM.includes(c));
+  return `<button type="button" class="crow${on?' on':''}" data-county="${c}"><span>${esc(cname(c))}${f.length?`<small>${f.join(' · ')}</small>`:''}</span><span class="go">›</span></button>`};
+ return `<p class="note" style="margin:-6px 0 0">${E?`Coloured as on the map: the worst signal at this pathway step, as known on ${D.months[t]}.`:`Värit kuten kartalla: heikoin signaali tässä hoitopolun vaiheessa ${D.months[t]} tiedoilla.`}</p>`
+  +['g','w','o','u','s','n','x'].filter(k=>by[k]).map(k=>{const n=by[k].length;return `<div class="sec"><h4><span class="st ${k}">${T(k)}</span> ${n} ${E?(n===1?'county':'counties'):(n===1?'alue':'aluetta')}</h4>${by[k].sort((a,b)=>cname(a).localeCompare(cname(b),S.lang)).map(c=>row(c,k)).join('')}</div>`}).join('')}
+function pickCounty(c){S.county=c;S.open='';SB=[];render();$('p-card').scrollIntoView({block:'start',behavior:RM()?'auto':'smooth'})}   // a row of the county list: show that county's twin
 let lastKey='',lastBody='';
 function drawSide(){
  if(FILM||!S.open){document.body.classList.remove('side-open');lastKey='';return}
@@ -645,30 +1095,36 @@ function syncURL(now){if(FILM||introOpen||tour>=0)return;clearTimeout(urlTimer);
 let copyTimer=null;
 async function copyLink(btn){syncURL(true);const u=location.origin+viewURL();
  try{await navigator.clipboard.writeText(u)}catch(_){const i=document.createElement('textarea');i.value=u;i.style.position='fixed';i.style.opacity='0';document.body.appendChild(i);i.select();try{document.execCommand('copy')}catch(__){}i.remove()}
- if(btn===$('copy')){btn.textContent=T('copied');clearTimeout(copyTimer);copyTimer=setTimeout(()=>{copyTimer=null;btn.textContent=T('copy')},1600)}else{btn.textContent='✓';setTimeout(()=>btn.textContent='🔗',1400)}}
+ if(btn===$('copy')){btn.textContent=T('copied');btn.classList.add('ok');clearTimeout(copyTimer);copyTimer=setTimeout(()=>{copyTimer=null;btn.textContent=T('copy');btn.classList.remove('ok')},1600)}else{btn.textContent='✓';setTimeout(()=>btn.textContent='🔗',1400)}}   // .ok: the compact bar shows ✓ in place of the icon
 
 function setHH(){document.documentElement.style.setProperty('--hh',document.querySelector('header').offsetHeight+'px')}
+let fitKey='';   // the widths the charts were last drawn at (one column only); a resize that changes them redraws
+const layoutKey=()=>FIT()?[NARROW()?'n':'f',$('series').clientWidth,$('lanes').clientWidth,$('sbody').clientWidth].join():'';
 function render(){
- $('slider').max=D.months.length-1;$('slider').value=S.t;$('date').textContent=D.months[S.t];$('play').textContent=S.play?T('pause'):T('play');$('lang').textContent=S.lang==='en'?'FI':'EN';
- $('subt').textContent=T('sub');if(!copyTimer)$('copy').textContent=T('copy');$('about').textContent=T('aboutL');$('srcbtn').textContent=T('srcL');document.documentElement.lang=S.lang;
- drawMap();drawCard();drawPolicy();drawScore();drawStatic();drawSide();drawIntro();drawTour();
+ $('slider').max=D.months.length-1;$('slider').value=S.t;$('date').textContent=D.months[S.t];$('play').textContent=S.play?T('pause'):T('play');$('play').classList.toggle('playing',S.play);$('lang').textContent=S.lang==='en'?'FI':'EN';
+ $('subt').textContent=$('subm').textContent=T('sub');if(!copyTimer)$('copy').textContent=T('copy');$('about').textContent=T('aboutL');$('govbtn').textContent=EN()?'Who decides':'Kuka päättää';$('govbtn').hidden=!GM;$('srcbtn').textContent=T('srcL');document.documentElement.lang=S.lang;
+ drawMap();drawCard();drawGov();drawPolicy();drawScore();drawStatic();drawSide();drawIntro();drawTour();
  document.querySelectorAll('[data-open]').forEach(e=>e.classList.toggle('active',!!S.open&&e.dataset.open===S.open));
  document.querySelectorAll('[data-src]').forEach(e=>e.classList.toggle('active',S.open==='src:'+e.dataset.src));
- setHH();syncURL();
+ setHH();syncURL();fitKey=layoutKey();
 }
 // full-screen view of the circuit: a click, ✕ or Esc closes it and returns focus to the thumbnail
 function openLB(){const b=$('lightbox');b.querySelector('img').src=CIRCUIT_URL;b.querySelector('img').alt=$('circOpen')?.querySelector('img').alt||'';b.hidden=false;document.body.classList.add('lb-open');b.querySelector('.x').focus()}
 function closeLB(){$('lightbox').hidden=true;document.body.classList.remove('lb-open');$('circOpen')?.focus()}
 $('lightbox').onclick=closeLB;
+function goTo(id){const x=$(id);if(!x)return;if(S.open&&innerWidth<1280)closeSide();x.scrollIntoView({block:'start',behavior:RM()?'auto':'smooth'})}   // the side panel covers the page below 1280px: close it, then scroll
 document.addEventListener('click',e=>{if(FILM)return;if(e.target.closest('#circOpen')){openLB();return}if(e.target.closest('[data-tour]')){e.preventDefault();tourGo(0);return}
+ const go=e.target.closest('[data-goto]');if(go&&!e.target.closest('[data-src]')){e.preventDefault();goTo(go.dataset.goto);return}
+ const cr=e.target.closest('[data-county]');if(cr){e.preventDefault();pickCounty(cr.dataset.county);return}
  const s=e.target.closest('[data-src]');if(s){e.preventDefault();openSide('src:'+s.dataset.src);return}   /* a source chip wins over the block it sits in */
  const o=e.target.closest('[data-open]');if(o){e.preventDefault();openSide(o.dataset.open)}});
 document.addEventListener('keydown',e=>{if(!$('lightbox').hidden){if(e.key==='Escape')closeLB();return}
  if(tour>=0){if(e.key==='Escape')tourEnd();else if(e.key==='ArrowRight')tourGo(tour+1);else if(e.key==='ArrowLeft'&&tour>0)tourGo(tour-1);return}
  if(introOpen)return;if(e.key==='Escape'&&S.open)closeSide()});
+document.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.matches&&e.target.matches('[data-open][tabindex],[data-goto][tabindex]')){e.preventDefault();e.target.click()}});   // the who-decides strip opens from the keyboard too
 $('sclose').onclick=closeSide;$('scrim').onclick=closeSide;$('sback').onclick=()=>{S.open=SB.pop()||'';render()};
 $('copy').onclick=e=>copyLink(e.currentTarget);$('slink').onclick=e=>copyLink(e.currentTarget);
-addEventListener('resize',setHH);
+let rzTimer=null;addEventListener('resize',()=>{setHH();clearTimeout(rzTimer);rzTimer=setTimeout(()=>{if(layoutKey()!==fitKey)render()},150)});
 $('slider').oninput=e=>{S.t=+e.target.value;render()};
 $('lang').onclick=()=>{S.lang=S.lang==='en'?'fi':'en';render()};
 let timer=null;
@@ -679,26 +1135,42 @@ const BEHIND=()=>document.querySelectorAll('header,main,#side');
 function lockPage(){const lock=introOpen||tour>=0;if(lock!==locked){locked=lock;BEHIND().forEach(e=>e.inert=lock)}}
 // intro popup: the page is blurred; a press outside only nudges the card; Play starts the replay, the showcase button starts the tour
 function drawIntro(){const m=$('intro');lockPage();if(m.hidden===introOpen){m.hidden=!introOpen;document.body.classList.toggle('intro-open',introOpen)}
- if(!introOpen)return;$('introT').textContent=T('tourK');$('introTag').textContent=T('tag');$('introH').textContent=T('howT');$('introL').innerHTML=['how1','how2','how3',...(CIRCUIT_URL?['how4']:[])].map(k=>`<li><span>${T(k)}</span></li>`).join('');
+ if(!introOpen)return;$('introT').textContent=T('tourK');$('introTag').textContent=T(GM?'tagG':'tag');$('introH').textContent=T('howT');$('introL').innerHTML=['how1','how2','how3',...(GM?['howG']:[]),...(CIRCUIT_URL?['how4']:[])].map(k=>`<li><span>${T(k)}</span></li>`).join('');
  $('introTourT').textContent=T('introT');$('introTourS').textContent=EN()?'Skip the tour and replay the months':'Ohita kierros ja toista kuukaudet';$('introPlay').setAttribute('aria-label',T('tourK'));
  m.querySelectorAll('[data-l]').forEach(b=>b.classList.toggle('on',b.dataset.l===S.lang));if(!m.contains(document.activeElement))$('introPlay').focus()}
 $('introPlay').onclick=$('introT').onclick=()=>tourGo(0);   // the big button starts the how-to showcase
 $('introTour').onclick=()=>{introOpen=false;setPlay(true)};
-$('intro').onclick=e=>{if(e.target.closest('#introAbout')){introOpen=false;S.open='about';SB=[];render();return}if(e.target.closest('.introcard'))return;const c=$('intro').firstElementChild;c.classList.remove('nudge');void c.offsetWidth;c.classList.add('nudge')};
+$('intro').onclick=e=>{if(e.target.closest('#introAbout')){introOpen=false;S.open='about';SB=[];render();return}if(e.target.closest('#introGov')){introOpen=false;S.open='';SB=[];render();goTo('p-gov');return}if(e.target.closest('.introcard'))return;const c=$('intro').firstElementChild;c.classList.remove('nudge');void c.offsetWidth;c.classList.add('nudge')};
 $('intro').querySelectorAll('[data-l]').forEach(b=>b.onclick=()=>{S.lang=b.dataset.l;render()});
-// ---------- how-to showcase: six stops; each sets the view it needs, scrolls there and puts a spotlight on it ----------
-const TG='2020-11';   // the month Lapland's referral gap is on screen
-const TOUR=[{sel:'#p-map',t:TG},{sel:'#p-card',t:TG},{sel:'.hb[data-sig="ref_assess_over90"]',t:TG},{sel:'#side',t:TG,open:'act:ref_assess_over90'},
- {sel:'#polT,#polTabs,#lanes',t:'end'},{sel:'#p-score,#p-ctrl,#p-lens,#p-src',t:'end'}];
-function tourText(i){const E=EN(),cs=D.card.signals.ref_assess_over90,pc=v=>Math.round(100*v)+(E?'%':' %'),tg=tIdx(TG),x=recOf('ref_assess_over90','21'),r=x&&x.r,nsig=Object.keys(D.card.signals).length;
+// ---------- how-to showcase: each stop sets the view it needs, scrolls there and puts a spotlight on it; three stops are about who decides ----------
+const TG='2020-11',TGD='2020-12',TGC='09';   // the month Lapland's referral gap is on screen; the month it reaches county management; Päijät-Häme, whose backlog climbs the ladder
+const TOUR=[{id:'map',sel:'#p-map',t:TG},{id:'card',sel:'#p-card',t:TG},{id:'why',sel:'.hb[data-sig="ref_assess_over90"]',t:TG},{id:'need',sel:'#side',t:TG,open:'act:ref_assess_over90'},
+ {id:'who',sel:'#govLadder,#govTracks',t:TGD,gov:1},{id:'up',sel:'#govTrail',t:'end',c:TGC,gov:1},{id:'test',sel:'#govReplay',t:'end',gov:1},
+ {id:'pol',sel:'#polT,#polTabs,#lanes',t:'end'},{id:'limits',sel:'#p-score,#p-ctrl,#p-lens,#p-src',t:'end'}].filter(x=>GM||!x.gov);
+const tourSub=()=>T(GM?'tourSG':'tourS').replace('{n}',TOUR.length);
+function tourText(i){const E=EN(),id=TOUR[i].id,cs=D.card.signals.ref_assess_over90,pc=v=>Math.round(100*v)+(E?'%':' %'),tg=tIdx(TG),x=recOf('ref_assess_over90','21'),r=x&&x.r,nsig=Object.keys(D.card.signals).length;
  const ties=Object.values(D.card.signals).filter(v=>{const d=v.model4_minus_model3_coverage;return d.lo80<=0&&d.hi80>=0}).length,rows=scoreRows(),nne=rows.filter(q=>/not estimated|not simulated/.test(q[3])&&/not estimated|not simulated/.test(q[4])).length;
- return [
-  [E?'See every county at once':'Näe kaikki alueet kerralla',E?`Each county is coloured by the weakest step of its cancer pathway, using only the figures published by that date. Here it is November 2020, and ${cname('21')} has just turned red.`:`Jokainen alue saa värinsä hoitopolkunsa heikoimman vaiheen mukaan, vain siihen päivään mennessä julkaistuista luvuista. Tässä on marraskuu 2020, ja ${cname('21')} on juuri muuttunut punaiseksi.`],
-  [E?'Find where on the pathway':'Näe, missä kohtaa hoitopolkua',E?'The County Twin follows one county’s cancer pathway: detection, referral, diagnosis, treatment start. Each block is one public figure, and a block turns dark in the month a gap opens.':'Aluekaksonen seuraa yhden alueen syövän hoitopolkua: havaitseminen, lähete, diagnoosi, hoidon aloitus. Jokainen lohko on yksi julkinen luku, ja lohko tummuu sinä kuukautena, kun ero avautuu.'],
-  [E?'Every flag gives its reason':'Jokainen ero perustellaan',!r?'':E?`${cnt(r.num[tg])} of ${cnt(r.den[tg])} patients had waited over 90 days for a first specialist assessment. The twin is ${sure(r.p[tg])} sure the county is past the flag line, and it says what changed. No black box.`:`${cnt(r.den[tg])} potilaasta ${cnt(r.num[tg])} oli odottanut ensimmäistä erikoislääkärin arviota yli 90 vuorokautta. Kaksosen varmuus siitä, että alue on kynnyksen huonommalla puolella, on ${sure(r.p[tg])}, ja se kertoo, mikä on muuttunut. Ei mustaa laatikkoa.`],
-  [E?'…and says what is needed':'…ja kertoo, mitä tarvitaan',E?'Each gap is tied to a concrete action: who owns it, which line of the national cancer roadmap pays for it, the published evidence, and how it could fail.':'Jokaiseen eroon liittyy konkreettinen toimenpide: vastuutaho, kansallisen syöpästrategian tiekartan rahoituslinja, julkaistu näyttö ja se, miten toimi voi epäonnistua.'],
-  [E?'Knowing sooner puts help in the right place':'Aikaisempi tieto vie avun oikeaan paikkaan',E?`Same ${D.card.budget.K} fast-track pilots, same budget, 2021–2026. Placed every month from the twins, a pilot was running in ${pc(cs.model4.coverage)} of the months a county was behind. Placed once a year from two-year-old figures: ${pc(cs.model3.coverage)}.`:`Samat ${D.card.budget.K} nopean väylän pilottia, sama budjetti, 2021–2026. Kun pilotit kohdennettiin kuukausittain kaksosten perusteella, pilotti oli käynnissä ${pc(cs.model4.coverage)}:ssa kuukausista, joina alue oli jäljessä. Kerran vuodessa kaksi vuotta vanhoista luvuista kohdennettuna: ${pc(cs.model3.coverage)}:ssa.`],
-  [E?'It also says what it cannot show':'Se kertoo myös, mitä se ei näytä',E?`${ties} of ${nsig} comparisons are ties. ${nne} of ${rows.length} success factors cannot be estimated from public data, and the page says so. Every figure links to its source.`:`${nsig} vertailusta ${ties} on tasapelejä. ${rows.length} menestystekijästä ${nne}:ää ei voi arvioida julkisesta datasta, ja sivu kertoo sen. Jokainen luku viittaa lähteeseensä.`]][i]}
+ const N=GM&&GM.rules,cap=v=>v.charAt(0).toUpperCase()+v.slice(1),nm=n=>(E?['no','one','two','three','four','five','six','seven','eight','nine','ten','eleven','twelve']:['ei','yksi','kaksi','kolme','neljä','viisi','kuusi','seitsemän','kahdeksan','yhdeksän','kymmenen','yksitoista','kaksitoista'])[n]??String(n);
+ switch(id){
+  case 'map':return [E?'See every county at once':'Näe kaikki alueet kerralla',E?`Each county is coloured by the weakest step of its cancer pathway, using only the figures published by that date. Here it is November 2020, and ${cname('21')} has just turned red.`:`Jokainen alue saa värinsä hoitopolkunsa heikoimman vaiheen mukaan, vain siihen päivään mennessä julkaistuista luvuista. Tässä on marraskuu 2020, ja ${cname('21')} on juuri muuttunut punaiseksi.`];
+  case 'card':return [E?'Find where on the pathway':'Näe, missä kohtaa hoitopolkua',E?'The County Twin follows one county’s cancer pathway: detection, referral, diagnosis, treatment start. Each block is one public figure, and a block turns dark in the month a gap opens.':'Aluekaksonen seuraa yhden alueen syövän hoitopolkua: havaitseminen, lähete, diagnoosi, hoidon aloitus. Jokainen lohko on yksi julkinen luku, ja lohko tummuu sinä kuukautena, kun ero avautuu.'];
+  case 'why':return [E?'Every flag gives its reason':'Jokainen ero perustellaan',!r?'':E?`${cnt(r.num[tg])} of ${cnt(r.den[tg])} patients had waited over 90 days for a first specialist assessment. The twin is ${sure(r.p[tg])} sure the county is past the flag line, and it says what changed. No black box.`:`${cnt(r.den[tg])} potilaasta ${cnt(r.num[tg])} oli odottanut ensimmäistä erikoislääkärin arviota yli 90 vuorokautta. Kaksosen varmuus siitä, että alue on kynnyksen huonommalla puolella, on ${sure(r.p[tg])}, ja se kertoo, mikä on muuttunut. Ei mustaa laatikkoa.`];
+  case 'need':return [E?'…and says what is needed':'…ja kertoo, mitä tarvitaan',E?'Each gap is tied to a concrete action: who owns it, which line of the national cancer roadmap pays for it, the published evidence, and how it could fail.':'Jokaiseen eroon liittyy konkreettinen toimenpide: vastuutaho, kansallisen syöpästrategian tiekartan rahoituslinja, julkaistu näyttö ja se, miten toimi voi epäonnistua.'];
+  case 'who':{const t=tIdx(TGD),g=govAt('ref_assess_over90','21',t),ok=!!g&&g.k==='2'&&g.start!=null&&g.dec!=null,run=ok?t-g.start+1:0,rv=ok?ym(g.dec,N.min_action_months):'';
+   return [E?'…and who decides':'…ja kuka päättää',
+    E?`Fixed rules, written before the run, hand every gap to a forum.${ok?` ${cname('21')}’s referral gap has lasted ${nm(run)} months, so it moves from the service unit to county management: start the fast track or not, name its owner, review it in ${rv}.`:''} A figure that cannot be judged gets a data request instead, and a stale one goes to its owner: never escalated, never read as fine.`
+     :`Ennen ajoa kirjatut säännöt osoittavat jokaisen eron foorumille.${ok?` Lapin lähete-ero on jatkunut ${nm(run)} kuukautta, joten se siirtyy palveluyksiköltä hyvinvointialueen johdolle: käynnistetäänkö nopea väylä, kuka siitä vastaa ja tarkastelu ${rv}.`:''} Luku, jota ei voida arvioida, saa sen sijaan tietopyynnön, ja vanhentunut luku menee tiedon omistajalle: niitä ei eskaloida eikä tulkita ”kunnossa”.`]}
+  case 'up':{const t=D.months.length-1,g=govAt('ref_assess_over90',TGC,t),y=ytaOf(TGC),ok=!!g&&!!y&&'34'.includes(g.k)&&g.start!=null&&g.dec!=null&&g.s.slice(g.start,t+1).includes('3'),uh=y?y['uh_'+S.lang].split(' (')[0]:'',d1=ok?g.dec-g.start:0;
+   return [E?'If the gap stays, the decision moves up':'Jos ero jatkuu, päätös nousee ylemmäs',
+    E?`${ok?`${cname(TGC)}’s assessment backlog, in gap since ${ym(g.start)}: ${nm(d1)} months with the service unit, then a county management decision in ${ym(g.dec)}. ${cap(nm(N.min_action_months))} months on it was still in gap, so it went to the ${y.en} and ${uh}, and to the national level whenever ${N.national_counties} or more counties were behind on the same signal`:`When a gap outlasts the county’s decision it goes to the collaborative area, and to the national level whenever ${N.national_counties} or more counties are behind on the same signal`}: then it is a pathway design question for FICAN and the ministry, not a county failing.`
+     :`${ok?`Päijät-Hämeen arviointijono on ollut erossa ${ym(g.start)} alkaen: ${nm(d1)} kuukautta palveluyksiköllä, sitten hyvinvointialueen johdon päätös ${ym(g.dec)}. ${cap(nm(N.min_action_months))} kuukautta myöhemmin ero jatkui, joten asia siirtyi ${y.fi}elle ja ${uh}:lle, ja kansalliselle tasolle aina, kun vähintään ${N.national_counties} aluetta oli jäljessä samalla signaalilla`:`Kun ero jatkuu alueen päätöksen jälkeen, asia siirtyy yhteistyöalueelle, ja kansalliselle tasolle aina, kun vähintään ${N.national_counties} aluetta on jäljessä samalla signaalilla`}: silloin se on hoitoketjun suunnittelukysymys FICANille ja STM:lle, ei alueen epäonnistuminen.`]}
+  case 'test':{const P=Object.keys(D.card.signals).map(k=>GV.metrics[k]).filter(Boolean),sum=f=>P.reduce((a,m)=>a+(m[f]||0),0),Ld=GV.metrics._load,tot=Object.values(Ld.yta_escalations_by_area).reduce((a,b)=>a+b,0),per=(tot/Object.keys(GM.yta).length/Ld.years).toFixed(1);
+   return [E?'The rules, tested on the replay':'Säännöt testattuina toistossa',
+    E?`${RY}, on the ${nm(P.length)} scored signals: ${sum('episodes_decided')} of the ${sum('episodes')} times a county fell behind for 3 months or more reached county management or higher while the gap lasted, and ${sum('yta_escalations')} went on to a collaborative area. Counting every signal, each area would get about ${per} escalations a year. ${sum('true_gap_months_no_suggestion')} of ${sum('true_gap_months')} county-months behind got no suggestion: the twin did not see the gap at the time.`
+     :`${RY}, ${P.length} pisteytetyllä signaalilla: ${sum('episodes')} kerrasta, jolloin alue oli jäljessä vähintään 3 kuukautta, ${sum('episodes_decided')} eteni hyvinvointialueen johdolle tai ylemmäs eron aikana, ja ${sum('yta_escalations')} eteni yhteistyöalueelle. Kaikki signaalit huomioiden kukin alue saisi noin ${per.replace('.',',')} eskalaatiota vuodessa. ${sum('true_gap_months')} jäljessäolokuukaudesta ${sum('true_gap_months_no_suggestion')} jäi ilman ehdotusta: kaksonen ei nähnyt eroa silloin.`]}
+  case 'pol':return [E?'Knowing sooner puts help in the right place':'Aikaisempi tieto vie avun oikeaan paikkaan',E?`Same ${D.card.budget.K} fast-track pilots, same budget, 2021–2026. Adding up all counties, there were ${cs.model3.true_gap_months} months in which a county was behind. Placed every month from the twins, a pilot was running in ${cs.model4.covered} of them; placed once a year from two-year-old figures, in ${cs.model3.covered}.`:`Samat ${D.card.budget.K} nopean väylän pilottia, sama budjetti, 2021–2026. Kun kaikki alueet lasketaan yhteen, alue oli jäljessä ${cs.model3.true_gap_months} kuukautena. Kun pilotit kohdennettiin kuukausittain kaksosten perusteella, pilotti oli käynnissä ${cs.model4.covered} niistä; kerran vuodessa kaksi vuotta vanhoista luvuista kohdennettuna ${cs.model3.covered}.`];
+  case 'limits':return GM?[E?'It also says what it cannot show':'Se kertoo myös, mitä se ei näytä',E?`${ties} of ${nsig} comparisons are ties. ${nne} of ${rows.length} success factors cannot be estimated from public data, and no replay can tell whether a county would have acted on a suggestion. The page says so, and every figure links to its source.`:`${nsig} vertailusta ${ties} on tasapelejä. ${rows.length} menestystekijästä ${nne}:ää ei voi arvioida julkisesta datasta, eikä mikään toisto kerro, olisiko alue toiminut ehdotuksen mukaan. Sivu kertoo sen, ja jokainen luku viittaa lähteeseensä.`]:[E?'It also says what it cannot show':'Se kertoo myös, mitä se ei näytä',E?`${ties} of ${nsig} comparisons are ties. ${nne} of ${rows.length} success factors cannot be estimated from public data, and the page says so. Every figure links to its source.`:`${nsig} vertailusta ${ties} on tasapelejä. ${rows.length} menestystekijästä ${nne}:ää ei voi arvioida julkisesta datasta, ja sivu kertoo sen. Jokainen luku viittaa lähteeseensä.`];
+ }}
 function drawTour(){const c=$('tourcard');lockPage();document.body.classList.toggle('tour-on',tour>=0);c.hidden=tour<0;if(tour<0)return;const [h,p]=tourText(tour),last=tour===TOUR.length-1;
  $('tourN').textContent=`${T('tourK')} · ${tour+1} / ${TOUR.length}`;$('tourT').textContent=h;$('tourP').textContent=p;$('tourX').setAttribute('aria-label',T('close'));$('tourX').title=T('close')+' (Esc)';
  $('tourB').textContent='← '+T('back');$('tourB').style.visibility=tour?'visible':'hidden';$('tourF').textContent=last?T('introT').replace('!','')+' ▶':T('next')+' →';
@@ -714,8 +1186,9 @@ function tourPlace(){const sp=$('spot');if(tour<0){sp.hidden=true;return}
 function tourScroll(){if(tour<0)return;const q=tourRect();if(!q||q.fixed)return;const hh=document.querySelector('header').offsetHeight,avail=innerHeight-hh-(tourWide(q)?$('tourcard').offsetHeight+34:0);
  window.scrollTo({top:Math.max(0,scrollY+q.t-hh-Math.max(14,(avail-q.h)/2)),behavior:'smooth'})}
 function tourGo(i){if(i>=TOUR.length){tourEnd(true);return}const first=tour<0,st=TOUR[Math.max(0,i)];tour=Math.max(0,i);introOpen=false;
- S.county='21';S.t=st.t==='end'?D.months.length-1:tIdx(st.t);S.step='all';S.sig='ref_assess_over90';S.open=st.open||'';SB=[];
- setPlay(false);$('tourF').focus();if(first)requestAnimationFrame(tourPlace);setTimeout(tourScroll,40);setTimeout(tourScroll,420)}   // again once the side panel has finished closing
+ S.county=st.c||'21';S.t=st.t==='end'?D.months.length-1:tIdx(st.t);S.step='all';S.sig='ref_assess_over90';S.open=st.open||'';SB=[];
+ setPlay(false);$('tourF').focus();if(first)requestAnimationFrame(tourPlace);setTimeout(tourScroll,40);setTimeout(tourScroll,420);   // again once the side panel has finished closing
+ const sb=$('sbody'),need=st.open&&(NARROW()||innerHeight<=520)&&sb.querySelector('.need');if(need)sb.scrollTop+=need.getBoundingClientRect().top-sb.getBoundingClientRect().top-8}   // phone or short screen: the panel shows little, so the stop about the need starts at the need
 function tourEnd(play){tour=-1;S.open='';SB=[];window.scrollTo({top:0,behavior:'smooth'});if(play)setPlay(true);else render()}
 $('tourF').onclick=()=>tourGo(tour+1);$('tourB').onclick=()=>tourGo(tour-1);$('tourX').onclick=()=>tourEnd();
 render();requestAnimationFrame(()=>requestAnimationFrame(()=>document.body.classList.remove('noanim')));  // a shared link opens with its panel already in place

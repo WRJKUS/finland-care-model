@@ -1,0 +1,280 @@
+{
+ "_doc": "Governance map and rule thresholds for scripts/run_governance.py and the demo. Rules: GOVERNANCE.md (written before the first run). label: sourced | proposal; every entry is also unchecked until a human confirms it (plan step 6).",
+ "rules": {
+  "persist_months": 3,
+  "min_action_months": 6,
+  "national_counties": 4,
+  "alarm_window_months": 3,
+  "closed_months": 3,
+  "yta_review_months": 6
+ },
+ "rungs": {
+  "1": {
+   "forum_en": "County service unit",
+   "forum_fi": "Hyvinvointialueen palveluyksikkö",
+   "short_en": "Unit",
+   "short_fi": "Yksikkö",
+   "decision_en": "Put the signal on the unit's monthly review. No pilot decision yet.",
+   "decision_fi": "Signaali otetaan yksikön kuukausikatsaukseen. Pilottipäätöstä ei vielä tehdä.",
+   "owner_en": "Head of the unit that holds the queue",
+   "owner_fi": "Jonosta vastaavan yksikön johtaja",
+   "escalate_en": "Still in gap 3 months in a row: to county management.",
+   "escalate_fi": "Ero jatkuu 3 kuukautta peräkkäin: hyvinvointialueen johdolle.",
+   "label": "proposal",
+   "basis_en": "The roadmap gives pathway implementation to the counties and HUS (3.1.2, p. 56); the unit-level review is ours.",
+   "basis_fi": "Tiekartta antaa hoitoketjujen toteutuksen hyvinvointialueille ja HUSille (3.1.2, s. 56); yksikkötason katsaus on meidän ehdotuksemme.",
+   "src": [
+    "S11"
+   ],
+   "first": [
+    {
+     "en": "Put the signal on the unit's monthly review.",
+     "fi": "Signaali otetaan yksikön kuukausikatsaukseen.",
+     "label": "proposal"
+    },
+    {
+     "en": "Watch it for 3 months; no pilot decision yet.",
+     "fi": "Seurataan 3 kuukautta; pilottipäätöstä ei vielä tehdä.",
+     "label": "proposal"
+    }
+   ]
+  },
+  "2": {
+   "forum_en": "County management",
+   "forum_fi": "Hyvinvointialueen johto",
+   "short_en": "County",
+   "short_fi": "Alue",
+   "decision_en": "Decide whether to start the recommended action, name its owner and set a review date 6 months on.",
+   "decision_fi": "Päätetään suositellun toimenpiteen käynnistämisestä, nimetään vastuuhenkilö ja sovitaan tarkastelu 6 kuukauden päähän.",
+   "owner_en": "The owner named on the recommended action, with the unit consulted",
+   "owner_fi": "Suositellun toimenpiteen vastuutaho; yksikköä kuullaan",
+   "escalate_en": "Still in gap 6 months after the decision (the action's minimum period): to the collaborative area and its regional cancer centre.",
+   "escalate_fi": "Ero jatkuu 6 kuukautta päätöksen jälkeen (toimenpiteen vähimmäiskesto): yhteistyöalueelle ja sen alueelliselle syöpäkeskukselle.",
+   "label": "proposal",
+   "basis_en": "The roadmap names no county-level decision step; the 6 months is Model 4's minimum pilot length.",
+   "basis_fi": "Tiekartta ei nimeä aluetason päätösvaihetta; 6 kuukautta on mallin 4 pilotin vähimmäiskesto.",
+   "src": [],
+   "first": [
+    {
+     "en": "Start the recommended action, or decide not to.",
+     "fi": "Käynnistetään suositeltu toimenpide tai päätetään olla käynnistämättä.",
+     "label": "proposal"
+    },
+    {
+     "en": "Name its owner.",
+     "fi": "Nimetään vastuuhenkilö.",
+     "label": "proposal"
+    },
+    {
+     "en": "Set a review date 6 months on.",
+     "fi": "Sovitaan tarkastelu 6 kuukauden päähän.",
+     "label": "proposal"
+    }
+   ]
+  },
+  "3": {
+   "forum_en": "Collaborative area (YTA) and its regional cancer centre",
+   "forum_fi": "Yhteistyöalue (YTA) ja sen alueellinen syöpäkeskus",
+   "short_en": "Area",
+   "short_fi": "YTA",
+   "decision_en": "Review the division of responsibility for this pathway under the YTA agreement.",
+   "decision_fi": "Tarkastellaan tämän hoitoketjun vastuunjakoa YTA-sopimuksen mukaisesti.",
+   "owner_en": "The parties to the YTA agreement; the regional cancer centre follows the counties and reacts",
+   "owner_fi": "YTA-sopimuksen osapuolet; alueellinen syöpäkeskus seuraa alueita ja reagoi",
+   "escalate_en": "4 or more counties in gap on this signal, or a national alarm on it: to FICAN and STM.",
+   "escalate_fi": "Vähintään 4 aluetta erossa samalla signaalilla tai kansallinen hälytys: FICANille ja STM:lle.",
+   "label": "sourced",
+   "basis_en": "YTA agreements divide responsibility for regional pathways (roadmap 3.1.2, p. 57); the regional cancer centre follows the long-term picture in the counties and reacts with the necessary actions (3.2.3, p. 61); FICAN's five regional centres work with the university hospitals (strategy p. 9); county membership: decree 91/2022. The trigger is ours.",
+   "basis_fi": "Alueellisten hoitoketjujen vastuunjaosta sovitaan YTA-sopimuksissa (tiekartta 3.1.2, s. 57); alueellinen syöpäkeskus seuraa hyvinvointialueiden kokonaiskuvaa ja reagoi tarvittavin toimin (3.2.3, s. 61); FICANin viisi aluekeskusta toimii yliopistosairaaloiden kanssa (strategia s. 9); jäsenyys: asetus 91/2022. Laukaisuehto on meidän.",
+   "src": [
+    "S11",
+    "S10",
+    "S12",
+    "S13"
+   ],
+   "first": [
+    {
+     "en": "Review the division of responsibility for this pathway under the YTA agreement (roadmap 3.1.2, p. 57).",
+     "fi": "Tarkastellaan hoitoketjun vastuunjakoa YTA-sopimuksen mukaisesti (tiekartta 3.1.2, s. 57).",
+     "label": "sourced"
+    },
+    {
+     "en": "The regional cancer centre follows the counties and reacts with the actions needed (3.2.3, p. 61).",
+     "fi": "Alueellinen syöpäkeskus seuraa alueita ja reagoi tarvittavin toimin (3.2.3, s. 61).",
+     "label": "sourced"
+    }
+   ]
+  },
+  "4": {
+   "forum_en": "National: FICAN's management group, with STM",
+   "forum_fi": "Kansallinen: FICANin johtoryhmä, mukana STM",
+   "short_en": "National",
+   "short_fi": "Kansallinen",
+   "decision_en": "Treat it as a pathway design question, not a county failing, and take it to the annual national peer review.",
+   "decision_fi": "Käsitellään hoitoketjun suunnittelukysymyksenä eikä alueen epäonnistumisena, ja viedään vuosittaiseen kansalliseen vertaisarviointiin.",
+   "owner_en": "FICAN (steering and management mechanisms) and STM (use of the information in steering)",
+   "owner_fi": "FICAN (ohjaus- ja johtomekanismit) ja STM (tiedon hyödyntäminen ohjauksessa)",
+   "escalate_en": "Top of the ladder.",
+   "escalate_fi": "Ylin taso.",
+   "label": "sourced",
+   "basis_en": "Steering and management mechanisms are agreed in FICAN's management group, where STM is represented; results that call for stronger steering are reported to STM (roadmap 3.2.3, p. 61). Results are reviewed nationally and peer reviews held once a year (3.2.2, p. 60). The trigger is ours.",
+   "basis_fi": "Ohjaus- ja johtomekanismeista sovitaan kansallisen syöpäkeskuksen johtoryhmässä, jossa myös STM on edustettuna; voimakkaampaa ohjausta vaativista tuloksista raportoidaan STM:lle (tiekartta 3.2.3, s. 61). Tuloksia tarkastellaan kansallisesti ja vertaisarvioinnit tehdään kerran vuodessa (3.2.2, s. 60). Laukaisuehto on meidän.",
+   "src": [
+    "S11"
+   ],
+   "first": [
+    {
+     "en": "Treat it as a pathway design question, not a county failing.",
+     "fi": "Käsitellään hoitoketjun suunnittelukysymyksenä, ei alueen epäonnistumisena.",
+     "label": "proposal"
+    },
+    {
+     "en": "Take it to the annual national peer review (roadmap 3.2.2, p. 60).",
+     "fi": "Viedään vuosittaiseen kansalliseen vertaisarviointiin (tiekartta 3.2.2, s. 60).",
+     "label": "sourced"
+    },
+    {
+     "en": "Report results that need stronger steering to STM (3.2.3, p. 61).",
+     "fi": "Voimakkaampaa ohjausta vaativista tuloksista raportoidaan STM:lle (3.2.3, s. 61).",
+     "label": "sourced"
+    }
+   ]
+  }
+ },
+ "tracks": {
+  "D": {
+   "en": "Data request",
+   "fi": "Tietopyyntö",
+   "decision_en": "Ask for the data needed to judge this county. Never escalated, never read as fine.",
+   "decision_fi": "Pyydetään tieto, jota alueen arviointi edellyttää. Ei koskaan eskaloida eikä tulkita ”kunnossa”.",
+   "owner_en": "The county, which reports the figure, with THL, which publishes it; for cancer-specific figures the cancer quality register (roadmap 3.2.1)",
+   "owner_fi": "Hyvinvointialue, joka raportoi luvun, ja THL, joka julkaisee sen; syöpäkohtaisten lukujen osalta syövän laaturekisteri (tiekartta 3.2.1)",
+   "label": "proposal",
+   "src": [
+    "S11"
+   ]
+  },
+  "S": {
+   "en": "Stale data",
+   "fi": "Vanhentunut tieto",
+   "decision_en": "No new figure for over 6 months: flag it to the data owner. No other suggestion on this signal until data returns.",
+   "decision_fi": "Uutta lukua ei ole yli 6 kuukauteen: ilmoitetaan tiedon omistajalle. Muita ehdotuksia ei tehdä ennen kuin tieto palaa.",
+   "owner_en": "The data owner (THL publishes the queue figures)",
+   "owner_fi": "Tiedon omistaja (THL julkaisee jonoluvut)",
+   "label": "proposal",
+   "src": []
+  },
+  "H": {
+   "en": "Hold",
+   "fi": "Odotus",
+   "decision_en": "The gap has closed but not yet for 3 months in a row: keep the action running.",
+   "decision_fi": "Ero on sulkeutunut, mutta ei vielä 3 kuukautta peräkkäin: toimenpide jatkuu.",
+   "owner_en": "County management",
+   "owner_fi": "Hyvinvointialueen johto",
+   "label": "proposal",
+   "src": []
+  },
+  "X": {
+   "en": "Stop",
+   "fi": "Lopetus",
+   "decision_en": "Out of gap 3 months in a row: release the pilot slot and record the outcome.",
+   "decision_fi": "Ei eroa 3 kuukauteen peräkkäin: pilottipaikka vapautetaan ja tulos kirjataan.",
+   "owner_en": "County management",
+   "owner_fi": "Hyvinvointialueen johto",
+   "label": "proposal",
+   "src": []
+  }
+ },
+ "record_en": "Write down the decision, its date, the reason, and the twin record cited (county, signal, month).",
+ "record_fi": "Kirjataan päätös, päivämäärä, perustelu ja kaksosen tietue, johon päätös perustuu (alue, signaali, kuukausi).",
+ "yta": {
+  "south": {
+   "fi": "Etelä-Suomen yhteistyöalue",
+   "en": "Southern Finland collaborative area",
+   "uh_fi": "HUS (Helsingin yliopistollinen sairaala)",
+   "uh_en": "HUS (Helsinki University Hospital)",
+   "members": [
+    "11",
+    "90",
+    "HUS",
+    "01",
+    "02",
+    "10",
+    "03",
+    "09",
+    "04"
+   ]
+  },
+  "east": {
+   "fi": "Itä-Suomen yhteistyöalue",
+   "en": "Eastern Finland collaborative area",
+   "uh_fi": "Pohjois-Savon hyvinvointialue (KYS, Kuopio)",
+   "uh_en": "North Savo county (Kuopio University Hospital)",
+   "members": [
+    "13",
+    "15",
+    "12",
+    "14"
+   ]
+  },
+  "inner": {
+   "fi": "Sisä-Suomen yhteistyöalue",
+   "en": "Inner Finland collaborative area",
+   "uh_fi": "Pirkanmaan hyvinvointialue (Tays, Tampere)",
+   "uh_en": "Pirkanmaa county (Tampere University Hospital)",
+   "members": [
+    "08",
+    "07",
+    "16"
+   ]
+  },
+  "west": {
+   "fi": "Länsi-Suomen yhteistyöalue",
+   "en": "Western Finland collaborative area",
+   "uh_fi": "Varsinais-Suomen hyvinvointialue (Tyks, Turku)",
+   "uh_en": "Southwest Finland county (Turku University Hospital)",
+   "members": [
+    "05",
+    "06",
+    "17"
+   ]
+  },
+  "north": {
+   "fi": "Pohjois-Suomen yhteistyöalue",
+   "en": "Northern Finland collaborative area",
+   "uh_fi": "Pohjois-Pohjanmaan hyvinvointialue (OYS, Oulu)",
+   "uh_en": "North Ostrobothnia county (Oulu University Hospital)",
+   "members": [
+    "19",
+    "18",
+    "20",
+    "21"
+   ]
+  }
+ },
+ "medicines": {
+  "title_en": "Medicines: decided nationally, not by the county",
+  "title_fi": "Lääkkeet: päätetään kansallisesti, ei alueella",
+  "points_en": [
+   "A new hospital medicine or a significant new indication is to get a national decision or guideline, usable in every county, which the counties commit to follow, on a set timetable (roadmap 4.5.1, p. 94).",
+   "Assessment and decision are to be gathered into one actor, through which the national assessment after the EU HTA assessment runs, building on Fimea, Palko and Hila (4.5.2, p. 95); for all new cancer medicines and significant indication extensions by 2029–2031 (p. 96). The strategy's indicator: cancer medicines are assessed through a single channel (strategy p. 5).",
+   "Responsible: STM (lead), with Fimea, Palko, Hila, Kela, FICAN, the counties, HUS and hospital pharmacies (4.5.1, p. 94)."
+  ],
+  "points_fi": [
+   "Uuden sairaalalääkkeen käyttöönotosta ja merkittävästä käyttöaiheen laajennuksesta tehdään kansallinen päätös tai linjaus, joka on käytettävissä kaikilla hyvinvointialueilla ja jota alueet sitoutuvat noudattamaan, ennalta määritellyssä aikataulussa (tiekartta 4.5.1, s. 94).",
+   "Lääkkeiden arviointi ja päätöksenteko kootaan yhdelle toimijalle, jonka kautta EU-HTA-arvioinnin jälkeinen kansallinen arviointi tapahtuu; pohjana Fimean, Palkon ja Hilan toimintamallit (4.5.2, s. 95); kaikkien uusien syöpälääkkeiden ja merkittävien käyttöaiheen laajennusten osalta vuosina 2029–2031 (s. 96). Strategian mittari: syövän hoidossa käytettävät lääkkeet arvioidaan yksikanavaisesti (strategia s. 5).",
+   "Vastuutaho: STM (päävastuu), Fimea, Palko, Hila, Kela, FICAN, hyvinvointialueet, HUS ja sairaala-apteekit (4.5.1, s. 94)."
+  ],
+  "twin_en": "The twin cannot see this: there is no public county-level figure on when a new cancer medicine reaches patients. A treatment gap that comes from access to a medicine is not a county decision.",
+  "twin_fi": "Kaksonen ei näe tätä: julkista aluekohtaista tietoa siitä, milloin uusi syöpälääke tavoittaa potilaat, ei ole. Lääkkeen saatavuudesta johtuva ero hoidon aloituksessa ei ole alueen päätettävissä.",
+  "src": [
+   "S11",
+   "S10"
+  ]
+ },
+ "first_order": {
+  "label": "proposal",
+  "en": "Decide first: the highest forum first (the gap has outlasted the decisions below it), then the pathway step closest to treatment (published mortality per month of delay is measured there: E14, E17-E19), then the longest gap. Hold next; data requests last.",
+  "fi": "Ensin päätettävä: ylin foorumi ensin (ero on kestänyt alempien päätösten yli), sitten hoitoa lähinnä oleva hoitopolun vaihe (julkaistu kuolleisuus viivekuukautta kohti on mitattu siellä: E14, E17-E19), sitten pisin ero. Seuraavaksi odotus; tietopyynnöt viimeisenä."
+ }
+}

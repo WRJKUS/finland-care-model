@@ -1,0 +1,89 @@
+{
+ "treat_onc_wait": {
+  "episodes": 18,
+  "episodes_decided": 11,
+  "median_months_to_decision": 2.0,
+  "median_months_to_first_suggestion": 2.0,
+  "true_gap_months": 249,
+  "true_gap_months_no_suggestion": 88,
+  "data_track_months": 564,
+  "data_track_months_true_gap": 32,
+  "yta_escalations": 1,
+  "yta_escalations_not_confirmed": 0,
+  "yta_escalations_by_area": {
+   "south": 1
+  },
+  "national_episodes": 10,
+  "national_episodes_not_confirmed": 5,
+  "national_months": 25
+ },
+ "dx_endo_over90": {
+  "episodes": 28,
+  "episodes_decided": 15,
+  "median_months_to_decision": 4.0,
+  "median_months_to_first_suggestion": 3.0,
+  "true_gap_months": 256,
+  "true_gap_months_no_suggestion": 118,
+  "data_track_months": 565,
+  "data_track_months_true_gap": 24,
+  "yta_escalations": 5,
+  "yta_escalations_not_confirmed": 1,
+  "yta_escalations_by_area": {
+   "east": 2,
+   "north": 3
+  },
+  "national_episodes": 6,
+  "national_episodes_not_confirmed": 2,
+  "national_months": 17
+ },
+ "ref_assess_over90": {
+  "episodes": 19,
+  "episodes_decided": 15,
+  "median_months_to_decision": 5.0,
+  "median_months_to_first_suggestion": 3.0,
+  "true_gap_months": 206,
+  "true_gap_months_no_suggestion": 74,
+  "data_track_months": 199,
+  "data_track_months_true_gap": 13,
+  "yta_escalations": 9,
+  "yta_escalations_not_confirmed": 3,
+  "yta_escalations_by_area": {
+   "inner": 4,
+   "north": 4,
+   "south": 1
+  },
+  "national_episodes": 5,
+  "national_episodes_not_confirmed": 3,
+  "national_months": 6
+ },
+ "_load": {
+  "years": 5.83,
+  "yta_escalations_by_area": {
+   "south": 5,
+   "east": 6,
+   "inner": 4,
+   "west": 1,
+   "north": 8
+  },
+  "yta_escalations_by_signal": {
+   "det_screen_breast": 2,
+   "det_screen_cervix": 2,
+   "dx_endo_over90": 5,
+   "ref_assess_over90": 9,
+   "treat_onc_over90": 2,
+   "treat_onc_wait": 1,
+   "treat_surg_over90": 3
+  },
+  "national_months_by_signal": {
+   "det_screen_breast": 0,
+   "det_screen_cervix": 0,
+   "det_screen_colorectal": 0,
+   "ref_assess_over90": 6,
+   "ref_over21": 18,
+   "dx_endo_over90": 17,
+   "treat_onc_wait": 25,
+   "treat_onc_over90": 0,
+   "treat_surg_over90": 30
+  }
+ }
+}

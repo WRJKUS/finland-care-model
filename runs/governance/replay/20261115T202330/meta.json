@@ -1,0 +1,19 @@
+{
+ "produced_by": "scripts/run_governance.py",
+ "timestamp": "20261115T202330",
+ "git": "c90a437",
+ "rules": "GOVERNANCE.md",
+ "thresholds": {
+  "persist_months": 3,
+  "min_action_months": 6,
+  "national_counties": 4,
+  "alarm_window_months": 3,
+  "closed_months": 3,
+  "yta_review_months": 6
+ },
+ "inputs": {
+  "model1": "runs/model1/replay/20261114T212304",
+  "model2": "runs/model2/replay/20261114T212304",
+  "truth": "runs/compare/policy/20261114T212427"
+ }
+}
